@@ -1,12 +1,13 @@
-<section class="hero">
+<section class="hero hero--photo" aria-labelledby="hero-titre">
+{{bg:entrepot-toit-blanc}}
 <div class="wrap">
 <div class="hero-copy">
 {{EYEBROW}}
-<h1>Rafraîchissez vos bâtiments par le toit</h1>
-<p class="lead">ALBEDIA applique des revêtements réfléchissants, ou cool roof, sur les toitures des bâtiments professionnels. Le toit renvoie le soleil au lieu de le stocker : vos locaux restent plus frais l’été et la climatisation est moins sollicitée.</p>
+<h1 id="hero-titre">Votre spécialiste du Cool Roof en France</h1>
+<p class="lead">ALBEDIA, spécialiste des revêtements anti-chaleur pour bâtiments professionnels, sur tous types de toitures, partout en France, en Suisse et en Italie.</p>
 <div class="hero-actions">
 <a class="btn btn--sun" href="devis.html">Demander un devis{{icon:fleche}}</a>
-<a class="btn btn--line" href="guide-cool-roof.html">Comprendre le cool roof</a>
+<a class="btn btn--light" href="guide-cool-roof.html">Comprendre le cool roof</a>
 </div>
 <ul class="hero-points">
 <li>{{icon:check}}Entrepôts, usines, commerces, bureaux</li>
@@ -14,40 +15,67 @@
 <li>{{icon:check}}Étude du bâtiment avant devis</li>
 </ul>
 </div>
-<div class="hero-visual">{{include:hero.svg}}</div>
-</div>
-</section>
-
-<section class="band band--tight" aria-labelledby="chiffres-titre">
-<div class="wrap">
-<h2 class="visually-hidden" id="chiffres-titre">Le cool roof en chiffres</h2>
-<div class="facts">
-<div class="fact"><p class="fact-num">85 à 95 %</p><p>du rayonnement solaire est absorbé par une toiture traditionnelle sombre.</p></div>
-<div class="fact"><p class="fact-num">28 à 33 °C</p><p>de moins en surface pour une toiture réfléchissante, au plus chaud de l’été.</p></div>
-<div class="fact"><p class="fact-num">14 à 38 %</p><p>de baisse de la pointe de climatisation mesurée après installation, selon les bâtiments étudiés.</p></div>
-</div>
-<p class="note">Source : US EPA, <cite>Reducing Urban Heat Islands</cite>, chapitre <cite>Cool Roofs</cite>. Ce sont des ordres de grandeur issus d’études publiées : le gain réel dépend de chaque bâtiment, et c’est ce qu’évalue notre étude préalable. <a href="guide-cool-roof.html#chiffres">Toutes les sources</a></p>
-</div>
-</section>
-
-<section class="band band--tint" aria-labelledby="projet-titre">
-<div class="wrap">
-<div class="quick">
-<div class="quick-intro">
-<h2 id="projet-titre">Votre projet en trois questions</h2>
-<p>Indiquez-nous l’essentiel. Vous compléterez votre demande à l’étape suivante.</p>
-</div>
-<form class="quick-form" action="devis.html" method="get">
-<div class="field"><label for="q-secteur">Secteur d’activité</label><select id="q-secteur" name="secteur">{{SECTOR_OPTIONS}}</select></div>
+<form class="estimate" action="devis.html" method="get" aria-labelledby="estimer-titre">
+<h2 id="estimer-titre">Estimez votre projet</h2>
+<p>Quatre informations pour commencer. Nous revenons vers vous pour étudier votre toiture.</p>
+<div class="field"><label for="q-secteur">Type de bâtiment</label><select id="q-secteur" name="secteur">{{SECTOR_OPTIONS}}</select></div>
 <div class="field"><label for="q-surface">Surface de toiture (m²)</label><input id="q-surface" name="surface" type="number" min="0" step="10" inputmode="numeric" placeholder="Ex. 2500"></div>
+<div class="field"><label for="q-cp">Code postal du bâtiment</label><input id="q-cp" name="code_postal" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="10" placeholder="Ex. 38000"></div>
 <div class="field"><label for="q-email">E-mail professionnel</label><input id="q-email" name="email" type="email" autocomplete="email" placeholder="vous@entreprise.fr"></div>
-<button class="btn btn--sun" type="submit">Continuer{{icon:fleche}}</button>
+<button class="btn btn--sun" type="submit">Estimer mon projet{{icon:fleche}}</button>
+<p class="estimate-note">Vous compléterez votre demande à l’étape suivante.</p>
 </form>
 </div>
+</section>
+
+<section class="band" aria-labelledby="cout-titre">
+<div class="wrap">
+<div class="section-head section-head--center">
+<p class="kicker">Le constat</p>
+<h2 id="cout-titre" class="h2-xl">Chaque été, votre toiture vous coûte <em>très cher</em></h2>
+<p class="lead">En plein soleil, une toiture sombre se comporte comme un radiateur posé sur votre bâtiment. Cette chaleur, vous la payez de plusieurs façons, et chaque été un peu plus.</p>
+</div>
+<div class="facts facts--hot">
+<div class="fact"><p class="fact-num">85 à 95 %</p><p>du rayonnement solaire est absorbé par une toiture traditionnelle sombre.</p></div>
+<div class="fact"><p class="fact-num">66 à 85 °C</p><p>en surface d’une toiture traditionnelle en plein été.</p></div>
+<div class="fact"><p class="fact-num">31 à 47 °C</p><p>de plus que l’air ambiant, contre 6 à 11 °C pour une toiture réfléchissante.</p></div>
+</div>
+<div class="split cost-split">
+<figure class="photo">{{img:atelier-industriel}}</figure>
+<ul class="costs">
+<li><span class="ico-badge">{{icon:clim}}</span><div><h3>Une climatisation qui tourne à plein</h3><p>Plus le toit chauffe, plus la climatisation doit extraire de chaleur. Dans plus de 25 études recensées par l’US EPA, une toiture réfléchissante a réduit la consommation de climatisation de 2 à 40 %, et de 20 % en moyenne.</p></div></li>
+<li><span class="ico-badge">{{icon:euro}}</span><div><h3>Des pointes de puissance qui pèsent sur la facture</h3><p>La demande d’électricité culmine aux heures les plus chaudes. Les mêmes études relèvent des baisses de la pointe de climatisation de 14 à 38 % avec un cool roof.</p></div></li>
+<li><span class="ico-badge">{{icon:thermo}}</span><div><h3>Des équipes moins efficaces</h3><p>Ateliers, quais de chargement, surfaces de vente : quand la chaleur s’accumule sous le toit, le confort et la vigilance baissent.</p></div></li>
+<li><span class="ico-badge">{{icon:couches}}</span><div><h3>Une toiture qui s’use plus vite</h3><p>Chauffée chaque jour puis refroidie la nuit, une couverture sombre subit de forts écarts de température qui fatiguent ses matériaux.</p></div></li>
+</ul>
+</div>
+<p class="note">Source : US EPA, <cite>Reducing Urban Heat Islands</cite>, chapitre <cite>Cool Roofs</cite>. Ce sont des ordres de grandeur issus d’études publiées : le gain réel dépend de chaque bâtiment, et c’est ce qu’évalue notre étude préalable. <a href="guide-cool-roof.html#chiffres">Toutes les sources</a></p>
+<p class="more"><a class="btn btn--sun" href="devis.html">Faire étudier ma toiture{{icon:fleche}}</a></p>
 </div>
 </section>
 
-<section class="band" aria-labelledby="diagnostic-titre">
+<section class="band band--navy" aria-labelledby="giec-titre">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker">Réchauffement climatique</p>
+<h2 id="giec-titre">Des étés toujours plus chauds : ce que concluent les experts du GIEC</h2>
+<p class="lead">Le Groupe d’experts intergouvernemental sur l’évolution du climat (GIEC) fait la synthèse des connaissances scientifiques sur le climat. Les conclusions de son sixième rapport concernent directement vos bâtiments.</p>
+</div>
+<div class="giec-grid">
+<div class="giec-item"><p class="giec-num">+1,1 °C</p><h3>Un réchauffement déjà là</h3><p>La température moyenne à la surface du globe a augmenté d’environ 1,1 °C entre 1850-1900 et 2011-2020. Pour le GIEC, il est « sans équivoque » que l’influence humaine a réchauffé l’atmosphère, l’océan et les terres.</p></div>
+<div class="giec-item"><p class="giec-num">1950</p><h3>Depuis les années 1950, des vagues de chaleur plus fréquentes</h3><p>Il est quasi certain que les extrêmes chauds, vagues de chaleur comprises, sont devenus plus fréquents et plus intenses dans la plupart des régions continentales depuis les années 1950.</p></div>
+<div class="giec-item"><p class="giec-num">2,8 fois</p><h3>Des pics de chaleur qui reviennent plus souvent</h3><p>Sur les continents, une chaleur extrême qui ne survenait qu’une fois tous les dix ans en moyenne sans l’influence humaine se produit déjà 2,8 fois plus souvent, et elle est environ 1,2 °C plus forte.</p></div>
+<div class="giec-item"><p class="giec-num">5,6 fois</p><h3>Et la tendance s’accentue</h3><p>Avec un réchauffement planétaire de 2 °C, ce pic de chaleur surviendrait 5,6 fois plus souvent, et 9,4 fois à 4 °C. Chaque hausse supplémentaire du réchauffement rend les extrêmes plus marqués.</p></div>
+</div>
+<div class="giec-conclusion">
+<p><strong>Pour vos bâtiments, cela annonce des étés plus chauds et des toitures qui accumulent toujours plus de chaleur.</strong> Rendre la toiture réfléchissante, c’est adapter dès maintenant votre patrimoine au climat qui vient.</p>
+<a class="btn btn--sun" href="devis.html">Adapter ma toiture{{icon:fleche}}</a>
+</div>
+<p class="src">Source : GIEC, sixième rapport d’évaluation, Groupe de travail I, <cite>Changement climatique 2021 : les bases scientifiques physiques</cite>, Résumé à l’intention des décideurs, énoncés A.1, A.1.2, A.3.1 et B.2.2 et figure RID.6. <a href="https://www.ipcc.ch/report/ar6/wg1/downloads/report/IPCC_AR6_WGI_SummaryVolume_French.pdf" rel="noopener" target="_blank">Version française (ipcc.ch)</a> · <a href="https://www.ipcc.ch/report/ar6/wg1/downloads/report/IPCC_AR6_WGI_SPM_Stand_Alone.pdf" rel="noopener" target="_blank">version anglaise</a></p>
+</div>
+</section>
+
+<section class="band band--tint" aria-labelledby="diagnostic-titre">
 <div class="wrap split">
 <div class="prose">
 <p class="kicker">Premier diagnostic</p>
@@ -61,21 +89,6 @@
 <li>{{icon:check}}<span><strong>Des locaux qui chauffent</strong> dès les premières journées chaudes.</span></li>
 <li>{{icon:check}}<span><strong>Une climatisation qui tourne fort</strong> tout l’été, ou des marchandises sensibles à la chaleur.</span></li>
 </ul>
-</div>
-</section>
-
-<section class="band band--tint" aria-labelledby="probleme-titre">
-<div class="wrap">
-<div class="section-head">
-<p class="kicker">Le problème</p>
-<h2 id="probleme-titre">L’été, le toit est la première source de chaleur</h2>
-<p class="lead">Sur un bâtiment de plain-pied, la toiture reçoit le soleil toute la journée. Sombre, elle en absorbe l’essentiel et le transmet aux locaux.</p>
-</div>
-<div class="grid-3">
-<div class="feature"><span class="ico-badge">{{icon:thermo}}</span><h3>Des équipes en difficulté</h3><p>Chaleur dans les ateliers, sur les quais et dans les surfaces de vente : le confort et la vigilance baissent quand la température monte.</p></div>
-<div class="feature"><span class="ico-badge">{{icon:clim}}</span><h3>Une climatisation à la peine</h3><p>Plus le toit chauffe, plus la climatisation doit extraire de chaleur. Factures et pointes de puissance grimpent avec les vagues de chaleur.</p></div>
-<div class="feature"><span class="ico-badge">{{icon:couches}}</span><h3>Une étanchéité qui vieillit</h3><p>Une toiture sombre peut dépasser 70 °C en été puis refroidir la nuit. Ces cycles quotidiens fatiguent les matériaux de couverture.</p></div>
-</div>
 </div>
 </section>
 
@@ -106,6 +119,16 @@
 <div class="season season--summer"><h3>{{icon:thermo}}En été</h3><p>Soleil haut, journées longues : la toiture reçoit l’essentiel des apports solaires. C’est là que le cool roof fait la différence.</p></div>
 <div class="season season--winter"><h3>{{icon:clim}}En hiver</h3><p>Soleil bas, journées courtes : les apports par le toit sont faibles, et la perte liée au revêtement l’est aussi.</p></div>
 </div>
+</div>
+</section>
+
+<section class="photo-band" aria-labelledby="bande-titre">
+{{bg-lazy:application-toiture}}
+<div class="wrap">
+<p class="slogan">{{SUN}}Le cool roof par ALBEDIA</p>
+<h2 id="bande-titre">Augmentez votre albédo !</h2>
+<p>Un revêtement blanc très réfléchissant, appliqué sur votre toiture existante : le soleil repart vers le ciel au lieu de chauffer vos locaux.</p>
+<div class="hero-actions"><a class="btn btn--sun" href="solutions.html">Découvrir nos solutions{{icon:fleche}}</a><a class="btn btn--light" href="devis.html">Demander un devis</a></div>
 </div>
 </section>
 
@@ -159,20 +182,21 @@
 </section>
 
 <section class="band band--tint" aria-labelledby="duree-titre">
-<div class="wrap split">
+<div class="wrap split split--media">
 <div class="prose">
 <p class="kicker">Durabilité</p>
 <h2 id="duree-titre">Une performance qui dure, si le revêtement est bien posé et entretenu</h2>
 <p>Correctement appliqués, de nombreux revêtements cool roof ont tenu plus de vingt ans. À l’inverse, une mise en œuvre bâclée peut provoquer décollements et écaillage en quelques années.</p>
 <p>La réflectance baisse surtout la première année, à cause de l’encrassement : d’environ 20 % avec un entretien correct. Un nettoyage selon les préconisations du fabricant aide à la préserver.</p>
-<p class="src">Source : US EPA, <cite>Reducing Urban Heat Islands</cite>, chapitre <cite>Cool Roofs</cite>.</p>
-</div>
-<ul class="checklist checklist--boxed">
+<ul class="checklist">
 <li>{{icon:check}}<span>Préparation soignée du support avant toute application</span></li>
 <li>{{icon:check}}<span>Conditions de température et d’humidité respectées pendant le chantier</span></li>
 <li>{{icon:check}}<span>Fiche d’entretien remise à la réception des travaux</span></li>
 <li>{{icon:check}}<span>Contrat d’entretien proposé pour garder la réflectance dans le temps</span></li>
 </ul>
+<p class="src">Source : US EPA, <cite>Reducing Urban Heat Islands</cite>, chapitre <cite>Cool Roofs</cite>.</p>
+</div>
+<figure class="photo photo--tall">{{img:toiture-terrasse-bureaux}}</figure>
 </div>
 </section>
 
@@ -213,6 +237,11 @@
 <div class="section-head">
 <p class="kicker">Notre méthode</p>
 <h2 id="methode-titre">Cinq étapes, de la visite à l’entretien</h2>
+</div>
+<div class="photo-strip">
+<figure>{{img:etude-plans|(max-width: 760px) 100vw, 380px}}<figcaption>Visite et étude</figcaption></figure>
+<figure>{{img:travaux-couverture|(max-width: 760px) 100vw, 380px}}<figcaption>Préparation du support</figcaption></figure>
+<figure>{{img:application-montagne|(max-width: 760px) 100vw, 380px}}<figcaption>Application du revêtement</figcaption></figure>
 </div>
 <ol class="steps">
 <li class="step"><h3>Visite de la toiture</h3><p>Support, état, pente, points singuliers et accès en sécurité.</p></li>

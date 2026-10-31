@@ -1,0 +1,308 @@
+{
+ "entrepot-toit-blanc": {
+  "alt": "Vue aérienne d’un grand bâtiment logistique à la toiture blanche",
+  "pos": "50% 50%",
+  "widths": [
+   640,
+   1280,
+   1920,
+   2400
+  ],
+  "ratio": [
+   2400,
+   1599
+  ],
+  "author": "Point3D Commercial Imaging Ltd.",
+  "author_url": "https://unsplash.com/@3dottawa",
+  "url": "https://unsplash.com/photos/g7GFCIXVkN0"
+ },
+ "application-toiture": {
+  "alt": "Opérateur en combinaison appliquant au pistolet un revêtement blanc sur une toiture-terrasse",
+  "pos": "68% 45%",
+  "widths": [
+   640,
+   1280,
+   1920,
+   2400
+  ],
+  "ratio": [
+   2400,
+   1600
+  ],
+  "author": "Ömer Haktan Bulut",
+  "author_url": "https://unsplash.com/@omerhaktan",
+  "url": "https://unsplash.com/photos/ce2r9sPR_9E"
+ },
+ "application-montagne": {
+  "alt": "Application au pistolet d’un revêtement de toiture, montagnes en arrière-plan",
+  "pos": "58% 40%",
+  "widths": [
+   640,
+   1280,
+   1920,
+   2400
+  ],
+  "ratio": [
+   2400,
+   1600
+  ],
+  "author": "Ömer Haktan Bulut",
+  "author_url": "https://unsplash.com/@omerhaktan",
+  "url": "https://unsplash.com/photos/MCMWHK-WEZU"
+ },
+ "plateforme-logistique": {
+  "alt": "Plateforme logistique à toiture claire dans une zone d’activités, vue du ciel",
+  "pos": "55% 55%",
+  "widths": [
+   640,
+   1280,
+   1920
+  ],
+  "ratio": [
+   1920,
+   1279
+  ],
+  "author": "Point3D Commercial Imaging Ltd.",
+  "author_url": "https://unsplash.com/@3dottawa",
+  "url": "https://unsplash.com/photos/xd4dqv1n2pk"
+ },
+ "toiture-bac-acier": {
+  "alt": "Toiture industrielle en tôle ondulée équipée d’extracteurs d’air",
+  "pos": "50% 50%",
+  "widths": [
+   640,
+   1280,
+   1920
+  ],
+  "ratio": [
+   1920,
+   1280
+  ],
+  "author": "Seyjoon Park",
+  "author_url": "https://unsplash.com/@seyjoon",
+  "url": "https://unsplash.com/photos/fMW6eqMSYeQ"
+ },
+ "atelier-industriel": {
+  "alt": "Intérieur d’un bâtiment industriel avec pont roulant, sous une toiture métallique",
+  "pos": "50% 50%",
+  "widths": [
+   640,
+   1280,
+   1920
+  ],
+  "ratio": [
+   1920,
+   830
+  ],
+  "author": "Howard Zheng",
+  "author_url": "https://unsplash.com/@wa1221",
+  "url": "https://unsplash.com/photos/MLuJUZGp6H8"
+ },
+ "zone-commerciale": {
+  "alt": "Centre commercial à toitures plates et son parking, vus du ciel",
+  "pos": "55% 45%",
+  "widths": [
+   640,
+   1280,
+   1920
+  ],
+  "ratio": [
+   1920,
+   1279
+  ],
+  "author": "Alex Reynolds",
+  "author_url": "https://unsplash.com/@asreynolds",
+  "url": "https://unsplash.com/photos/hgYoFjx2f40"
+ },
+ "centre-commercial": {
+  "alt": "Commerces de périphérie à toitures plates entourés d’arbres, vus du ciel",
+  "pos": "50% 55%",
+  "widths": [
+   640,
+   1280,
+   1920
+  ],
+  "ratio": [
+   1920,
+   1279
+  ],
+  "author": "Alex Reynolds",
+  "author_url": "https://unsplash.com/@asreynolds",
+  "url": "https://unsplash.com/photos/5SbMNF0VqsI"
+ },
+ "parc-activites": {
+  "alt": "Bâtiments d’activité aux toitures plates claires, vus du ciel",
+  "pos": "45% 60%",
+  "widths": [
+   640,
+   1280,
+   1920
+  ],
+  "ratio": [
+   1920,
+   1279
+  ],
+  "author": "Alex Reynolds",
+  "author_url": "https://unsplash.com/@asreynolds",
+  "url": "https://unsplash.com/photos/rHvi-_-0jUU"
+ },
+ "immeuble-bureaux": {
+  "alt": "Immeuble de bureaux contemporain au coucher du soleil",
+  "pos": "55% 50%",
+  "widths": [
+   640,
+   1280,
+   1920
+  ],
+  "ratio": [
+   1920,
+   1490
+  ],
+  "author": "Kaleb Tapp",
+  "author_url": "https://unsplash.com/@kalebtapp",
+  "url": "https://unsplash.com/photos/1deQbU6DhBg"
+ },
+ "toiture-terrasse-bureaux": {
+  "alt": "Toiture-terrasse claire d’un immeuble de bureaux et ses équipements de climatisation",
+  "pos": "45% 55%",
+  "widths": [
+   640,
+   1280,
+   1920
+  ],
+  "ratio": [
+   1920,
+   1398
+  ],
+  "author": "Toni Reed",
+  "author_url": "https://unsplash.com/@trfotos",
+  "url": "https://unsplash.com/photos/Ba_o2rvI5aY"
+ },
+ "ecole-vue-aerienne": {
+  "alt": "Groupe scolaire aux toitures plates dans un quartier résidentiel, vu du ciel",
+  "pos": "50% 55%",
+  "widths": [
+   640,
+   1280,
+   1920
+  ],
+  "ratio": [
+   1920,
+   1080
+  ],
+  "author": "Myron Mott",
+  "author_url": "https://unsplash.com/@s2killa",
+  "url": "https://unsplash.com/photos/Suc_jM5WEuo"
+ },
+ "batiment-scolaire": {
+  "alt": "Bâtiment scolaire de plain-pied et sa grande toiture",
+  "pos": "50% 55%",
+  "widths": [
+   640,
+   1280,
+   1920
+  ],
+  "ratio": [
+   1920,
+   1280
+  ],
+  "author": "Arlind Photography",
+  "author_url": "https://unsplash.com/@arlindphotography",
+  "url": "https://unsplash.com/photos/2U39ARxwO2E"
+ },
+ "batiment-agricole": {
+  "alt": "Long bâtiment agricole à toiture métallique rouge au pied des montagnes",
+  "pos": "50% 62%",
+  "widths": [
+   640,
+   1280,
+   1920
+  ],
+  "ratio": [
+   1920,
+   1280
+  ],
+  "author": "Valentin Gerardi",
+  "author_url": "https://unsplash.com/@valentin_gerardi",
+  "url": "https://unsplash.com/photos/qilXrfg1SY0"
+ },
+ "hangar-agricole": {
+  "alt": "Hangar agricole au milieu des champs",
+  "pos": "50% 60%",
+  "widths": [
+   640,
+   1280,
+   1920
+  ],
+  "ratio": [
+   1920,
+   1272
+  ],
+  "author": "Roger Starnes Sr",
+  "author_url": "https://unsplash.com/@rstar50",
+  "url": "https://unsplash.com/photos/UEJks7Y-kwQ"
+ },
+ "toits-ville": {
+  "alt": "Toits plats clairs et sombres d’un centre-ville, vus du ciel",
+  "pos": "50% 50%",
+  "widths": [
+   640,
+   1280,
+   1920
+  ],
+  "ratio": [
+   1920,
+   1080
+  ],
+  "author": "Brendon Trofimowicz",
+  "author_url": "https://unsplash.com/@btrofimo",
+  "url": "https://unsplash.com/photos/OkCxIdSRh1g"
+ },
+ "toit-blanc-ville": {
+  "alt": "Toiture-terrasse blanche d’un immeuble en brique",
+  "pos": "50% 50%",
+  "widths": [
+   640,
+   1280,
+   1920
+  ],
+  "ratio": [
+   1920,
+   1178
+  ],
+  "author": "Simon Hurry",
+  "author_url": "https://unsplash.com/@bullterriere",
+  "url": "https://unsplash.com/photos/nmIpX-OGCG0"
+ },
+ "etude-plans": {
+  "alt": "Professionnel du bâtiment étudiant des plans sur un chantier",
+  "pos": "50% 30%",
+  "widths": [
+   640,
+   1280
+  ],
+  "ratio": [
+   1920,
+   2560
+  ],
+  "author": "GN Group",
+  "author_url": "https://unsplash.com/@gnhearingglobal",
+  "url": "https://unsplash.com/photos/9gCRnfwSkwo"
+ },
+ "travaux-couverture": {
+  "alt": "Travaux sur une couverture métallique",
+  "pos": "50% 50%",
+  "widths": [
+   640,
+   1280,
+   1920
+  ],
+  "ratio": [
+   1920,
+   1280
+  ],
+  "author": "Sergio Martins",
+  "author_url": "https://unsplash.com/@smartins20",
+  "url": "https://unsplash.com/photos/E07VvBCSSNE"
+ }
+}

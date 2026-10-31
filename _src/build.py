@@ -7,6 +7,7 @@ Utilisation (depuis la racine du dépôt) :
                                             dans un dossier HORS du dépôt, pour le publier comme artifact
 """
 import html, json, os, re, shutil, sys, tempfile
+from urllib.parse import quote
 
 SRC = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(SRC)
@@ -19,14 +20,28 @@ LASTMOD = '2026-10-31'
 GSC_VERIFICATION = 'ymRFVKE_Tfryz-8vZf1Ez11ze668aD4px2rOz4EN0yQ'   # Google Search Console, balise placée sur l'accueil
 SLOGANS = ['Vos toitures réfléchissent\u00a0!', 'Augmentez votre albédo\u00a0!']
 
+AREA = 'en France, en Suisse et en Italie'   # zone d'intervention affichée sur le site
+
+# photo = vignette de l'accueil et bandeau de la page secteur ; photo2 = photo dans le contenu de la page
 SECTORS = [
-    dict(slug='industrie', label='Industrie', short='Ateliers et sites de production', icon='industrie'),
-    dict(slug='logistique', label='Logistique', short='Entrepôts et plateformes', icon='logistique'),
-    dict(slug='distribution', label='Commerce et distribution', short='Magasins et surfaces de vente', icon='distribution'),
-    dict(slug='tertiaire', label='Bureaux et tertiaire', short='Bureaux et bâtiments d’activité', icon='tertiaire'),
-    dict(slug='collectivites', label='Collectivités', short='Écoles, gymnases, équipements', icon='collectivites'),
-    dict(slug='agricole', label='Agricole', short='Élevage, stockage, transformation', icon='agricole'),
+    dict(slug='industrie', label='Industrie', short='Ateliers et sites de production', icon='industrie',
+         photo='toiture-bac-acier', photo2='atelier-industriel'),
+    dict(slug='logistique', label='Logistique', short='Entrepôts et plateformes', icon='logistique',
+         photo='plateforme-logistique', photo2='entrepot-toit-blanc'),
+    dict(slug='distribution', label='Commerce et distribution', short='Magasins et surfaces de vente', icon='distribution',
+         photo='zone-commerciale', photo2='centre-commercial'),
+    dict(slug='tertiaire', label='Bureaux et tertiaire', short='Bureaux et bâtiments d’activité', icon='tertiaire',
+         photo='parc-activites', photo2='immeuble-bureaux'),
+    dict(slug='collectivites', label='Collectivités', short='Écoles, gymnases, équipements', icon='collectivites',
+         photo='ecole-vue-aerienne', photo2='batiment-scolaire'),
+    dict(slug='agricole', label='Agricole', short='Élevage, stockage, transformation', icon='agricole',
+         photo='batiment-agricole', photo2='hangar-agricole'),
 ]
+
+# Langues proposées : traduction automatique de la page courante par Google Traduction (simple lien,
+# aucun script ni cookie sur albedia.eu)
+LANGS = [('en', 'EN', 'English', 'Translate this page into English (Google Translate)'),
+         ('it', 'IT', 'Italiano', 'Traduci questa pagina in italiano (Google Traduttore)')]
 
 # Ordre = ordre d'alternance des slogans (0, 1, 0, 1…)
 PAGES = [
@@ -70,6 +85,9 @@ for i, p in enumerate(PAGES):
     p['slogan'] = SLOGANS[i % 2]
 
 SECTOR_DATA = json.load(open(os.path.join(SRC, 'pages', 'secteurs.json'), encoding='utf-8'))
+# Photos (Unsplash, licence Unsplash) : texte alternatif, cadrage, largeurs disponibles, auteur.
+# Fichiers WebP dans assets/img/photos/<slug>-<largeur>.webp
+PHOTOS = json.load(open(os.path.join(SRC, 'pages', 'photos.json'), encoding='utf-8'))
 
 # ------------------------------------------------------------------ helpers
 PART = os.path.join(SRC, 'partials')
@@ -114,6 +132,47 @@ def todo(text):
     return '<span class="a-completer">[%s]</span>' % text
 
 
+SIZES_HALF = '(max-width: 880px) 100vw, 580px'
+
+
+def photo(slug, ctx, sizes=SIZES_HALF, cls='', eager=False, alt=None):
+    """Balise <img> responsive (WebP en plusieurs largeurs) pour une photo du registre."""
+    p = PHOTOS[slug]
+    base = '%sassets/img/photos/%s' % (ctx.prefix, slug)
+    widths = p['widths']
+    srcset = ', '.join('%s-%d.webp %dw' % (base, w, w) for w in widths)
+    default = min(widths, key=lambda w: abs(w - 1280))
+    w, h = p['ratio']
+    load = 'loading="eager" fetchpriority="high"' if eager else 'loading="lazy"'
+    return '<img%s src="%s-%d.webp" srcset="%s" sizes="%s" width="%d" height="%d" alt="%s" data-photo="%s" %s decoding="async">' % (
+        ' class="%s"' % cls if cls else '', base, default, srcset, sizes, w, h,
+        esc(p['alt'] if alt is None else alt), slug, load)
+
+
+def photo_css():
+    """Cadrage de chaque photo (object-position), ajouté à la feuille de style au build."""
+    rules = ['[data-photo="%s"] { object-position: %s; }' % (s, p['pos']) for s, p in PHOTOS.items()
+             if p.get('pos') and p['pos'] != '50% 50%']
+    return '\n/* ---------------------------------------------------------------- cadrage des photos (généré) */\n' + '\n'.join(rules) + '\n'
+
+
+def photo_credits():
+    items = []
+    for slug, p in PHOTOS.items():
+        items.append('<li>%s : photo de <a href="%s" rel="noopener" target="_blank">%s</a> sur <a href="%s" rel="noopener" target="_blank">Unsplash</a></li>' % (
+            esc(p['alt']), p['author_url'], esc(p['author']), p['url']))
+    return '<ul class="credits">%s</ul>' % ''.join(items)
+
+
+def lang_switch(ctx):
+    page_url = SITE_URL + '/' + ('' if ctx.page['file'] in ('index.html', '404.html') else ctx.page['file'])
+    links = ''.join(
+        '<a class="lang-link" href="https://translate.google.com/translate?sl=fr&amp;tl=%s&amp;hl=%s&amp;u=%s" lang="%s" hreflang="%s" rel="nofollow" title="%s"><span aria-hidden="true">%s</span><span class="visually-hidden">%s</span></a>' % (
+            code, code, quote(page_url, safe=''), code, code, esc(title), short, esc(label))
+        for code, short, label, title in LANGS)
+    return '<div class="lang" role="group" aria-label="Langue du site"><span class="lang-cur" lang="fr" aria-current="true" title="Français">FR</span>%s</div>' % links
+
+
 class Ctx:
     def __init__(self, variant, page):
         self.variant, self.page = variant, page
@@ -154,6 +213,17 @@ def expand(text, ctx):
             return sector_tiles(ctx)
         if key == 'SECTOR_OPTIONS':
             return sector_options()
+        if key == 'PHOTO_CREDITS':
+            return photo_credits()
+        if key == 'AREA':
+            return AREA
+        if key.startswith('img:'):
+            slug, _, sizes = key[4:].partition('|')
+            return photo(slug, ctx, sizes or SIZES_HALF)
+        if key.startswith('bg:'):
+            return photo(key[3:], ctx, '100vw', cls='bg', eager=True, alt='')
+        if key.startswith('bg-lazy:'):
+            return photo(key[8:], ctx, '100vw', cls='bg', alt='')
         if key.startswith('icon:'):
             return icon(key[5:])
         if key.startswith('include:'):
@@ -179,9 +249,11 @@ def sector_options():
 
 
 def sector_tiles(ctx):
+    sizes = '(max-width: 580px) 100vw, (max-width: 960px) 50vw, 380px'
     return ''.join(
-        '<a class="tile" href="%s.html">%s<span class="tile-text"><strong>%s</strong><span>%s</span></span>%s</a>' % (
-            s['slug'], icon(s['icon']), esc(s['label']), esc(s['short']), icon('fleche'))
+        '<a class="tile" href="%s.html"><span class="tile-media">%s</span>'
+        '<span class="tile-body"><span class="tile-ico">%s</span><span class="tile-text"><strong>%s</strong><span>%s</span></span>%s</span></a>' % (
+            s['slug'], photo(s['photo'], ctx, sizes, alt=''), icon(s['icon']), esc(s['label']), esc(s['short']), icon('fleche'))
         for s in SECTORS)
 
 
@@ -216,7 +288,6 @@ def header(ctx):
 <header class="site-header">
 <div class="wrap">
 <a class="brand" href="index.html" aria-label="ALBEDIA, accueil">{part('logo.svg')}</a>
-<button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-principale">{icon('menu')}<span>Menu</span></button>
 <nav class="nav" id="nav-principale" aria-label="Navigation principale">
 <ul class="nav-list">
 <li><a class="nav-link" href="solutions.html"{cur('solutions')}>Solutions</a></li>
@@ -229,6 +300,8 @@ def header(ctx):
 </ul>
 <a class="btn btn--sun btn--sm nav-cta" href="devis.html"{cur('devis')}>Demander un devis</a>
 </nav>
+{lang_switch(ctx)}
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-principale">{icon('menu')}<span>Menu</span></button>
 </div>
 </header>'''
 
@@ -257,7 +330,7 @@ def footer(ctx):
 <div class="footer-top">
 <div class="footer-brand">
 <a class="brand" href="index.html" aria-label="ALBEDIA, accueil">{part('logo.svg')}</a>
-<p>Revêtements réfléchissants (cool roof) pour les toitures des bâtiments professionnels, en France.</p>
+<p>Revêtements réfléchissants (cool roof) pour les toitures des bâtiments professionnels, {AREA}.</p>
 <p class="footer-contact">{icon('mail')}<a href="mailto:{EMAIL}">{EMAIL}</a></p>
 {phone}
 </div>
@@ -297,27 +370,27 @@ def sector_page(slug):
     others = ''.join('<li><a class="chip" href="%s.html">{{icon:%s}}%s</a></li>' % (o['slug'], o['icon'], esc(o['label']))
                      for o in SECTORS if o['slug'] != slug)
     enjeux = ''.join('<p>%s</p>' % esc(p) for p in d['enjeux'])
-    return f'''<section class="page-head page-head--sector">
+    return f'''<section class="page-head page-head--photo page-head--sector">
+{{{{bg:{s['photo']}}}}}
 <div class="wrap">
 {{{{BREADCRUMB}}}}
 <span class="badge-ico">{{{{icon:{s['icon']}}}}}</span>
 {{{{EYEBROW}}}}
 <h1>{esc(d['h1'])}</h1>
 <p class="lead">{esc(d['lead'])}</p>
-<div class="hero-actions"><a class="btn btn--sun" href="devis.html">Demander un devis{{{{icon:fleche}}}}</a><a class="btn btn--line" href="guide-cool-roof.html">Comprendre le cool roof</a></div>
+<div class="hero-actions"><a class="btn btn--sun" href="devis.html">Demander un devis{{{{icon:fleche}}}}</a><a class="btn btn--light" href="guide-cool-roof.html">Comprendre le cool roof</a></div>
 </div>
 </section>
 <section class="band" aria-labelledby="enjeux-titre">
-<div class="wrap split split--top">
+<div class="wrap split split--top split--media">
 <div class="prose">
 <p class="kicker">Les enjeux</p>
 <h2 id="enjeux-titre">{esc(d['enjeux_titre'])}</h2>
 {enjeux}
-</div>
-<aside class="aside-box" aria-labelledby="batiments-titre">
 <h3 id="batiments-titre">Bâtiments concernés</h3>
-<ul class="checklist">{bats}</ul>
-</aside>
+<ul class="checklist checklist--cols">{bats}</ul>
+</div>
+<figure class="photo photo--tall">{{{{img:{s['photo2']}}}}}</figure>
 </div>
 </section>
 <section class="band band--tint" aria-labelledby="apports-titre">
@@ -366,7 +439,7 @@ def jsonld(page):
             'logo': SITE_URL + '/assets/img/logo-albedia.png', 'email': EMAIL,
             'slogan': SLOGANS[0].replace('\u00a0', ' '),
             'description': 'Application de revêtements réfléchissants (cool roof) sur les toitures des bâtiments professionnels.',
-            'areaServed': {'@type': 'Country', 'name': 'France'},
+            'areaServed': [{'@type': 'Country', 'name': n} for n in ('France', 'Suisse', 'Italie')],
             'legalName': 'CONTRACTANT GENERAL EN BATIMENTS INDUSTRIELS (CGBI)',
             'telephone': PHONE_TEL,
             'address': {'@type': 'PostalAddress', 'streetAddress': '163 cours de la Libération et du Général de Gaulle',
@@ -408,6 +481,8 @@ def page_body(page, ctx):
         page['desc'] = d['desc']
     else:
         main = open(os.path.join(SRC, 'pages', page['src']), encoding='utf-8').read()
+    m = re.search(r'\{\{bg:([a-z0-9-]+)\}\}', main)
+    page['lcp'] = m.group(1) if m else None   # photo d'en-tête, préchargée dans le <head>
     if '{{FAQ_FULL}}' in main or '{{FAQ_HOME}}' in main:
         faq = json.load(open(os.path.join(SRC, 'pages', 'faq.json'), encoding='utf-8'))
         main = main.replace('{{FAQ_FULL}}', faq_html(faq))
@@ -417,6 +492,16 @@ def page_body(page, ctx):
         parts.append(cta_band(ctx))
     parts.append(footer(ctx))
     return typo(expand('\n'.join(parts), ctx))
+
+
+def preload_photo(page, ctx):
+    slug = page.get('lcp')
+    if not slug:
+        return ''
+    p = PHOTOS[slug]
+    base = '%sassets/img/photos/%s' % (ctx.prefix, slug)
+    srcset = ', '.join('%s-%d.webp %dw' % (base, w, w) for w in p['widths'])
+    return '<link rel="preload" as="image" type="image/webp" imagesrcset="%s" imagesizes="100vw" fetchpriority="high">\n' % srcset
 
 
 def head_site(page, ctx):
@@ -451,7 +536,7 @@ def head_site(page, ctx):
 <link rel="icon" href="{p}favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{p}apple-touch-icon.png">
 <link rel="preload" href="{p}assets/fonts/plus-jakarta-sans-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="{p}assets/css/style.css?v=1">
+{preload_photo(page, ctx)}<link rel="stylesheet" href="{p}assets/css/style.css?v=2">
 {jsonld(page)}</head>
 <body>
 '''
@@ -465,7 +550,7 @@ GFONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
 def head_preview(page, is_main):
     if is_main:
         return ('<title>Site albedia.eu</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n'
-                + GFONTS + '\n<link rel="stylesheet" href="assets/css/style.css?v=1">\n')
+                + GFONTS + '\n<link rel="stylesheet" href="assets/css/style.css?v=2">\n')
     return f'''<!doctype html>
 <html lang="fr">
 <head>
@@ -473,7 +558,7 @@ def head_preview(page, is_main):
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{esc(page['title'])}</title>
 {GFONTS}
-<link rel="stylesheet" href="assets/css/style.css?v=1">
+<link rel="stylesheet" href="assets/css/style.css?v=2">
 </head>
 <body>
 '''
@@ -492,10 +577,18 @@ def build(variant, out):
     css = open(os.path.join(SRC, 'assets', 'css', 'style.css'), encoding='utf-8').read()
     if variant == 'preview':
         css = re.sub(r'/\* @font-face:start \*/.*?/\* @font-face:end \*/', '', css, flags=re.S)
+    css += photo_css()
     open(os.path.join(out, 'assets', 'css', 'style.css'), 'w', encoding='utf-8').write(css)
     shutil.copy(os.path.join(SRC, 'assets', 'js', 'main.js'), os.path.join(out, 'assets', 'js', 'main.js'))
-    for f in os.listdir(os.path.join(SRC, 'assets', 'img')):
-        shutil.copy(os.path.join(SRC, 'assets', 'img', f), os.path.join(out, 'assets', 'img', f))
+    img_src = os.path.join(SRC, 'assets', 'img')
+    for f in os.listdir(img_src):
+        if os.path.isfile(os.path.join(img_src, f)):
+            shutil.copy(os.path.join(img_src, f), os.path.join(out, 'assets', 'img', f))
+    # photos : le dossier généré est recréé à chaque build (une photo retirée des sources disparaît du site)
+    photos_out = os.path.join(out, 'assets', 'img', 'photos')
+    if os.path.isdir(photos_out):
+        shutil.rmtree(photos_out)
+    shutil.copytree(os.path.join(img_src, 'photos'), photos_out)
     if variant == 'site':
         shutil.copytree(os.path.join(SRC, 'assets', 'fonts'), os.path.join(out, 'assets', 'fonts'), dirs_exist_ok=True)
         for f in ('favicon.ico', 'favicon.svg', 'apple-touch-icon.png'):
@@ -509,7 +602,7 @@ def build(variant, out):
         ctx = Ctx(variant, page)
         body = page_body(page, ctx)
         p = ctx.prefix
-        script = '<script src="%sassets/js/main.js?v=1" defer></script>\n' % p
+        script = '<script src="%sassets/js/main.js?v=2" defer></script>\n' % p
         if variant == 'site':
             doc = head_site(page, ctx) + body + '\n' + script + '</body>\n</html>\n'
         else:

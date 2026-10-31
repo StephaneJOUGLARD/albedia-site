@@ -40,9 +40,34 @@ Test local : `php -S 127.0.0.1:8765 -t .` (le `.htaccess` n'y est pas appliqué)
 ## Balises disponibles dans les pages
 
 `{{EYEBROW}}` (soleil + slogan de la page), `{{SLOGAN}}`, `{{BREADCRUMB}}`, `{{icon:nom}}`,
-`{{include:fichier.svg}}`, `{{EMAIL}}`, `{{EMAIL_LINK}}`, `{{PHONE}}`, `{{SECTOR_TILES}}`,
-`{{SECTOR_OPTIONS}}`, `{{FAQ_HOME}}`, `{{FAQ_FULL}}`, `{{TODO:texte}}` (information à compléter,
+`{{include:fichier.svg}}`, `{{EMAIL}}`, `{{EMAIL_LINK}}`, `{{PHONE}}`, `{{PHONE_LINK}}`, `{{AREA}}`
+(zone d'intervention : « en France, en Suisse et en Italie »), `{{SECTOR_TILES}}`, `{{SECTOR_OPTIONS}}`,
+`{{FAQ_HOME}}`, `{{FAQ_FULL}}`, `{{PHOTO_CREDITS}}`, `{{TODO:texte}}` (information à compléter,
 affichée surlignée en jaune).
+
+Photos : `{{img:slug}}` (ou `{{img:slug|sizes}}`) dans une `<figure class="photo">`, `{{bg:slug}}` en fond
+d'un en-tête (`page-head--photo`, `hero--photo`, chargée en priorité) et `{{bg-lazy:slug}}` en fond d'un
+bandeau plus bas (`photo-band`).
+
+## Photos
+
+- Registre : `_src/pages/photos.json` (texte alternatif, cadrage `pos`, largeurs, auteur, lien Unsplash).
+  Fichiers : `_src/assets/img/photos/<slug>-<largeur>.webp` (640, 1280, 1920, parfois 2400 px).
+- Ce sont des photos d'illustration Unsplash (licence Unsplash), toutes créditées automatiquement dans les
+  mentions légales. Ne jamais les présenter comme des chantiers ou réalisations d'ALBEDIA (pas de légende
+  du type « nos réalisations ») ; n'utiliser que des photos « gratuites », jamais Unsplash+.
+- Retouches déjà faites : logo effacé sur la casquette (`application-toiture`), haut de l'image recadré
+  pour retirer des inscriptions (`atelier-industriel`).
+- Pour ajouter une photo : `python3 _src/photos.py <image.jpg> <nom-court> --alt … --auteur … --compte …
+  --source …` (WebP qualité 70 aux largeurs 640/1280/1920 et entrée dans `photos.json`), puis rebuild.
+- Les secteurs (`SECTORS` dans `build.py`) ont une photo de vignette/en-tête (`photo`) et une photo de
+  contenu (`photo2`).
+
+## Langues
+
+Les boutons EN et IT de l'en-tête ouvrent la page courante traduite par Google Traduction (simple lien
+vers translate.google.com, `LANGS` dans `build.py`) : aucun script ni cookie sur albedia.eu. C'est décrit
+dans `confidentialite.html` et `mentions-legales.html`.
 
 ## Règles de contenu
 

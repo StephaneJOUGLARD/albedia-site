@@ -91,7 +91,7 @@
     // pré-remplissage depuis le formulaire rapide de l'accueil
     try {
       var q = new URLSearchParams(window.location.search);
-      ['secteur', 'surface', 'email'].forEach(function (k) {
+      ['secteur', 'surface', 'code_postal', 'email'].forEach(function (k) {
         var v = q.get(k);
         var el = form.elements[k];
         if (v && el) el.value = v;
