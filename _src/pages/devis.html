@@ -1,0 +1,76 @@
+<section class="page-head">
+<div class="wrap">
+{{BREADCRUMB}}
+{{EYEBROW}}
+<h1>Demander un devis</h1>
+<p class="lead">Décrivez votre bâtiment en quelques lignes. Nous revenons vers vous pour préciser le besoin et organiser la visite de votre toiture.</p>
+</div>
+</section>
+
+<section class="band" aria-label="Formulaire de demande de devis">
+<div class="wrap devis">
+<div class="form-card">
+<div id="merci" class="target-msg form-status ok" role="status">Merci, votre demande est bien partie. Nous revenons vers vous rapidement.</div>
+<div id="erreur" class="target-msg form-status err" role="alert">L’envoi n’a pas abouti. Réessayez ou écrivez-nous directement à {{EMAIL}}.</div>
+<form id="devis-form" class="devis-form" action="contact.php" method="post"{{PREVIEW_ATTR}}>
+<fieldset>
+<legend>Vous</legend>
+<div class="form-grid">
+<div class="field"><label for="f-nom">Nom et prénom</label><input id="f-nom" name="nom" type="text" autocomplete="name" required maxlength="100"></div>
+<div class="field"><label for="f-entreprise">Entreprise ou organisme</label><input id="f-entreprise" name="entreprise" type="text" autocomplete="organization" required maxlength="120"></div>
+<div class="field"><label for="f-email">E-mail professionnel</label><input id="f-email" name="email" type="email" autocomplete="email" required maxlength="160"></div>
+<div class="field"><label for="f-tel">Téléphone <span class="opt">(facultatif)</span></label><input id="f-tel" name="telephone" type="tel" autocomplete="tel" maxlength="30"></div>
+</div>
+</fieldset>
+<fieldset>
+<legend>Votre bâtiment</legend>
+<div class="form-grid">
+<div class="field"><label for="f-secteur">Secteur d’activité</label><select id="f-secteur" name="secteur">{{SECTOR_OPTIONS}}</select></div>
+<div class="field"><label for="f-surface">Surface de toiture (m²) <span class="opt">(approximative)</span></label><input id="f-surface" name="surface" type="number" min="0" max="1000000" step="1" inputmode="numeric"></div>
+<div class="field"><label for="f-toiture">Type de toiture</label><select id="f-toiture" name="toiture"><option value="">Choisir…</option><option>Bac acier</option><option>Étanchéité bitumineuse</option><option>Membrane synthétique (PVC, TPO, EPDM)</option><option>Béton</option><option>Fibres-ciment</option><option>Plusieurs types</option><option>Je ne sais pas</option></select></div>
+<div class="field"><label for="f-cp">Code postal du bâtiment</label><input id="f-cp" name="code_postal" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="10"></div>
+<div class="field field--full"><span class="label" id="f-clim-label">Le bâtiment est-il climatisé ?</span>
+<div class="choices" role="radiogroup" aria-labelledby="f-clim-label">
+<label class="choice"><input type="radio" name="climatisation" value="Oui"><span>Oui</span></label>
+<label class="choice"><input type="radio" name="climatisation" value="En partie"><span>En partie</span></label>
+<label class="choice"><input type="radio" name="climatisation" value="Non"><span>Non</span></label>
+<label class="choice"><input type="radio" name="climatisation" value="Je ne sais pas"><span>Je ne sais pas</span></label>
+</div></div>
+<div class="field field--full"><label for="f-message">Votre projet <span class="opt">(facultatif)</span></label><textarea id="f-message" name="message" rows="5" maxlength="5000" placeholder="Usage du bâtiment, problèmes de chaleur constatés, délais souhaités…"></textarea></div>
+</div>
+</fieldset>
+<div class="hp" aria-hidden="true"><label for="f-site">Ne pas remplir ce champ</label><input id="f-site" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+<input type="hidden" name="elapsed" value="">
+<div class="form-foot">
+<button class="btn btn--sun" type="submit">Envoyer ma demande{{icon:fleche}}</button>
+<p class="form-legal">Vos informations servent uniquement à répondre à votre demande. <a href="confidentialite.html">En savoir plus sur vos données</a></p>
+</div>
+<div class="form-status" id="form-status" role="status" aria-live="polite" hidden></div>
+</form>
+</div>
+<aside class="devis-aside">
+<div class="aside-block">
+<h2 class="h3">Ce qui nous aide à vous répondre</h2>
+<ul class="checklist">
+<li>{{icon:check}}<span>La surface approximative et le type de toiture</span></li>
+<li>{{icon:check}}<span>L’usage du bâtiment et ses horaires</span></li>
+<li>{{icon:check}}<span>La présence d’une climatisation et son mode de chauffage</span></li>
+<li>{{icon:check}}<span>Quelques photos de la toiture, à joindre en réponse à notre e-mail</span></li>
+</ul>
+</div>
+<div class="aside-block">
+<h2 class="h3">Après votre demande</h2>
+<ol class="mini-steps">
+<li>Nous vous recontactons pour préciser le besoin.</li>
+<li>Nous visitons la toiture.</li>
+<li>Nous vous remettons l’étude et le devis.</li>
+</ol>
+</div>
+<div class="aside-block">
+<h2 class="h3">Nous écrire</h2>
+<p class="contact-line">{{icon:mail}}{{EMAIL_LINK}}</p>
+<p class="muted">Intervention en France.</p>
+</div>
+</aside>
+</div>
+</section>

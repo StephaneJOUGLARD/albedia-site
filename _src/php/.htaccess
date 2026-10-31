@@ -1,0 +1,38 @@
+# ALBEDIA · réglages Apache pour l'hébergement OVHcloud
+
+# Page d'erreur personnalisée
+ErrorDocument 404 /404.html
+
+# Encodage des pages et fichiers texte
+AddDefaultCharset UTF-8
+
+# Pas de listage des dossiers
+Options -Indexes
+
+# Le site est déployé depuis GitHub : les sources, l'historique Git et les notes de travail
+# sont présents sur l'hébergement mais ne doivent jamais être servis aux visiteurs.
+RedirectMatch 404 ^/(\.git|_src)(/|$)
+RedirectMatch 404 ^/(README|CLAUDE)\.md$
+
+# Compression des fichiers texte
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml application/json text/plain application/xml
+</IfModule>
+
+# Mise en cache des ressources statiques
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/x-icon "access plus 1 month"
+  ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
+
+# Redirection vers HTTPS : à activer une fois le certificat SSL actif sur l'hébergement
+# (retirez le # au début des trois lignes suivantes)
+# RewriteEngine On
+# RewriteCond %{HTTPS} off
+# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]

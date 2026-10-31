@@ -1,0 +1,34 @@
+[
+  {"home": true, "q": "Qu’est-ce qu’un cool roof ?", "a": [
+    "Un cool roof, ou toiture froide, est une toiture rendue très réfléchissante et très émissive. Le plus souvent, on applique sur la couverture existante un revêtement clair qui renvoie la plus grande partie du rayonnement solaire et évacue rapidement la chaleur restante.",
+    "Résultat : la toiture chauffe beaucoup moins et transmet moins de chaleur au bâtiment."]},
+  {"home": true, "q": "Quels gains peut-on attendre ?", "a": [
+    "Les travaux recensés par l’agence américaine de l’environnement (US EPA) font état d’une toiture 28 à 33 °C plus fraîche au plus chaud de l’été, d’économies de climatisation de 2 à plus de 40 % (20 % en moyenne) et d’une baisse des pointes de 14 à 38 %.",
+    "Ces chiffres varient fortement d’un bâtiment à l’autre : isolation de la toiture, usage, climatisation, climat. Notre étude préalable sert à estimer l’intérêt pour votre bâtiment."]},
+  {"home": true, "q": "Le cool roof augmente-t-il le chauffage en hiver ?", "a": [
+    "Un peu, car la toiture capte aussi moins de soleil en hiver. Mais le soleil est alors bas et les journées courtes : dans la plupart des climats étudiés, cette pénalité reste inférieure aux économies d’été (US EPA).",
+    "Elle pèse davantage pour un bâtiment surtout chauffé en climat froid. Une étude réalisée pour la Fédération française du bâtiment conclut à un effet très faible quand le chauffage représente 75 % des besoins, et à un bilan favorable dès que la climatisation dépasse 30 % des besoins. Nous en tenons compte dans notre étude."]},
+  {"home": true, "q": "Sur quelles toitures peut-on l’appliquer ?", "a": [
+    "Sur la plupart des toitures-terrasses et des toitures à faible pente : bac acier, étanchéités bitumineuses ou synthétiques, béton. Les plaques en fibres-ciment demandent un repérage de l’amiante au préalable.",
+    "Un support trop dégradé doit d’abord être réparé ou refait. Pour les peintures réflectives, les toitures où l’eau stagne sont à exclure."]},
+  {"home": true, "q": "Faut-il arrêter l’activité pendant les travaux ?", "a": [
+    "En général non : les travaux se déroulent sur la toiture, depuis l’extérieur. Nous organisons les accès, les horaires et les zones de sécurité avec vous pour ne pas gêner l’exploitation."]},
+  {"home": true, "q": "Existe-t-il des aides financières ?", "a": [
+    "Oui, sous conditions. La fiche CEE BAT-EN-112 finance la pose d’un revêtement réflectif sur la toiture des bâtiments tertiaires à usage commercial, au-dessus d’un volume climatisé, avec un revêtement d’indice SRI supérieur à 100 à neuf et à 90 après vieillissement.",
+    "Nous vérifions l’éligibilité de votre projet lors de l’étude."]},
+  {"q": "Le cool roof est-il utile en dehors du sud de la France ?", "a": [
+    "Oui, dès que le bâtiment a besoin de fraîcheur l’été : locaux climatisés, ateliers ou entrepôts qui surchauffent, toiture peu isolée. Pour un bâtiment surtout chauffé, l’intérêt est plus faible. Le climat compte, mais l’usage du bâtiment compte autant."]},
+  {"q": "Combien de temps dure un revêtement réfléchissant ?", "a": [
+    "Bien appliqués, de nombreux revêtements cool roof ont tenu plus de vingt ans selon l’US EPA. La durée de vie dépend surtout du produit, de la préparation du support et de la qualité de l’application : un chantier mal préparé peut se dégrader en quelques années."]},
+  {"q": "Faut-il entretenir la toiture ?", "a": [
+    "Oui. La saleté réduit la réflectance, surtout la première année : la baisse est d’environ 20 % avec un entretien correct (US EPA). Un nettoyage selon les préconisations du fabricant aide à garder la performance.",
+    "Nous remettons une fiche d’entretien à la fin du chantier et proposons un contrat d’entretien."]},
+  {"q": "Le cool roof remplace-t-il l’isolation ?", "a": [
+    "Non. Le cool roof limite la chaleur reçue du soleil, surtout l’été. L’isolation limite les échanges de chaleur à travers la toiture toute l’année. Les deux se complètent."]},
+  {"q": "Le revêtement rend-il la toiture étanche ?", "a": [
+    "Une peinture réflective n’assure pas l’étanchéité : elle se pose sur une étanchéité en bon état. Si la toiture fuit, il faut d’abord la réparer, ou choisir un procédé d’étanchéité réfléchissant."]},
+  {"q": "Qu’est-ce que l’indice SRI ?", "a": [
+    "Le SRI (indice de réflectance solaire) combine la réflectance et l’émissivité d’une surface selon la norme ASTM E1980. Il vaut 0 pour un noir de référence et 100 pour un blanc de référence. Les revêtements les plus performants dépassent 100."]},
+  {"q": "Combien coûte un cool roof ?", "a": [
+    "Le prix dépend de la surface, de l’état du support, des réparations à prévoir et du système retenu. Nous établissons un devis détaillé après la visite de la toiture."]}
+]
