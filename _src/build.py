@@ -15,6 +15,7 @@ SITE_URL = 'https://albedia.eu'
 EMAIL = 'contact@albedia.eu'
 PHONE = None          # ex. '04 00 00 00 00' : s'affiche dans l'en-tête de contact et le pied de page
 LASTMOD = '2026-10-31'
+GSC_VERIFICATION = 'ymRFVKE_Tfryz-8vZf1Ez11ze668aD4px2rOz4EN0yQ'   # Google Search Console, balise placée sur l'accueil
 SLOGANS = ['Vos toitures réfléchissent\u00a0!', 'Augmentez votre albédo\u00a0!']
 
 SECTORS = [
@@ -417,6 +418,8 @@ def head_site(page, ctx):
     robots = 'noindex, follow' if page.get('noindex') else 'index, follow'
     canonical = '' if page.get('noindex') else '<link rel="canonical" href="%s">\n' % url
     og_title = page.get('og') or page['title'].replace(' | ALBEDIA', '')
+    gsc = ('<meta name="google-site-verification" content="%s">\n' % GSC_VERIFICATION
+           if GSC_VERIFICATION and page['file'] == 'index.html' else '')
     return f'''<!doctype html>
 <html lang="fr">
 <head>
@@ -425,7 +428,7 @@ def head_site(page, ctx):
 <title>{esc(page['title'])}</title>
 <meta name="description" content="{esc(page['desc'])}">
 <meta name="robots" content="{robots}">
-{canonical}<meta name="theme-color" content="#0F2B46">
+{gsc}{canonical}<meta name="theme-color" content="#0F2B46">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ALBEDIA">
 <meta property="og:locale" content="fr_FR">
