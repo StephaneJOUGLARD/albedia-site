@@ -13,7 +13,8 @@ REPO = os.path.dirname(SRC)
 
 SITE_URL = 'https://albedia.eu'
 EMAIL = 'contact@albedia.eu'
-PHONE = None          # ex. '04 00 00 00 00' : s'affiche dans l'en-tête de contact et le pied de page
+PHONE = '06 83 48 06 15'   # affiché sur le site (pied de page, devis, mentions légales)
+PHONE_TEL = '+33683480615'                     # même numéro, format international pour les liens « tel: »
 LASTMOD = '2026-10-31'
 GSC_VERIFICATION = 'ymRFVKE_Tfryz-8vZf1Ez11ze668aD4px2rOz4EN0yQ'   # Google Search Console, balise placée sur l'accueil
 SLOGANS = ['Vos toitures réfléchissent\u00a0!', 'Augmentez votre albédo\u00a0!']
@@ -143,6 +144,8 @@ def expand(text, ctx):
             return '<a href="mailto:%s">%s</a>' % (EMAIL, EMAIL)
         if key == 'PHONE':
             return PHONE if PHONE else todo('Téléphone')
+        if key == 'PHONE_LINK':
+            return '<a href="tel:%s">%s</a>' % (PHONE_TEL, PHONE) if PHONE else todo('Téléphone')
         if key == 'PREVIEW_ATTR':
             return ' data-preview="1"' if ctx.variant == 'preview' else ''
         if key == 'BREADCRUMB':
@@ -240,14 +243,14 @@ def cta_band(ctx):
 <h2 class="cta-slogan" id="cta-titre">{page['slogan']}</h2>
 <p>Parlez-nous de votre bâtiment : surface, type de toiture, usage. Nous revenons vers vous pour organiser la visite de la toiture.</p>
 <div class="cta-actions"><a class="btn btn--sun" href="devis.html">Demander un devis{icon('fleche')}</a><a class="btn btn--line" href="{href2}">{label2}</a></div>
-<p class="cta-contact">Ou écrivez-nous à <a href="mailto:{EMAIL}">{EMAIL}</a></p>
+<p class="cta-contact">Ou contactez-nous : <a href="mailto:{EMAIL}">{EMAIL}</a>{(' · <a href="tel:%s">%s</a>' % (PHONE_TEL, PHONE)) if PHONE else ''}</p>
 </div>
 </section>
 </div>'''
 
 
 def footer(ctx):
-    phone = ('<p class="footer-contact">%s<span>%s</span></p>' % (icon('tel'), PHONE)) if PHONE else ''
+    phone = ('<p class="footer-contact">%s<a href="tel:%s">%s</a></p>' % (icon('tel'), PHONE_TEL, PHONE)) if PHONE else ''
     sectors = ''.join('<li><a href="%s.html">%s</a></li>' % (s['slug'], esc(s['label'])) for s in SECTORS)
     return f'''<footer class="site-footer">
 <div class="wrap">
@@ -278,7 +281,7 @@ def footer(ctx):
 <li><a href="confidentialite.html">Confidentialité</a></li>
 </ul></div>
 </div>
-<div class="footer-bottom"><p>© 2026 ALBEDIA. Tous droits réservés.</p><p>Ce site ne dépose aucun cookie.</p></div>
+<div class="footer-bottom"><p>© 2026 ALBEDIA, marque déposée exploitée par CGBI, filiale de GROUPE NOVELIA.</p><p>Ce site ne dépose aucun cookie.</p></div>
 </div>
 </footer>'''
 
@@ -363,7 +366,11 @@ def jsonld(page):
             'logo': SITE_URL + '/assets/img/logo-albedia.png', 'email': EMAIL,
             'slogan': SLOGANS[0].replace('\u00a0', ' '),
             'description': 'Application de revêtements réfléchissants (cool roof) sur les toitures des bâtiments professionnels.',
-            'areaServed': {'@type': 'Country', 'name': 'France'}})
+            'areaServed': {'@type': 'Country', 'name': 'France'},
+            'legalName': 'CONTRACTANT GENERAL EN BATIMENTS INDUSTRIELS (CGBI)',
+            'telephone': PHONE_TEL,
+            'address': {'@type': 'PostalAddress', 'streetAddress': '163 cours de la Libération et du Général de Gaulle',
+                        'postalCode': '38000', 'addressLocality': 'Grenoble', 'addressCountry': 'FR'}})
         blocks.append({'@context': 'https://schema.org', '@type': 'WebSite', 'name': 'ALBEDIA', 'url': SITE_URL + '/',
                        'inLanguage': 'fr-FR'})
     elif page.get('crumbs'):

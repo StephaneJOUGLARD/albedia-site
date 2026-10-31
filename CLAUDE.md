@@ -1,8 +1,10 @@
 # Site albedia.eu (ALBEDIA, cool roof)
 
-Site vitrine d'ALBEDIA, société de GROUPE NOVELIA qui applique des revêtements réfléchissants
-(cool roof) sur les toitures des bâtiments professionnels. Site statique HTML/CSS/JS, en français,
-avec un formulaire de devis en PHP.
+Site vitrine d'ALBEDIA, marque commerciale déposée à l'INPI et exploitée par la SAS CGBI
+(CONTRACTANT GENERAL EN BATIMENTS INDUSTRIELS, Grenoble), filiale de GROUPE NOVELIA. ALBEDIA applique
+des revêtements réfléchissants (cool roof) sur les toitures des bâtiments professionnels.
+Site statique HTML/CSS/JS, en français, avec un formulaire de devis en PHP. L'éditeur du site
+(mentions légales, confidentialité) est CGBI ; le directeur de la publication est M. Stéphane JOUGLARD.
 
 ## Mise en ligne : chaque push sur `main` publie le site
 
@@ -57,9 +59,9 @@ affichée surlignée en jaune).
 - Le site affirme ne déposer aucun cookie : tout ajout de mesure d'audience ou de service tiers
   impose de mettre à jour `confidentialite.html` et `mentions-legales.html`.
 
-## Informations encore à compléter
+## Référencement
 
-Mentions légales (forme juridique, capital, siège, ville du RCS, SIREN, TVA, téléphone, directeur
-de la publication) et adresse du siège dans la politique de confidentialité : balises `{{TODO:…}}`
-dans `_src/pages/mentions-legales.html` et `_src/pages/confidentialite.html`. Téléphone : `PHONE`
-dans `build.py`.
+L'adresse officielle du site est https://albedia.eu (sans www) : le `.htaccess` y renvoie les visites
+en http:// et sur www.albedia.eu. Le site est validé dans Google Search Console par la balise
+`GSC_VERIFICATION` de `build.py` (placée sur l'accueil) : ne pas la retirer. La propriété Search Console
+à utiliser est https://albedia.eu/ (une première propriété avait été créée avec www).
