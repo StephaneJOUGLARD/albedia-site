@@ -962,6 +962,49 @@ tr.hl > * { background: var(--sky-soft); }
 .footer-cities h2 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.14em; color: #fff; }
 .footer-cities ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 0.92rem; }
 
+/* carte des zones climatiques (Zones d'intervention) : départements colorés par zone, orange au survol */
+.zones-carte { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: center; }
+.carte { position: relative; width: 100%; max-width: 660px; justify-self: center; }
+.carte svg { display: block; width: 100%; height: auto; overflow: visible; }
+.carte path { fill: #CFE5F5; stroke: #fff; stroke-width: 0.8px; stroke-linejoin: round; vector-effect: non-scaling-stroke; transition: fill 0.12s ease, opacity 0.2s ease; }
+.carte path[data-z="H2"] { fill: #86C3EA; }
+.carte path[data-z="H3"] { fill: var(--sky); }
+.carte path.is-actif { fill: var(--sun); }
+@media (hover: hover) { .carte path:hover { fill: var(--sun); } }
+.carte svg[data-focus="H1"] path:not([data-z="H1"]),
+.carte svg[data-focus="H2"] path:not([data-z="H2"]),
+.carte svg[data-focus="H3"] path:not([data-z="H3"]) { opacity: 0.25; }
+.carte-cadre { fill: #fff; stroke: var(--field); stroke-width: 1px; vector-effect: non-scaling-stroke; }
+.carte-repere { fill: none; stroke: var(--navy); stroke-width: 1px; stroke-opacity: 0.55; vector-effect: non-scaling-stroke; pointer-events: none; }
+.carte-tip {
+  position: absolute; left: 0; top: 0; z-index: 2; display: grid; gap: 2px; padding: 8px 12px;
+  transform: translate(-50%, calc(-100% - 14px)); border-radius: 10px; background: var(--navy); color: #fff;
+  font-size: 0.88rem; line-height: 1.35; white-space: nowrap; pointer-events: none; box-shadow: 0 10px 24px rgba(15, 43, 70, 0.28);
+}
+.carte-tip[hidden] { display: none; }
+.carte-tip strong { font-weight: 800; color: #fff; }
+.carte-tip span { font-weight: 750; color: var(--sun-light); }
+.carte-tip::after {
+  content: ""; position: absolute; top: 100%; left: calc(50% + var(--dx, 0px)); transform: translateX(-50%);
+  border: 7px solid transparent; border-top-color: var(--navy);
+}
+.carte-tip.is-dessous { transform: translate(-50%, 18px); }
+.carte-tip.is-dessous::after { top: auto; bottom: 100%; border-top-color: transparent; border-bottom-color: var(--navy); }
+.carte-infos { display: grid; gap: 22px; align-content: center; }
+.carte-legende { list-style: none; display: grid; gap: 10px; }
+.carte-legende li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 14px; align-items: center; padding: 12px 16px; border-radius: 12px; background: var(--tint); }
+.carte-l { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 10px; align-items: baseline; }
+.carte-l strong { color: var(--navy); font-size: 1.02rem; }
+.carte-l em { font-style: normal; font-size: 0.84rem; color: var(--muted); }
+.carte-l small { grid-column: 1 / -1; font-size: 0.88rem; color: var(--text); }
+.carte-pastille { width: 22px; height: 22px; border-radius: 6px; background: #CFE5F5; box-shadow: inset 0 0 0 1px rgba(15, 43, 70, 0.12); }
+[data-zone="H2"] .carte-pastille { background: #86C3EA; }
+[data-zone="H3"] .carte-pastille { background: var(--sky); }
+.carte-aide { font-size: 0.9rem; color: var(--muted); }
+.carte-aide .si-tactile { display: none; }
+@media (hover: none) { .carte-aide .si-souris { display: none; } .carte-aide .si-tactile { display: inline; } }
+@media (max-width: 880px) { .zones-carte { grid-template-columns: minmax(0, 1fr); } .carte-infos { max-width: 660px; width: 100%; justify-self: center; } }
+
 /* ---------------------------------------------------------------- cadrage des photos (généré) */
 [data-photo="application-toiture"] { object-position: 68% 45%; }
 [data-photo="application-montagne"] { object-position: 58% 40%; }

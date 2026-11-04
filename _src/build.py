@@ -377,6 +377,8 @@ def expand(text, ctx):
             return regions_html()
         if key == 'VILLES':
             return villes_html()
+        if key == 'CARTE_ZONES':
+            return carte_zones()
         if key.startswith('img:'):
             slug, _, sizes = key[4:].partition('|')
             return photo(slug, ctx, sizes or SIZES_HALF)
@@ -641,6 +643,39 @@ def regions_html():
     return '<div class="regions">%s</div>' % ''.join(out)
 
 
+def carte_zones():
+    """Carte des zones climatiques CEE par département (balise {{CARTE_ZONES}}, page Zones d'intervention).
+    Tracés : partials/carte-departements.json, produit par _src/carte.py. Noms et zones : DEPTS et zone_of()."""
+    carte = json.loads(part('carte-departements.json'))
+    enc = carte['encart']
+
+    def dep(code, d):
+        return '<path data-d="%s" data-z="%s" data-n="%s" d="%s"/>' % (code, zone_of(code), esc(DEPTS[code]), d)
+
+    def rect(cls, r, rx):
+        return '<rect class="%s" x="%d" y="%d" width="%d" height="%d" rx="%d"/>' % (cls, r[0], r[1], r[2], r[3], rx)
+
+    svg = ('<svg viewBox="%s" fill-rule="evenodd" role="img" aria-label="Carte des départements de France métropolitaine, '
+           'colorés selon leur zone climatique CEE (H1, H2 ou H3). La zone de chaque département figure aussi dans la '
+           'liste des régions, plus bas.">'
+           '<g class="carte-deps">%s</g>%s<g class="carte-encart">%s%s</g></svg>') % (
+        carte['viewBox'], ''.join(dep(c, d) for c, d in carte['paths'].items()),
+        rect('carte-repere', enc['repere'], 3), rect('carte-cadre', enc['cadre'], 8),
+        ''.join(dep(c, d) for c, d in enc['paths'].items()))
+    zones = ('H1', 'H2', 'H3')
+    nb = {z: sum(1 for d in DEPTS if zone_of(d) == z) for z in zones}
+    legende = ''.join(
+        '<li data-zone="%s"><span class="carte-pastille" aria-hidden="true"></span><span class="carte-l"><strong>Zone %s</strong>'
+        '<em>%d départements</em><small>Prime BAT-EN-112 : %d kWh cumac par\u00a0m²</small></span></li>' % (z, z, nb[z], CEE_KWHC[z])
+        for z in zones)
+    return ('<div class="zones-carte" data-carte-zones>'
+            '<div class="carte">%s<div class="carte-tip" hidden><strong></strong><span></span></div></div>'
+            '<div class="carte-infos"><ul class="carte-legende">%s</ul>'
+            '<p class="carte-aide"><span class="si-souris">Passez le curseur sur un département pour afficher sa zone.</span>'
+            '<span class="si-tactile">Touchez un département pour afficher sa zone.</span> '
+            'Paris et la petite couronne sont agrandis dans l’encadré, en haut à gauche.</p></div></div>') % (svg, legende)
+
+
 def city_page(slug):
     v = VILLE_PAR_SLUG[slug]
     nom = esc(v['nom'])
@@ -850,7 +885,7 @@ def head_site(page, ctx):
 <link rel="icon" href="{p}favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{p}apple-touch-icon.png">
 <link rel="preload" href="{p}assets/fonts/plus-jakarta-sans-var.woff2" as="font" type="font/woff2" crossorigin>
-{preload_photo(page, ctx)}<link rel="stylesheet" href="{p}assets/css/style.css?v=6">
+{preload_photo(page, ctx)}<link rel="stylesheet" href="{p}assets/css/style.css?v=7">
 {jsonld(page)}</head>
 <body>
 '''
@@ -864,7 +899,7 @@ GFONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
 def head_preview(page, is_main):
     if is_main:
         return ('<title>Site albedia.eu</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n'
-                + GFONTS + '\n<link rel="stylesheet" href="assets/css/style.css?v=6">\n')
+                + GFONTS + '\n<link rel="stylesheet" href="assets/css/style.css?v=7">\n')
     return f'''<!doctype html>
 <html lang="fr">
 <head>
@@ -872,7 +907,7 @@ def head_preview(page, is_main):
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{esc(page['title'])}</title>
 {GFONTS}
-<link rel="stylesheet" href="assets/css/style.css?v=6">
+<link rel="stylesheet" href="assets/css/style.css?v=7">
 </head>
 <body>
 '''
@@ -917,7 +952,7 @@ def build(variant, out):
         ctx = Ctx(variant, page)
         body = page_body(page, ctx)
         p = ctx.prefix
-        script = '<script src="%sassets/js/main.js?v=5" defer></script>\n' % p
+        script = '<script src="%sassets/js/main.js?v=6" defer></script>\n' % p
         if variant == 'site':
             doc = head_site(page, ctx) + body + '\n' + script + '</body>\n</html>\n'
         else:

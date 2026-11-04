@@ -447,6 +447,62 @@
     });
   }
 
+  /* ---------- carte des zones climatiques (Zones d'intervention) : département en orange et bulle au survol */
+  var carte = document.querySelector('[data-carte-zones]');
+  if (carte) {
+    var cBoite = carte.querySelector('.carte');
+    var cSvg = cBoite.querySelector('svg');
+    var bulle = cBoite.querySelector('.carte-tip');
+    var bNom = bulle.querySelector('strong');
+    var bZone = bulle.querySelector('span');
+    var cActif = null;
+
+    // un département peut figurer deux fois (carte et encadré de Paris) : les deux s'allument ensemble
+    var allumer = function (code) {
+      if (code === cActif) return;
+      Array.prototype.forEach.call(cSvg.querySelectorAll('path.is-actif'), function (p) { p.classList.remove('is-actif'); });
+      cActif = code;
+      if (code) {
+        Array.prototype.forEach.call(cSvg.querySelectorAll('path[data-d="' + code + '"]'), function (p) { p.classList.add('is-actif'); });
+      }
+    };
+    var montrer = function (p, cx, cy) {
+      allumer(p.getAttribute('data-d'));
+      bNom.textContent = p.getAttribute('data-n') + ' (' + p.getAttribute('data-d') + ')';
+      bZone.textContent = 'Zone climatique ' + p.getAttribute('data-z');
+      bulle.hidden = false;
+      var r = cBoite.getBoundingClientRect();
+      var x = cx - r.left, y = cy - r.top;
+      var w = bulle.offsetWidth, h = bulle.offsetHeight;
+      var lx = Math.max(w / 2, Math.min(r.width - w / 2, x));   // la bulle reste dans le cadre de la carte
+      var dx = Math.max(14 - w / 2, Math.min(w / 2 - 14, x - lx)); // la pointe reste sous le curseur
+      bulle.classList.toggle('is-dessous', y < h + 22);
+      bulle.style.left = lx + 'px';
+      bulle.style.top = y + 'px';
+      bulle.style.setProperty('--dx', dx + 'px');
+    };
+    var cacher = function () { allumer(null); bulle.hidden = true; };
+    var depSous = function (e) { return e.target.closest ? e.target.closest('path[data-d]') : null; };
+
+    cSvg.addEventListener('pointermove', function (e) {
+      if (e.pointerType === 'touch') return;
+      var p = depSous(e);
+      if (p) montrer(p, e.clientX, e.clientY); else cacher();
+    });
+    cSvg.addEventListener('pointerleave', function (e) { if (e.pointerType !== 'touch') cacher(); });
+    cSvg.addEventListener('click', function (e) {   // écran tactile : le département touché
+      var p = depSous(e);
+      if (p) montrer(p, e.clientX, e.clientY); else cacher();
+    });
+    document.addEventListener('click', function (e) { if (!cSvg.contains(e.target)) cacher(); });
+
+    // légende : survoler une zone fait ressortir ses départements
+    Array.prototype.forEach.call(carte.querySelectorAll('.carte-legende [data-zone]'), function (li) {
+      li.addEventListener('mouseenter', function () { cSvg.setAttribute('data-focus', li.getAttribute('data-zone')); });
+      li.addEventListener('mouseleave', function () { cSvg.removeAttribute('data-focus'); });
+    });
+  }
+
   /* ---------- formulaire de devis */
   var form = document.getElementById('devis-form');
   if (form) {

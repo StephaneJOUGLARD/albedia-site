@@ -44,6 +44,13 @@ Donc :
     dans `build.py` ; balises `{{REGIONS}}` et `{{VILLES}}` pour la page Zones d'intervention. La liste « Le cool
     roof par ville » du pied de page reprend toutes les villes du fichier. Pour ajouter une ville : une entrée
     dans `villes.json` (textes originaux et exacts, sans chiffre non sourcé), puis rebuild.
+  - Carte des zones climatiques (balise `{{CARTE_ZONES}}`, page Zones d'intervention) : départements colorés selon
+    leur zone (H1, H2, H3), orange avec une bulle « Nom (n°) / Zone climatique Hx » au survol ou au toucher, encadré
+    agrandi pour Paris et la petite couronne. Tracés dans `partials/carte-departements.json`, produits une fois pour
+    toutes par `_src/carte.py` (Lambert-93, simplification qui garde les frontières communes) à partir des contours
+    IGN ADMIN EXPRESS 2018 (Licence Ouverte) publiés par France GeoJSON : la source est créditée sous la carte et
+    dans les mentions légales. Noms et zones viennent de `DEPTS` et `zone_of()` ; le comportement est dans
+    `main.js` (bloc « carte des zones climatiques »).
   - `partials/` : logo, soleil, illustrations SVG et icônes.
   - `assets/` : feuille de style, script, police auto-hébergée (Plus Jakarta Sans, licence OFL), logos, favicons.
   - `php/contact.php` (formulaire de devis, fonction `mail()` d'OVH), `php/simulation.php` (envoi par e-mail
@@ -61,7 +68,7 @@ Test local : `php -S 127.0.0.1:8765 -t .` (le `.htaccess` n'y est pas appliqué)
 `{{EYEBROW}}` (soleil + slogan de la page), `{{SLOGAN}}`, `{{BREADCRUMB}}`, `{{icon:nom}}`,
 `{{include:fichier.svg}}`, `{{EMAIL}}`, `{{EMAIL_LINK}}`, `{{PHONE}}`, `{{PHONE_LINK}}`, `{{AREA}}`
 (zone d'intervention : « en France, en Suisse, en Italie et en Espagne »), `{{SECTOR_TILES}}`, `{{SECTOR_OPTIONS}}`,
-`{{FAQ_HOME}}`, `{{FAQ_FULL}}`, `{{FAQ_PAGE}}`, `{{PHOTO_CREDITS}}`, `{{SIMULATEUR}}` (simulateur, partagé
+`{{FAQ_HOME}}`, `{{FAQ_FULL}}`, `{{FAQ_PAGE}}`, `{{PHOTO_CREDITS}}`, `{{CARTE_ZONES}}`, `{{SIMULATEUR}}` (simulateur, partagé
 entre l'accueil et la page Rentabilité : `partials/simulateur.html`), `{{TODO:texte}}` (information à compléter,
 affichée surlignée en jaune).
 
