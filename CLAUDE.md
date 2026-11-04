@@ -28,7 +28,8 @@ Donc :
   - `pages/secteurs.json` : contenu des six pages secteur. `pages/faq.json` : questions et réponses.
   - `partials/` : logo, soleil, illustrations SVG et icônes.
   - `assets/` : feuille de style, script, police auto-hébergée (Plus Jakarta Sans, licence OFL), logos, favicons.
-  - `php/contact.php` (formulaire de devis, fonction `mail()` d'OVH) et `php/.htaccess`.
+  - `php/contact.php` (formulaire de devis, fonction `mail()` d'OVH), `php/simulation.php` (envoi par e-mail
+    d'une simulation, au visiteur et à contact@albedia.eu) et `php/.htaccess`.
 - À la racine : le site généré (pages `.html`, `assets/`, `contact.php`, `.htaccess`, `sitemap.xml`,
   `robots.txt`). **Ne pas modifier ces fichiers à la main** : ils sont écrasés à chaque build.
 
@@ -62,6 +63,15 @@ bandeau plus bas (`photo-band`).
   --source …` (WebP qualité 70 aux largeurs 640/1280/1920 et entrée dans `photos.json`), puis rebuild.
 - Les secteurs (`SECTORS` dans `build.py`) ont une photo de vignette/en-tête (`photo`) et une photo de
   contenu (`photo2`).
+
+## Simulateur (accueil, `#simulateur`)
+
+Le simulateur d'économies et de prime CEE est calculé en JavaScript dans `assets/js/main.js` (bloc « simulateur »).
+Ses hypothèses et sources sont exposées sous le simulateur (« Méthode et sources du simulateur », `pages/index.html`) :
+toute modification d'une valeur (intensités OID, part de la climatisation, gain EPA, barème BAT-EN-112, prix du
+MWh cumac) se fait aux deux endroits. `simulation.php` ne recalcule rien : il contrôle les valeurs reçues (listes
+autorisées, nombres bornés) et envoie un récapitulatif au texte fixe. Le prix du MWh cumac (indice du ministère)
+est à actualiser de temps en temps.
 
 ## Langues
 

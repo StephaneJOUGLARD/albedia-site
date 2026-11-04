@@ -50,7 +50,137 @@
 </ul>
 </div>
 <p class="note">Source : US EPA, <cite>Reducing Urban Heat Islands</cite>, chapitre <cite>Cool Roofs</cite>. Ce sont des ordres de grandeur issus d’études publiées : le gain réel dépend de chaque bâtiment, et c’est ce qu’évalue notre étude préalable. <a href="guide-cool-roof.html#chiffres">Toutes les sources</a></p>
-<p class="more"><a class="btn btn--sun" href="devis.html">Faire étudier ma toiture{{icon:fleche}}</a></p>
+</div>
+</section>
+
+<section class="band band--tint" id="simulateur" aria-labelledby="simu-titre">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker">Simulateur</p>
+<h2 id="simu-titre">Estimez vos économies et votre prime CEE</h2>
+<p class="lead">Décrivez votre bâtiment : nous estimons sa consommation d’été et d’hiver, ce qu’une toiture réfléchissante peut vous faire économiser et la prime CEE à laquelle vous pouvez prétendre. Si vous connaissez votre consommation annuelle, ajustez le curseur.</p>
+</div>
+<div class="simu" data-simu>
+<form class="simu-form" id="simu-form" novalidate>
+<fieldset class="simu-group">
+<legend>Localisation</legend>
+<div class="choices" role="radiogroup" aria-label="Pays">
+<label class="choice"><input type="radio" name="pays" value="FR" checked><span>France</span></label>
+<label class="choice"><input type="radio" name="pays" value="CH"><span>Suisse</span></label>
+<label class="choice"><input type="radio" name="pays" value="IT"><span>Italie</span></label>
+</div>
+<div class="field simu-cp" data-show-fr><label for="s-cp">Code postal du bâtiment</label><input id="s-cp" name="code_postal" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="Ex. 38000"><p class="simu-hint" id="s-zone" aria-live="polite">Indiquez le code postal pour connaître la zone climatique.</p></div>
+</fieldset>
+<fieldset class="simu-group">
+<legend>Le bâtiment</legend>
+<div class="choices" role="radiogroup" aria-label="Type de bâtiment">
+<label class="choice"><input type="radio" name="secteur" value="industrie"><span>Industrie</span></label>
+<label class="choice"><input type="radio" name="secteur" value="logistique"><span>Logistique</span></label>
+<label class="choice"><input type="radio" name="secteur" value="distribution" checked><span>Commerce</span></label>
+<label class="choice"><input type="radio" name="secteur" value="tertiaire"><span>Bureaux et tertiaire</span></label>
+<label class="choice"><input type="radio" name="secteur" value="collectivites"><span>Collectivités</span></label>
+<label class="choice"><input type="radio" name="secteur" value="agricole"><span>Agricole</span></label>
+</div>
+<div class="simu-dims">
+<div class="field"><label for="s-long">Longueur (m)</label><input id="s-long" name="longueur" type="number" min="5" max="1000" step="1" inputmode="numeric" value="80"></div>
+<div class="field"><label for="s-larg">Largeur (m)</label><input id="s-larg" name="largeur" type="number" min="5" max="1000" step="1" inputmode="numeric" value="50"></div>
+<div class="field"><label for="s-haut">Hauteur (m)</label><input id="s-haut" name="hauteur" type="number" min="2" max="60" step="0.5" inputmode="decimal" value="8"></div>
+</div>
+<p class="simu-hint" id="s-surface" aria-live="polite"></p>
+</fieldset>
+<fieldset class="simu-group">
+<legend>La toiture</legend>
+<p class="simu-sub-legend">Couverture</p>
+<div class="choices" role="radiogroup" aria-label="Couverture">
+<label class="choice"><input type="radio" name="couverture" value="bac-acier" checked><span>Bac acier</span></label>
+<label class="choice"><input type="radio" name="couverture" value="bitume"><span>Étanchéité bitumineuse</span></label>
+<label class="choice"><input type="radio" name="couverture" value="membrane"><span>Membrane synthétique</span></label>
+<label class="choice"><input type="radio" name="couverture" value="beton"><span>Béton</span></label>
+<label class="choice"><input type="radio" name="couverture" value="fibres-ciment"><span>Fibres-ciment</span></label>
+</div>
+<p class="simu-sub-legend">Aspect actuel</p>
+<div class="choices" role="radiogroup" aria-label="Aspect actuel de la toiture">
+<label class="choice"><input type="radio" name="aspect" value="sombre" checked><span>Sombre</span></label>
+<label class="choice"><input type="radio" name="aspect" value="clair"><span>Grise ou claire</span></label>
+<label class="choice"><input type="radio" name="aspect" value="reflechissant"><span>Déjà blanche et réfléchissante</span></label>
+</div>
+<p class="simu-sub-legend">État</p>
+<div class="choices" role="radiogroup" aria-label="État de la toiture">
+<label class="choice"><input type="radio" name="etat" value="bon" checked><span>Bon état</span></label>
+<label class="choice"><input type="radio" name="etat" value="reprises"><span>À reprendre par endroits</span></label>
+<label class="choice"><input type="radio" name="etat" value="degradee"><span>Dégradée</span></label>
+</div>
+</fieldset>
+<fieldset class="simu-group">
+<legend>Chauffage, climatisation et consommation</legend>
+<p class="simu-sub-legend">Climatisation</p>
+<div class="choices" role="radiogroup" aria-label="Climatisation">
+<label class="choice"><input type="radio" name="clim" value="totale" checked><span>Tout le bâtiment</span></label>
+<label class="choice"><input type="radio" name="clim" value="partielle"><span>Une partie</span></label>
+<label class="choice"><input type="radio" name="clim" value="aucune"><span>Aucune</span></label>
+</div>
+<p class="simu-sub-legend">Chauffage</p>
+<div class="choices" role="radiogroup" aria-label="Chauffage">
+<label class="choice"><input type="radio" name="chauffage" value="pac" checked><span>Pompe à chaleur</span></label>
+<label class="choice"><input type="radio" name="chauffage" value="gaz"><span>Gaz ou fioul</span></label>
+<label class="choice"><input type="radio" name="chauffage" value="electrique"><span>Électrique</span></label>
+<label class="choice"><input type="radio" name="chauffage" value="aucun"><span>Aucun</span></label>
+</div>
+<div class="simu-slider">
+<div class="simu-slider-head"><label for="s-conso">Consommation annuelle d’énergie</label><span class="simu-tag" id="s-conso-tag">Estimation</span></div>
+<input id="s-conso" type="range" min="0" max="1000000" step="1000" value="440000" aria-describedby="s-conso-help">
+<div class="simu-slider-foot"><div class="simu-num"><input id="s-conso-num" type="text" inputmode="numeric" autocomplete="off" maxlength="14" aria-label="Consommation annuelle en kWh" value="440 000"><span>kWh par an</span></div><button class="simu-reset" type="button" id="s-conso-reset" hidden>Revenir à l’estimation</button></div>
+<p class="simu-hint" id="s-conso-help">Vous connaissez votre consommation ? Déplacez le curseur ou saisissez-la.</p>
+</div>
+<div class="simu-slider">
+<div class="simu-slider-head"><label for="s-prix">Prix du kWh (hors TVA)</label><output id="s-prix-out" for="s-prix">0,20 €</output></div>
+<input id="s-prix" type="range" min="0.10" max="0.40" step="0.01" value="0.20">
+</div>
+</fieldset>
+</form>
+<aside class="simu-result" id="simu-resultat" aria-label="Résultat de la simulation">
+<div aria-live="polite">
+<p class="simu-label">Économies estimées</p>
+<p class="simu-big"><span class="simu-big-num" id="r-eur">…</span><span class="simu-unit">par an*</span></p>
+<p class="simu-line" id="r-line"></p>
+<div class="simu-split">
+<p class="simu-label">Consommation annuelle estimée</p>
+<div class="simu-split-bar" aria-hidden="true"><span class="is-ete" id="r-bar-ete"></span><span class="is-reste"></span></div>
+<p class="simu-split-legend"><span><i class="dot dot--ete"></i>Climatisation l’été <b id="r-kwh-ete"></b></span><span><i class="dot dot--reste"></i>Chauffage et autres usages <b id="r-kwh-reste"></b></span></p>
+</div>
+<div class="simu-cee">
+<p class="simu-label">Prime CEE estimée</p>
+<p class="simu-mid" id="r-cee"></p>
+<p class="simu-small" id="r-cee-note"></p>
+</div>
+<ul class="simu-points" id="r-points"></ul>
+</div>
+<form class="simu-mail" id="simu-mail" action="simulation.php" method="post"{{PREVIEW_ATTR}}>
+<label for="s-email">Recevez cette simulation par e-mail</label>
+<div class="simu-mail-row"><input id="s-email" name="email" type="email" autocomplete="email" required maxlength="160" placeholder="vous@entreprise.fr"><button class="btn btn--sun" type="submit">Recevoir ma simulation</button></div>
+<div class="hp" aria-hidden="true"><label for="s-site">Ne pas remplir ce champ</label><input id="s-site" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+<p class="simu-legal">Votre e-mail sert à vous envoyer cette simulation et à vous recontacter à son sujet. <a href="confidentialite.html">Politique de confidentialité</a></p>
+<p class="form-status" id="simu-status" role="status" hidden></p>
+</form>
+</aside>
+<a class="simu-peek" id="simu-peek" href="#simu-resultat" aria-hidden="true" tabindex="-1"><span><small>Économies</small><strong id="p-eur"></strong></span><span><small>Prime CEE</small><strong id="p-cee"></strong></span><span class="simu-peek-go">Détail{{icon:fleche}}</span></a>
+</div>
+<noscript><p class="form-status info">Le simulateur a besoin de JavaScript pour calculer. Vous pouvez aussi <a href="devis.html">demander directement l’étude de votre toiture</a>.</p></noscript>
+<p class="note">* Estimation indicative et non contractuelle, établie à partir de valeurs moyennes publiées et des hypothèses détaillées ci-dessous, pour une toiture sans ombrage. Le gain réel dépend de votre bâtiment : c’est ce qu’évalue notre étude préalable.</p>
+<details class="simu-method">
+<summary>Méthode et sources du simulateur</summary>
+<div class="simu-method-body">
+<ul>
+<li><strong>Zone climatique</strong> : déduite du département, selon le découpage H1, H2 et H3 des fiches CEE.</li>
+<li><strong>Consommation estimée</strong> : surface de plancher × consommation moyenne du type de bâtiment (Observatoire de l’immobilier durable, baromètre 2025, données 2024) : bureaux 126 kWh/m²/an, commerces non alimentaires 110, entrepôts logistiques 65, stockage non chauffé 19 (agricole). À défaut de donnée publiée, l’industrie reprend la valeur des entrepôts et les collectivités celle des bureaux. Remplacez-la par votre consommation réelle si vous la connaissez.</li>
+<li><strong>Part de la climatisation</strong> : hypothèse ALBEDIA de 15 % de la consommation d’un bâtiment entièrement climatisé en zone H1, 20 % en zone H2 et 30 % en zone H3 (Suisse 15 %, Italie 30 %), la moitié si une partie seulement est climatisée.</li>
+<li><strong>Économies</strong> : 20 % de la climatisation du dernier niveau, sous la toiture. C’est le gain moyen relevé par l’US EPA sur plus de 25 études, qui va de 2 à 40 % selon les bâtiments. Pour une toiture déjà grise ou claire, le gain retenu est divisé par deux (hypothèse ALBEDIA). Le léger surcoût de chauffage en hiver n’est pas déduit : selon l’US EPA, il est en général compensé par les économies d’été, car le soleil est plus bas et les jours plus courts.</li>
+<li><strong>Prime CEE</strong> : fiche BAT-EN-112, soit 160, 170 ou 270 kWh cumac par m² de toiture traitée en zone H1, H2 ou H3, valorisés à 8,70 € le MWh cumac (indice de prix à terme des CEE classiques de juin 2026, ministère de la Transition écologique). Le montant versé dépend du financeur. Conditions : bâtiment tertiaire à usage commercial, toiture au-dessus d’un volume fermé et climatisé, chauffage et climatisation par pompe à chaleur, aucun revêtement réflectif existant, produit d’indice de réflectance solaire (SRI) supérieur à 100 à l’état neuf et à 90 à l’état vieilli, travaux réalisés par un professionnel.</li>
+<li><strong>Prix du kWh</strong> : 0,20 € hors TVA par défaut, à ajuster selon votre contrat. Repère : 0,25 € hors TVA pour les petits professionnels au premier semestre 2026 (Eurostat).</li>
+</ul>
+<p class="src">Sources : <a href="https://www.epa.gov/sites/default/files/2017-05/documents/reducing_urban_heat_islands_ch_4.pdf" rel="noopener" target="_blank">US EPA</a> (<a href="https://www.epa.gov/heatislands/using-cool-roofs-reduce-heat-islands" rel="noopener" target="_blank">surcoût d’hiver</a>) · <a href="https://www.ecologie.gouv.fr/sites/default/files/documents/BAT-EN-112%20vA38-1%20%C3%A0%20compter%20du%2031-07-2021.pdf" rel="noopener" target="_blank">fiche BAT-EN-112</a> · <a href="https://www.ecologie.gouv.fr/sites/default/files/documents/2026-07-09%20Flash%20Info%20Indices%20de%20prix%20%C3%A0%20terme.pdf" rel="noopener" target="_blank">indices de prix des CEE</a> · <a href="https://www.meilleurescpi.com/actualites/barometre-2025-de-la-performance-energetique-des-batiments/" rel="noopener" target="_blank">baromètre OID 2025</a> · <a href="https://selectra.info/energie/actualites/marche/electricite-petits-pros-plus-cher-menages-2026" rel="noopener" target="_blank">prix Eurostat</a></p>
+</div>
+</details>
 </div>
 </section>
 

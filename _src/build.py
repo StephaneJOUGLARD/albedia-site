@@ -16,7 +16,7 @@ SITE_URL = 'https://albedia.eu'
 EMAIL = 'contact@albedia.eu'
 PHONE = '06 83 48 06 15'   # affiché sur le site (pied de page, devis, mentions légales)
 PHONE_TEL = '+33683480615'                     # même numéro, format international pour les liens « tel: »
-LASTMOD = '2026-10-31'
+LASTMOD = '2026-11-04'
 GSC_VERIFICATION = 'ymRFVKE_Tfryz-8vZf1Ez11ze668aD4px2rOz4EN0yQ'   # Google Search Console, balise placée sur l'accueil
 SLOGANS = ['Vos toitures réfléchissent\u00a0!', 'Augmentez votre albédo\u00a0!']
 
@@ -536,7 +536,7 @@ def head_site(page, ctx):
 <link rel="icon" href="{p}favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{p}apple-touch-icon.png">
 <link rel="preload" href="{p}assets/fonts/plus-jakarta-sans-var.woff2" as="font" type="font/woff2" crossorigin>
-{preload_photo(page, ctx)}<link rel="stylesheet" href="{p}assets/css/style.css?v=2">
+{preload_photo(page, ctx)}<link rel="stylesheet" href="{p}assets/css/style.css?v=3">
 {jsonld(page)}</head>
 <body>
 '''
@@ -550,7 +550,7 @@ GFONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
 def head_preview(page, is_main):
     if is_main:
         return ('<title>Site albedia.eu</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n'
-                + GFONTS + '\n<link rel="stylesheet" href="assets/css/style.css?v=2">\n')
+                + GFONTS + '\n<link rel="stylesheet" href="assets/css/style.css?v=3">\n')
     return f'''<!doctype html>
 <html lang="fr">
 <head>
@@ -558,7 +558,7 @@ def head_preview(page, is_main):
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{esc(page['title'])}</title>
 {GFONTS}
-<link rel="stylesheet" href="assets/css/style.css?v=2">
+<link rel="stylesheet" href="assets/css/style.css?v=3">
 </head>
 <body>
 '''
@@ -594,6 +594,7 @@ def build(variant, out):
         for f in ('favicon.ico', 'favicon.svg', 'apple-touch-icon.png'):
             shutil.copy(os.path.join(SRC, 'assets', f), os.path.join(out, f))
         shutil.copy(os.path.join(SRC, 'php', 'contact.php'), os.path.join(out, 'contact.php'))
+        shutil.copy(os.path.join(SRC, 'php', 'simulation.php'), os.path.join(out, 'simulation.php'))
         shutil.copy(os.path.join(SRC, 'php', '.htaccess'), os.path.join(out, '.htaccess'))
     written = []
     for page in PAGES:
@@ -602,7 +603,7 @@ def build(variant, out):
         ctx = Ctx(variant, page)
         body = page_body(page, ctx)
         p = ctx.prefix
-        script = '<script src="%sassets/js/main.js?v=2" defer></script>\n' % p
+        script = '<script src="%sassets/js/main.js?v=3" defer></script>\n' % p
         if variant == 'site':
             doc = head_site(page, ctx) + body + '\n' + script + '</body>\n</html>\n'
         else:
