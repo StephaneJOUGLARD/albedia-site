@@ -124,7 +124,7 @@ function dec(float $n): string
 }
 
 $LIBELLES = [
-    'pays' => ['FR' => 'France', 'CH' => 'Suisse', 'IT' => 'Italie'],
+    'pays' => ['FR' => 'France', 'CH' => 'Suisse', 'IT' => 'Italie', 'ES' => 'Espagne'],
     'secteur' => [
         'industrie' => 'Industrie', 'logistique' => 'Logistique et entreposage', 'distribution' => 'Commerce',
         'tertiaire' => 'Bureaux et tertiaire', 'collectivites' => 'Collectivité ou équipement public', 'agricole' => 'Agricole',
@@ -140,7 +140,7 @@ $LIBELLES = [
     'conso_source' => ['estimation' => 'estimée par le simulateur', 'declaree' => 'indiquée par vous'],
     'cee_statut' => [
         'ok' => '',
-        'etranger' => 'non applicable : les CEE sont un dispositif français. D’autres aides peuvent exister en Suisse et en Italie.',
+        'etranger' => 'non applicable : les CEE sont un dispositif français. D’autres aides peuvent exister en Suisse, en Italie et en Espagne.',
         'secteur' => 'non éligible à la fiche BAT-EN-112, qui concerne les bâtiments tertiaires à usage commercial. Nous vérifions lors de l’étude si un autre dispositif s’applique à votre site.',
         'reflechissant' => 'non éligible : la fiche BAT-EN-112 exige une toiture sans revêtement réflectif avant les travaux.',
         'sans-clim' => 'non éligible : la toiture doit couvrir un volume fermé et climatisé.',

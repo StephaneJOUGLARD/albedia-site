@@ -1,0 +1,20 @@
+[
+ {
+  "q": "À partir de quelle température l’employeur doit-il agir ?",
+  "a": [
+   "Le décret ne fixe pas de température limite. Il s’appuie sur la vigilance canicule de Météo-France : les niveaux jaune, orange et rouge définissent les épisodes de chaleur intense, pendant lesquels les mesures de prévention issues de l’évaluation des risques s’appliquent."
+  ]
+ },
+ {
+  "q": "Le décret concerne-t-il les bureaux et les magasins ?",
+  "a": [
+   "Oui. L’évaluation des risques liés à la chaleur porte sur le travail en intérieur comme en extérieur. Un local de travail qui surchauffe sous sa toiture est directement concerné."
+  ]
+ },
+ {
+  "q": "Une toiture réfléchissante suffit-elle à respecter le décret ?",
+  "a": [
+   "Non. Le décret impose des mesures d’organisation, d’eau, d’équipement et d’information pendant les épisodes de chaleur intense. La toiture réfléchissante agit en amont : elle réduit la chaleur qui entre dans le bâtiment, chaque jour d’été."
+  ]
+ }
+]

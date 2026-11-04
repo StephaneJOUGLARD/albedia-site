@@ -23,9 +23,18 @@ Donc :
 - `_src/` : les sources. **On ne modifie que ce dossier**, puis on régénère.
   - `build.py` : gabarits communs (en-tête, menu, pied de page, bandeau final), liste des pages
     (`PAGES`, dont l'ordre fixe l'alternance des slogans), secteurs (`SECTORS`), typographie française
-    automatique, balises SEO, sitemap. Réglages en tête : `SITE_URL`, `EMAIL`, `PHONE`, `LASTMOD`.
+    automatique, balises SEO, sitemap. Réglages en tête : `SITE_URL`, `EMAIL`, `PHONE`, `LASTMOD`,
+    `BASELINE` (« Augmentez votre albédo ! » sous le logo), `SUPPORTS` (pages par type de toiture),
+    `MENUS` (menu principal à sous-menus) et `FOOTER_COLS` (colonnes du pied de page). Une nouvelle page
+    s'ajoute dans `PAGES` (et dans `MENUS` / `FOOTER_COLS` si elle doit y figurer).
+  - `?v=` des liens vers `style.css` et `main.js` (dans `build.py`) : à incrémenter à chaque modification
+    de la feuille de style ou du script, sinon les visiteurs gardent l'ancienne version en cache un mois.
   - `pages/*.html` : le contenu de chaque page (balises `{{…}}` remplacées au build).
   - `pages/secteurs.json` : contenu des six pages secteur. `pages/faq.json` : questions et réponses.
+  - Pages de contenu ajoutées en novembre 2026 : `rentabilite-cool-roof.html` (avec le simulateur et le calcul
+    du retour sur investissement), cinq pages par type de toiture (`cool-roof-*.html`), `decret-tertiaire.html`,
+    `chaleur-au-travail.html`, `indice-sri.html`, `zones-intervention.html`. Leurs questions fréquentes sont dans
+    `pages/faq-*.json` (clé `faq` de la page dans `PAGES`, balise `{{FAQ_PAGE}}`, données structurées FAQPage).
   - `partials/` : logo, soleil, illustrations SVG et icônes.
   - `assets/` : feuille de style, script, police auto-hébergée (Plus Jakarta Sans, licence OFL), logos, favicons.
   - `php/contact.php` (formulaire de devis, fonction `mail()` d'OVH), `php/simulation.php` (envoi par e-mail
@@ -42,8 +51,9 @@ Test local : `php -S 127.0.0.1:8765 -t .` (le `.htaccess` n'y est pas appliqué)
 
 `{{EYEBROW}}` (soleil + slogan de la page), `{{SLOGAN}}`, `{{BREADCRUMB}}`, `{{icon:nom}}`,
 `{{include:fichier.svg}}`, `{{EMAIL}}`, `{{EMAIL_LINK}}`, `{{PHONE}}`, `{{PHONE_LINK}}`, `{{AREA}}`
-(zone d'intervention : « en France, en Suisse et en Italie »), `{{SECTOR_TILES}}`, `{{SECTOR_OPTIONS}}`,
-`{{FAQ_HOME}}`, `{{FAQ_FULL}}`, `{{PHOTO_CREDITS}}`, `{{TODO:texte}}` (information à compléter,
+(zone d'intervention : « en France, en Suisse, en Italie et en Espagne »), `{{SECTOR_TILES}}`, `{{SECTOR_OPTIONS}}`,
+`{{FAQ_HOME}}`, `{{FAQ_FULL}}`, `{{FAQ_PAGE}}`, `{{PHOTO_CREDITS}}`, `{{SIMULATEUR}}` (simulateur, partagé
+entre l'accueil et la page Rentabilité : `partials/simulateur.html`), `{{TODO:texte}}` (information à compléter,
 affichée surlignée en jaune).
 
 Photos : `{{img:slug}}` (ou `{{img:slug|sizes}}`) dans une `<figure class="photo">`, `{{bg:slug}}` en fond
@@ -66,8 +76,10 @@ bandeau plus bas (`photo-band`).
 
 ## Simulateur (accueil, `#simulateur`)
 
-Le simulateur d'économies et de prime CEE est calculé en JavaScript dans `assets/js/main.js` (bloc « simulateur »).
-Ses hypothèses et sources sont exposées sous le simulateur (« Méthode et sources du simulateur », `pages/index.html`) :
+Le simulateur d'économies et de prime CEE est calculé en JavaScript dans `assets/js/main.js` (bloc « simulateur »,
+qui calcule aussi le retour sur investissement de la page Rentabilité, `[data-roi]`). Son balisage est dans
+`partials/simulateur.html`. Ses hypothèses et sources sont exposées sous le simulateur (« Méthode et sources du
+simulateur », dans ce même partiel) :
 toute modification d'une valeur (intensités OID, part de la climatisation, gain EPA, barème BAT-EN-112, prix du
 MWh cumac) se fait aux deux endroits. `simulation.php` ne recalcule rien : il contrôle les valeurs reçues (listes
 autorisées, nombres bornés) et envoie un récapitulatif au texte fixe. Le prix du MWh cumac (indice du ministère)
@@ -75,7 +87,7 @@ est à actualiser de temps en temps.
 
 ## Langues
 
-Les boutons EN et IT de l'en-tête ouvrent la page courante traduite par Google Traduction (simple lien
+Les boutons EN, IT et ES de l'en-tête ouvrent la page courante traduite par Google Traduction (simple lien
 vers translate.google.com, `LANGS` dans `build.py`) : aucun script ni cookie sur albedia.eu. C'est décrit
 dans `confidentialite.html` et `mentions-legales.html`.
 

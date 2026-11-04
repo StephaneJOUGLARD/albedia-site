@@ -92,13 +92,13 @@
     var CEE_KWHC = { H1: 160, H2: 170, H3: 270 };   // fiche BAT-EN-112 : kWh cumac par m² de toiture traitée
     var CEE_PRIX = 8.70;                            // €/MWh cumac : indice de prix à terme des CEE classiques, juin 2026
     var INTENSITE = { industrie: 65, logistique: 65, distribution: 110, tertiaire: 126, collectivites: 126, agricole: 19 }; // kWh/m²/an (OID, données 2024)
-    var PART_CLIM = { H1: 0.15, H2: 0.20, H3: 0.30, CH: 0.15, IT: 0.30 }; // hypothèse ALBEDIA
+    var PART_CLIM = { H1: 0.15, H2: 0.20, H3: 0.30, CH: 0.15, IT: 0.30, ES: 0.30 }; // hypothèse ALBEDIA
     var GAIN = 0.20;                                // US EPA : économie moyenne sur la climatisation
     var GAIN_ASPECT = { sombre: 1, clair: 0.5, reflechissant: 0 }; // hypothèse ALBEDIA
     var MULTI_NIVEAUX = { tertiaire: true, collectivites: true };
     var HAUTEUR_NIVEAU = 3.5;
     var CONSO_MAX = 50000000;
-    var PAYS = { FR: 'France', CH: 'Suisse', IT: 'Italie' };
+    var PAYS = { FR: 'France', CH: 'Suisse', IT: 'Italie', ES: 'Espagne' };
 
     var sForm = document.getElementById('simu-form');
     var cpInput = document.getElementById('s-cp');
@@ -169,12 +169,14 @@
       consoTag.classList.toggle('is-user', consoManuelle !== null);
       consoReset.hidden = consoManuelle === null;
     };
-    var lireConso = function (texte) {   // « 440 000 », « 440.000 », « 440000,5 »… ; null si vide
+    var lireNombre = function (texte, max) {   // « 440 000 », « 440.000 », « 440000,5 »… ; null si vide
       var t = String(texte).replace(/[\s\u00a0\u202f]/g, '');
       if (t === '') return null;
       var v = /^\d+([.,]\d{1,2})?$/.test(t) ? parseFloat(t.replace(',', '.')) : parseFloat(t.replace(/\D/g, ''));
-      return isFinite(v) ? Math.min(v, CONSO_MAX) : null;
+      return isFinite(v) ? Math.min(v, max) : null;
     };
+    var lireConso = function (texte) { return lireNombre(texte, CONSO_MAX); };
+    var fmtDec = function (x) { return (Math.round(x * 10) / 10).toFixed(1).replace('.', ','); };
     var point = function (texte) {
       var li = document.createElement('li');
       li.textContent = texte;
@@ -243,7 +245,7 @@
       if (pays !== 'FR') {
         ceeStatut = 'etranger';
         statut = 'Non applicable';
-        notes.push('Les CEE sont un dispositif français : d’autres aides peuvent exister en Suisse et en Italie.');
+        notes.push('Les CEE sont un dispositif français : d’autres aides peuvent exister en Suisse, en Italie et en Espagne.');
       } else if (secteur === 'industrie' || secteur === 'agricole') {
         ceeStatut = 'secteur';
         statut = 'Non éligible à la fiche BAT-EN-112';
@@ -297,7 +299,67 @@
         conso_ete: Math.round(ete), gain_kwh: Math.round(gainKwh), gain_eur: Math.round(gainEur),
         cee_statut: ceeStatut, cee_eur: cee === null ? '' : Math.round(cee)
       };
+      majRoi();
     };
+
+    /* retour sur investissement (page Rentabilité et ROI) */
+    var roi = document.querySelector('[data-roi]');
+    var roiMontant = roi ? document.getElementById('roi-montant') : null;
+    var HORIZON = 20;   // durée de vie conventionnelle de la fiche CEE BAT-EN-112 (pas une garantie de durée)
+    var roiSet = function (id, texte, estTexte) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.textContent = texte;
+      if (estTexte !== undefined) el.classList.toggle('is-text', !!estTexte);
+    };
+    var majRoi = function () {
+      if (!roi) return;
+      var d = dernier;
+      var eco = d.gain_eur > 0 ? d.gain_eur : 0;
+      var cee = d.cee_eur === '' || !d.cee_eur ? 0 : d.cee_eur;
+      var S = d.surface || 0;
+      var montant = lireNombre(roiMontant.value, 1000000000);
+      roiSet('roi-eco', eco > 0 ? '≈\u00a0' + fmt(arrondi(eco)) + '\u00a0€ par an' : 'non chiffrées');
+      roiSet('roi-cee', cee > 0 ? '≈\u00a0' + fmt(arrondi(cee)) + '\u00a0€' : (d.pays !== 'FR' ? 'non applicable' : 'non éligible'));
+      roiSet('roi-surface', fmt(S) + '\u00a0m²');
+      [5, 10, 20].forEach(function (n) {
+        var b = cee + eco * n;
+        var ok = b > 0;
+        roiSet('roi-b' + n, ok ? '≈\u00a0' + fmt(arrondi(b)) + '\u00a0€' : '—');
+        roiSet('roi-b' + n + 'm', ok && S > 0 ? 'soit ' + fmtDec(b / S) + '\u00a0€ HT par m²' : '');
+      });
+      if (eco <= 0) {
+        roiSet('roi-retour', 'Non chiffrable', true);
+        roiSet('roi-retour-txt', d.aspect === 'reflechissant'
+          ? 'Votre toiture est déjà réfléchissante : un nouveau revêtement apporterait peu d’économies.'
+          : 'Sans climatisation, il n’y a pas de facture d’été à réduire : la rentabilité se juge sur le confort des équipes, la protection des marchandises et la toiture.');
+        roiSet('roi-gain', '—', false);
+        roiSet('roi-gain-txt', '');
+      } else if (montant === null) {
+        roiSet('roi-retour', 'Indiquez votre devis', true);
+        roiSet('roi-retour-txt', 'Saisissez le montant de votre devis, ou comparez-le au budget remboursé ci-dessous.');
+        roiSet('roi-gain', '—', false);
+        roiSet('roi-gain-txt', 'Sur 20 ans, vos économies estimées représentent ≈\u00a0' + fmt(arrondi(eco * HORIZON)) + '\u00a0€.');
+      } else {
+        var net = Math.max(0, montant - cee);
+        var ans = net / eco;
+        var gain = eco * HORIZON - net;
+        if (net === 0) roiSet('roi-retour', 'Immédiat', true);
+        else roiSet('roi-retour', '≈\u00a0' + (ans < 10 ? fmtDec(ans) : fmt(Math.round(ans))) + (ans < 2 ? '\u00a0an' : '\u00a0ans'), false);
+        roiSet('roi-retour-txt', net === 0 ? 'La prime CEE estimée couvre le montant de votre devis.' :
+          'Pour un investissement net de ' + fmt(arrondi(net)) + '\u00a0€ HT, prime CEE déduite.' +
+          (ans > HORIZON ? ' Au-delà de 20 ans, les seules économies d’énergie ne remboursent pas les travaux.' : ''));
+        roiSet('roi-gain', (gain < 0 ? '≈\u00a0−' : '≈\u00a0') + fmt(arrondi(Math.abs(gain))) + '\u00a0€', false);
+        roiSet('roi-gain-txt', '20 ans d’économies, soit ≈\u00a0' + fmt(arrondi(eco * HORIZON)) + '\u00a0€, moins l’investissement net.');
+      }
+    };
+    if (roiMontant) {
+      roiMontant.addEventListener('input', majRoi);
+      roiMontant.addEventListener('blur', function () {
+        var v = lireNombre(roiMontant.value, 1000000000);
+        roiMontant.value = v === null ? '' : fmt(Math.round(v));
+      });
+    }
 
     sForm.addEventListener('submit', function (e) { e.preventDefault(); });
     sForm.addEventListener('change', function () { calculer(false); });

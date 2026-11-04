@@ -210,22 +210,6 @@
   "author_url": "https://unsplash.com/@arlindphotography",
   "url": "https://unsplash.com/photos/2U39ARxwO2E"
  },
- "batiment-agricole": {
-  "alt": "Long bâtiment agricole à toiture métallique rouge au pied des montagnes",
-  "pos": "50% 62%",
-  "widths": [
-   640,
-   1280,
-   1920
-  ],
-  "ratio": [
-   1920,
-   1280
-  ],
-  "author": "Valentin Gerardi",
-  "author_url": "https://unsplash.com/@valentin_gerardi",
-  "url": "https://unsplash.com/photos/qilXrfg1SY0"
- },
  "hangar-agricole": {
   "alt": "Hangar agricole au milieu des champs",
   "pos": "50% 60%",
@@ -304,5 +288,37 @@
   "author": "Sergio Martins",
   "author_url": "https://unsplash.com/@smartins20",
   "url": "https://unsplash.com/photos/E07VvBCSSNE"
+ },
+ "ferme-toits-blancs": {
+  "alt": "Vue aérienne d’une exploitation laitière aux grands bâtiments à toiture blanche",
+  "pos": "30% 42%",
+  "widths": [
+   640,
+   1280,
+   1920
+  ],
+  "ratio": [
+   1920,
+   1438
+  ],
+  "author": "Portraits of Modern Dairy",
+  "author_url": "https://unsplash.com/@portraitsofmoderndairy",
+  "url": "https://unsplash.com/photos/XKAN_IFYOGo"
+ },
+ "site-industriel": {
+  "alt": "Vue aérienne d’un grand site industriel aux toitures grises",
+  "pos": "55% 50%",
+  "widths": [
+   640,
+   1280,
+   1920
+  ],
+  "ratio": [
+   1920,
+   1279
+  ],
+  "author": "Ben Griffiths",
+  "author_url": "https://unsplash.com/@benofthenorth",
+  "url": "https://unsplash.com/photos/0uV7K96XwH0"
  }
 }

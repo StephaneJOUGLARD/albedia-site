@@ -20,12 +20,14 @@ LASTMOD = '2026-11-04'
 GSC_VERIFICATION = 'ymRFVKE_Tfryz-8vZf1Ez11ze668aD4px2rOz4EN0yQ'   # Google Search Console, balise placée sur l'accueil
 SLOGANS = ['Vos toitures réfléchissent\u00a0!', 'Augmentez votre albédo\u00a0!']
 
-AREA = 'en France, en Suisse et en Italie'   # zone d'intervention affichée sur le site
+AREA = 'en France, en Suisse, en Italie et en Espagne'   # zone d'intervention affichée sur le site
+COUNTRIES = ('France', 'Suisse', 'Italie', 'Espagne')   # pays de la zone d'intervention (données structurées)
+BASELINE = 'Augmentez votre albédo\u00a0!'   # signature affichée sous le logo (en-tête et pied de page)
 
 # photo = vignette de l'accueil et bandeau de la page secteur ; photo2 = photo dans le contenu de la page
 SECTORS = [
     dict(slug='industrie', label='Industrie', short='Ateliers et sites de production', icon='industrie',
-         photo='toiture-bac-acier', photo2='atelier-industriel'),
+         photo='site-industriel', photo2='atelier-industriel'),
     dict(slug='logistique', label='Logistique', short='Entrepôts et plateformes', icon='logistique',
          photo='plateforme-logistique', photo2='entrepot-toit-blanc'),
     dict(slug='distribution', label='Commerce et distribution', short='Magasins et surfaces de vente', icon='distribution',
@@ -35,13 +37,59 @@ SECTORS = [
     dict(slug='collectivites', label='Collectivités', short='Écoles, gymnases, équipements', icon='collectivites',
          photo='ecole-vue-aerienne', photo2='batiment-scolaire'),
     dict(slug='agricole', label='Agricole', short='Élevage, stockage, transformation', icon='agricole',
-         photo='batiment-agricole', photo2='hangar-agricole'),
+         photo='ferme-toits-blancs', photo2='hangar-agricole'),
 ]
 
 # Langues proposées : traduction automatique de la page courante par Google Traduction (simple lien,
 # aucun script ni cookie sur albedia.eu)
 LANGS = [('en', 'EN', 'English', 'Translate this page into English (Google Translate)'),
-         ('it', 'IT', 'Italiano', 'Traduci questa pagina in italiano (Google Traduttore)')]
+         ('it', 'IT', 'Italiano', 'Traduci questa pagina in italiano (Google Traduttore)'),
+         ('es', 'ES', 'Español', 'Traducir esta página al español (Google Traductor)')]
+
+# Pages par type de toiture : (fichier, libellé court pour les menus)
+SUPPORTS = [('cool-roof-bac-acier.html', 'Bac acier'),
+            ('cool-roof-membrane.html', 'Membranes PVC, TPO, EPDM'),
+            ('cool-roof-bitume.html', 'Étanchéité bitumineuse'),
+            ('cool-roof-toit-terrasse-beton.html', 'Toit-terrasse en béton'),
+            ('cool-roof-fibres-ciment.html', 'Fibres-ciment')]
+
+# Menu principal : (clé « nav » des pages, libellé, entrées (fichier, icône, libellé) ou ('-', intertitre))
+MENUS = [
+    ('solutions', 'Solutions', [
+        ('solutions.html', 'chantier', 'Notre solution cool roof'),
+        ('guide-cool-roof.html', 'thermo', 'Le cool roof, comment ça marche'),
+        ('indice-sri.html', 'mesure', 'Indice SRI et performances'),
+        ('-', 'Par type de toiture')] + [(f, 'couches', label) for f, label in SUPPORTS]),
+    ('secteurs', 'Secteurs', [(s['slug'] + '.html', s['icon'], s['label']) for s in SECTORS]),
+    ('rentabilite', 'Rentabilité', [
+        ('rentabilite-cool-roof.html', 'euro', 'Rentabilité et ROI'),
+        ('rentabilite-cool-roof.html#simulateur', 'calendrier', 'Simulateur d’économies'),
+        ('aides-reglementation.html', 'document', 'Prime CEE et aides')]),
+    ('ressources', 'Ressources', [
+        ('decret-tertiaire.html', 'bouclier', 'Décret tertiaire'),
+        ('chaleur-au-travail.html', 'thermo', 'Chaleur au travail'),
+        ('faq.html', 'question', 'Questions fréquentes')]),
+    ('albedia', 'ALBEDIA', [
+        ('qui-sommes-nous.html', 'interlocuteur', 'Qui sommes-nous'),
+        ('zones-intervention.html', 'lieu', 'Zones d’intervention'),
+        ('devis.html', 'mail', 'Devis et contact')]),
+]
+
+# Pied de page : colonnes de liens (titre, [(lien, libellé)])
+FOOTER_COLS = [
+    ('Solutions', [('solutions.html', 'Notre solution cool roof'), ('solutions.html#methode', 'Notre méthode'),
+                   ('guide-cool-roof.html', 'Le cool roof, comment ça marche'), ('indice-sri.html', 'Indice SRI'),
+                   ('solutions.html#entretien', 'Entretien de la toiture')]),
+    ('Toitures', [(f, label) for f, label in SUPPORTS]),
+    ('Secteurs', [(s['slug'] + '.html', s['label']) for s in SECTORS]),
+    ('Rentabilité et aides', [('rentabilite-cool-roof.html', 'Rentabilité et ROI'),
+                              ('rentabilite-cool-roof.html#simulateur', 'Simulateur d’économies'),
+                              ('aides-reglementation.html#bat-en-112', 'Prime CEE BAT-EN-112'),
+                              ('decret-tertiaire.html', 'Décret tertiaire'),
+                              ('chaleur-au-travail.html', 'Chaleur au travail')]),
+    ('ALBEDIA', [('qui-sommes-nous.html', 'Qui sommes-nous'), ('zones-intervention.html', 'Zones d’intervention'),
+                 ('faq.html', 'Questions fréquentes'), ('devis.html', 'Demander un devis')]),
+]
 
 # Ordre = ordre d'alternance des slogans (0, 1, 0, 1…)
 PAGES = [
@@ -51,7 +99,7 @@ PAGES = [
          crumbs=None, nav=None, cta=True, cta_bg='paper'),
     dict(file='guide-cool-roof.html', src='guide-cool-roof.html', title='Le cool roof : principe, albédo, bénéfices et limites | ALBEDIA',
          desc='Comprendre le cool roof : albédo, émissivité, indice SRI, chiffres de référence sourcés, intérêt selon le bâtiment, effet en hiver et entretien.',
-         crumbs=[('Le cool roof', None)], nav='guide', cta=True, cta_bg='paper', cta2=('solutions.html', 'Découvrir nos solutions')),
+         crumbs=[('Le cool roof', None)], nav='solutions', cta=True, cta_bg='paper', cta2=('solutions.html', 'Découvrir nos solutions')),
     dict(file='solutions.html', src='solutions.html', title='Solutions cool roof : diagnostic, application, entretien | ALBEDIA',
          desc='De la visite de toiture à l’entretien : la méthode ALBEDIA pour appliquer un revêtement réfléchissant sur la toiture de votre bâtiment professionnel.',
          crumbs=[('Solutions', None)], nav='solutions', cta=True, cta_bg='paper'),
@@ -62,10 +110,10 @@ PAGES = [
 ] + [
     dict(file='aides-reglementation.html', src='aides-reglementation.html', title='Prime CEE BAT-EN-112 et décret tertiaire : aides et réglementation du cool roof | ALBEDIA',
          desc='Conditions de la prime CEE BAT-EN-112 pour les revêtements réflectifs en toiture, objectifs du décret tertiaire et règles techniques à connaître.',
-         crumbs=[('Aides et réglementation', None)], nav='aides', cta=True, cta_bg='paper'),
+         crumbs=[('Aides et réglementation', None)], nav='rentabilite', cta=True, cta_bg='paper'),
     dict(file='faq.html', src='faq.html', title='Questions fréquentes sur le cool roof | ALBEDIA',
          desc='Gains, hiver, toitures compatibles, durée de vie, entretien, aides : les réponses aux questions les plus fréquentes sur le cool roof.',
-         crumbs=[('Questions fréquentes', None)], nav='albedia', cta=True, cta_bg='paper'),
+         crumbs=[('Questions fréquentes', None)], nav='ressources', cta=True, cta_bg='paper'),
     dict(file='qui-sommes-nous.html', src='qui-sommes-nous.html', title='Qui sommes-nous | ALBEDIA',
          desc='ALBEDIA, spécialiste des toitures réfléchissantes pour les bâtiments professionnels : notre nom, notre mission et notre façon de travailler.',
          crumbs=[('Qui sommes-nous', None)], nav='albedia', cta=True, cta_bg='paper'),
@@ -80,6 +128,48 @@ PAGES = [
          crumbs=[('Confidentialité', None)], nav=None, cta=False),
     dict(file='404.html', src='404.html', title='Page introuvable | ALBEDIA', desc='Cette page n’existe pas ou a été déplacée.',
          crumbs=None, nav=None, cta=False, noindex=True, absolute=True),
+    dict(file='rentabilite-cool-roof.html', src='rentabilite-cool-roof.html',
+         title='Rentabilité et ROI d’un cool roof : calcul du temps de retour | ALBEDIA',
+         desc='Calculez la rentabilité d’une toiture réfléchissante : économies de climatisation, prime CEE, temps de retour et gain sur 20 ans, avec notre calculateur.',
+         crumbs=[('Rentabilité et ROI', None)], nav='rentabilite', cta=True, cta_bg='paper',
+         cta2=('aides-reglementation.html', 'Voir la prime CEE'), faq='faq-rentabilite.json', prio='0.9'),
+    dict(file='cool-roof-bac-acier.html', src='cool-roof-bac-acier.html', faq='faq-bac-acier.json',
+         title='Cool roof sur toiture en bac acier | ALBEDIA',
+         desc='Revêtement réfléchissant sur bac acier : corrosion, fixations, plaques éclairantes, primaire et application. Ce qu’il faut savoir avant les travaux.',
+         crumbs=[('Solutions', 'solutions.html'), ('Toiture en bac acier', None)], nav='solutions', cta=True, cta_bg='paper'),
+    dict(file='cool-roof-membrane.html', src='cool-roof-membrane.html', faq='faq-membrane.json',
+         title='Cool roof sur membrane PVC, TPO ou EPDM | ALBEDIA',
+         desc='Revêtement réfléchissant sur membrane synthétique : compatibilité, essai d’adhérence, garanties et assurance. Nos repères avant d’intervenir.',
+         crumbs=[('Solutions', 'solutions.html'), ('Membranes PVC, TPO, EPDM', None)], nav='solutions', cta=True, cta_bg='paper'),
+    dict(file='cool-roof-bitume.html', src='cool-roof-bitume.html', faq='faq-bitume.json',
+         title='Cool roof sur étanchéité bitumineuse | ALBEDIA',
+         desc='Toiture-terrasse en bitume : autoprotection, remontées du bitume, primaire adapté, eaux stagnantes. Comment appliquer un revêtement réfléchissant.',
+         crumbs=[('Solutions', 'solutions.html'), ('Étanchéité bitumineuse', None)], nav='solutions', cta=True, cta_bg='paper'),
+    dict(file='cool-roof-toit-terrasse-beton.html', src='cool-roof-toit-terrasse-beton.html', faq='faq-beton.json',
+         title='Cool roof sur toit-terrasse en béton | ALBEDIA',
+         desc='Toit-terrasse en béton : étanchéité existante, gravillons, fissures, humidité, évacuation des eaux. Les étapes pour une toiture plate réfléchissante.',
+         crumbs=[('Solutions', 'solutions.html'), ('Toit-terrasse en béton', None)], nav='solutions', cta=True, cta_bg='paper'),
+    dict(file='cool-roof-fibres-ciment.html', src='cool-roof-fibres-ciment.html', faq='faq-fibres-ciment.json',
+         title='Cool roof sur plaques en fibres-ciment : amiante et sécurité | ALBEDIA',
+         desc='Toiture en fibres-ciment : repérage de l’amiante, travaux en sous-section 4, toiture fragile et protection contre les chutes, étapes d’application.',
+         crumbs=[('Solutions', 'solutions.html'), ('Fibres-ciment', None)], nav='solutions', cta=True, cta_bg='paper'),
+    dict(file='decret-tertiaire.html', src='decret-tertiaire.html', faq='faq-decret-tertiaire.json',
+         title='Décret tertiaire : objectifs, OPERAT et rôle du cool roof | ALBEDIA',
+         desc='Éco Énergie Tertiaire : bâtiments concernés, objectif de −40 % en 2030, déclaration OPERAT, sanctions, et place d’une toiture réfléchissante.',
+         crumbs=[('Décret tertiaire', None)], nav='ressources', cta=True, cta_bg='paper',
+         cta2=('rentabilite-cool-roof.html', 'Calculer la rentabilité')),
+    dict(file='chaleur-au-travail.html', src='chaleur-au-travail.html', faq='faq-chaleur.json',
+         title='Chaleur au travail : obligations de l’employeur | ALBEDIA',
+         desc='Décret du 27 mai 2025 : épisodes de chaleur intense, évaluation des risques, mesures de prévention et aménagement des lieux de travail.',
+         crumbs=[('Chaleur au travail', None)], nav='ressources', cta=True, cta_bg='paper'),
+    dict(file='indice-sri.html', src='indice-sri.html',
+         title='Indice SRI, réflectance et émissivité d’une toiture | ALBEDIA',
+         desc='L’indice SRI expliqué : norme ASTM E1980, réflectance, émissivité, valeurs à neuf et vieillies, seuils de la prime CEE, lecture d’une fiche technique.',
+         crumbs=[('Solutions', 'solutions.html'), ('Indice SRI', None)], nav='solutions', cta=True, cta_bg='paper'),
+    dict(file='zones-intervention.html', src='zones-intervention.html',
+         title='Zones d’intervention : France, Suisse, Italie, Espagne | ALBEDIA',
+         desc='ALBEDIA intervient sur les toitures professionnelles en France, en Suisse, en Italie et en Espagne : zones climatiques, aides et règles de chaque pays.',
+         crumbs=[('Zones d’intervention', None)], nav='albedia', cta=True, cta_bg='paper'),
 ]
 for i, p in enumerate(PAGES):
     p['slogan'] = SLOGANS[i % 2]
@@ -236,7 +326,7 @@ def expand(text, ctx):
     text = re.sub(r'\{\{([^{}]+)\}\}', repl, text)
     # liens internes relatifs → préfixe (page 404) / accueil
     text = re.sub(r'href="([a-z0-9-]+\.html)(#[^"]*)?"', lambda m: 'href="%s%s"' % (ctx.href(m.group(1)), m.group(2) or ''), text)
-    text = re.sub(r'action="(devis\.html|contact\.php)"', lambda m: 'action="%s%s"' % (ctx.prefix, m.group(1)), text)
+    text = re.sub(r'action="(devis\.html|contact\.php|simulation\.php)"', lambda m: 'action="%s%s"' % (ctx.prefix, m.group(1)), text)
     return text
 
 
@@ -272,33 +362,40 @@ def breadcrumb(ctx):
 
 
 # ------------------------------------------------------------------ gabarits communs
+def brand():
+    return '<a class="brand" href="index.html" aria-label="ALBEDIA, accueil">%s<span class="brand-tag" aria-hidden="true">%s</span></a>' % (
+        part('logo.svg'), BASELINE)
+
+
+def menus(ctx):
+    page = ctx.page
+    out = []
+    for key, label, items in MENUS:
+        lis = []
+        for item in items:
+            if item[0] == '-':
+                lis.append('<li class="sub-head">%s</li>' % esc(item[1]))
+                continue
+            href, ic, lab = item
+            cur = ' aria-current="page"' if href == page['file'] else ''
+            lis.append('<li><a href="%s"%s>%s<span>%s</span></a></li>' % (href, cur, icon(ic), esc(lab)))
+        is_cur = ' is-current' if page.get('nav') == key else ''
+        out.append('<li class="has-sub"><button class="nav-toggle-sub%s" type="button" aria-expanded="false" aria-controls="sub-%s">%s%s</button>\n'
+                   '<ul class="sub" id="sub-%s">%s</ul></li>' % (is_cur, key, esc(label), icon('chevron'), key, ''.join(lis)))
+    return '\n'.join(out)
+
+
 def header(ctx):
-    nav = ctx.page.get('nav')
-    cur = lambda key: ' aria-current="page"' if nav == key else ''
-    sub_cur = lambda key: ' is-current' if nav == key else ''
-    sectors = ''.join('<li><a href="%s.html"%s>%s<span>%s</span></a></li>' % (
-        s['slug'], ' aria-current="page"' if ctx.page.get('sector') == s['slug'] else '', icon(s['icon']), esc(s['label']))
-        for s in SECTORS)
-    albedia = ''.join('<li><a href="%s"%s>%s<span>%s</span></a></li>' % (
-        f, ' aria-current="page"' if ctx.page['file'] == f else '', icon(ic), lab)
-        for f, ic, lab in (('qui-sommes-nous.html', 'interlocuteur', 'Qui sommes-nous'),
-                           ('faq.html', 'question', 'Questions fréquentes'),
-                           ('devis.html', 'mail', 'Devis et contact')))
+    devis_cur = ' aria-current="page"' if ctx.page.get('nav') == 'devis' else ''
     return f'''<a class="skip" href="#contenu">Aller au contenu</a>
 <header class="site-header">
 <div class="wrap">
-<a class="brand" href="index.html" aria-label="ALBEDIA, accueil">{part('logo.svg')}</a>
+{brand()}
 <nav class="nav" id="nav-principale" aria-label="Navigation principale">
 <ul class="nav-list">
-<li><a class="nav-link" href="solutions.html"{cur('solutions')}>Solutions</a></li>
-<li class="has-sub"><button class="nav-toggle-sub{sub_cur('secteurs')}" type="button" aria-expanded="false" aria-controls="sub-secteurs">Secteurs{icon('chevron')}</button>
-<ul class="sub" id="sub-secteurs">{sectors}</ul></li>
-<li><a class="nav-link" href="guide-cool-roof.html"{cur('guide')}>Le cool roof</a></li>
-<li><a class="nav-link" href="aides-reglementation.html"{cur('aides')}>Aides CEE</a></li>
-<li class="has-sub"><button class="nav-toggle-sub{sub_cur('albedia')}" type="button" aria-expanded="false" aria-controls="sub-albedia">ALBEDIA{icon('chevron')}</button>
-<ul class="sub" id="sub-albedia">{albedia}</ul></li>
+{menus(ctx)}
 </ul>
-<a class="btn btn--sun btn--sm nav-cta" href="devis.html"{cur('devis')}>Demander un devis</a>
+<a class="btn btn--sun btn--sm nav-cta" href="devis.html"{devis_cur}>Demander un devis</a>
 </nav>
 {lang_switch(ctx)}
 <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-principale">{icon('menu')}<span>Menu</span></button>
@@ -324,37 +421,23 @@ def cta_band(ctx):
 
 def footer(ctx):
     phone = ('<p class="footer-contact">%s<a href="tel:%s">%s</a></p>' % (icon('tel'), PHONE_TEL, PHONE)) if PHONE else ''
-    sectors = ''.join('<li><a href="%s.html">%s</a></li>' % (s['slug'], esc(s['label'])) for s in SECTORS)
+    cols = '\n'.join('<nav class="footer-col" aria-label="%s"><h2>%s</h2><ul>%s</ul></nav>' % (
+        esc(title), esc(title), ''.join('<li><a href="%s">%s</a></li>' % (href, esc(label)) for href, label in links))
+        for title, links in FOOTER_COLS)
     return f'''<footer class="site-footer">
 <div class="wrap">
 <div class="footer-top">
 <div class="footer-brand">
-<a class="brand" href="index.html" aria-label="ALBEDIA, accueil">{part('logo.svg')}</a>
+{brand()}
 <p>Revêtements réfléchissants (cool roof) pour les toitures des bâtiments professionnels, {AREA}.</p>
 <p class="footer-contact">{icon('mail')}<a href="mailto:{EMAIL}">{EMAIL}</a></p>
 {phone}
+<p class="footer-contact">{icon('lieu')}<a href="zones-intervention.html">France · Suisse · Italie · Espagne</a></p>
 </div>
-<div class="footer-col"><h2>Solutions</h2><ul>
-<li><a href="solutions.html">Nos solutions</a></li>
-<li><a href="solutions.html#methode">Notre méthode</a></li>
-<li><a href="solutions.html#toitures">Toitures compatibles</a></li>
-<li><a href="devis.html">Demander un devis</a></li>
-</ul></div>
-<div class="footer-col"><h2>Secteurs</h2><ul>{sectors}</ul></div>
-<div class="footer-col"><h2>Ressources</h2><ul>
-<li><a href="guide-cool-roof.html">Guide du cool roof</a></li>
-<li><a href="aides-reglementation.html#bat-en-112">Prime CEE BAT-EN-112</a></li>
-<li><a href="aides-reglementation.html#decret-tertiaire">Décret tertiaire</a></li>
-<li><a href="faq.html">Questions fréquentes</a></li>
-</ul></div>
-<div class="footer-col"><h2>ALBEDIA</h2><ul>
-<li><a href="qui-sommes-nous.html">Qui sommes-nous</a></li>
-<li><a href="devis.html">Contact</a></li>
-<li><a href="mentions-legales.html">Mentions légales</a></li>
-<li><a href="confidentialite.html">Confidentialité</a></li>
-</ul></div>
+{cols}
 </div>
-<div class="footer-bottom"><p>© 2026 ALBEDIA, marque déposée exploitée par CGBI, filiale de GROUPE NOVELIA.</p><p>Ce site ne dépose aucun cookie.</p></div>
+<div class="footer-bottom"><p>© 2026 ALBEDIA, marque déposée exploitée par CGBI, filiale de GROUPE NOVELIA.</p>
+<ul class="footer-legal"><li><a href="mentions-legales.html">Mentions légales</a></li><li><a href="confidentialite.html">Confidentialité</a></li><li>Ce site ne dépose aucun cookie.</li></ul></div>
 </div>
 </footer>'''
 
@@ -420,6 +503,7 @@ def sector_page(slug):
 <h2 id="aides-titre">Ce qui peut s’appliquer à votre bâtiment</h2>
 <p>{esc(d['aides'])}</p>
 <a class="link-arrow" href="aides-reglementation.html">Aides CEE et réglementation{{{{icon:fleche}}}}</a>
+<a class="link-arrow" href="rentabilite-cool-roof.html">Rentabilité et temps de retour{{{{icon:fleche}}}}</a>
 </div>
 <nav class="others" aria-labelledby="autres-titre">
 <h3 id="autres-titre">Autres secteurs</h3>
@@ -439,7 +523,7 @@ def jsonld(page):
             'logo': SITE_URL + '/assets/img/logo-albedia.png', 'email': EMAIL,
             'slogan': SLOGANS[0].replace('\u00a0', ' '),
             'description': 'Application de revêtements réfléchissants (cool roof) sur les toitures des bâtiments professionnels.',
-            'areaServed': [{'@type': 'Country', 'name': n} for n in ('France', 'Suisse', 'Italie')],
+            'areaServed': [{'@type': 'Country', 'name': n} for n in COUNTRIES],
             'legalName': 'CONTRACTANT GENERAL EN BATIMENTS INDUSTRIELS (CGBI)',
             'telephone': PHONE_TEL,
             'address': {'@type': 'PostalAddress', 'streetAddress': '163 cours de la Libération et du Général de Gaulle',
@@ -457,8 +541,9 @@ def jsonld(page):
                 it['item'] = SITE_URL + '/' + link.replace('index.html', '')
             items.append(it)
         blocks.append({'@context': 'https://schema.org', '@type': 'BreadcrumbList', 'itemListElement': items})
-    if page['file'] == 'faq.html':
-        faq = json.load(open(os.path.join(SRC, 'pages', 'faq.json'), encoding='utf-8'))
+    faq_file = 'faq.json' if page['file'] == 'faq.html' else page.get('faq')
+    if faq_file:
+        faq = json.load(open(os.path.join(SRC, 'pages', faq_file), encoding='utf-8'))
         blocks.append({'@context': 'https://schema.org', '@type': 'FAQPage', 'mainEntity': [
             {'@type': 'Question', 'name': q['q'], 'acceptedAnswer': {'@type': 'Answer', 'text': ' '.join(q['a'])}} for q in faq]})
     return ''.join('<script type="application/ld+json">%s</script>\n' % json.dumps(b, ensure_ascii=False) for b in blocks)
@@ -483,6 +568,10 @@ def page_body(page, ctx):
         main = open(os.path.join(SRC, 'pages', page['src']), encoding='utf-8').read()
     m = re.search(r'\{\{bg:([a-z0-9-]+)\}\}', main)
     page['lcp'] = m.group(1) if m else None   # photo d'en-tête, préchargée dans le <head>
+    if '{{SIMULATEUR}}' in main:
+        main = main.replace('{{SIMULATEUR}}', part('simulateur.html'))
+    if '{{FAQ_PAGE}}' in main:
+        main = main.replace('{{FAQ_PAGE}}', faq_html(json.load(open(os.path.join(SRC, 'pages', page['faq']), encoding='utf-8'))))
     if '{{FAQ_FULL}}' in main or '{{FAQ_HOME}}' in main:
         faq = json.load(open(os.path.join(SRC, 'pages', 'faq.json'), encoding='utf-8'))
         main = main.replace('{{FAQ_FULL}}', faq_html(faq))
@@ -536,7 +625,7 @@ def head_site(page, ctx):
 <link rel="icon" href="{p}favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{p}apple-touch-icon.png">
 <link rel="preload" href="{p}assets/fonts/plus-jakarta-sans-var.woff2" as="font" type="font/woff2" crossorigin>
-{preload_photo(page, ctx)}<link rel="stylesheet" href="{p}assets/css/style.css?v=3">
+{preload_photo(page, ctx)}<link rel="stylesheet" href="{p}assets/css/style.css?v=4">
 {jsonld(page)}</head>
 <body>
 '''
@@ -550,7 +639,7 @@ GFONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
 def head_preview(page, is_main):
     if is_main:
         return ('<title>Site albedia.eu</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n'
-                + GFONTS + '\n<link rel="stylesheet" href="assets/css/style.css?v=3">\n')
+                + GFONTS + '\n<link rel="stylesheet" href="assets/css/style.css?v=4">\n')
     return f'''<!doctype html>
 <html lang="fr">
 <head>
@@ -558,7 +647,7 @@ def head_preview(page, is_main):
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{esc(page['title'])}</title>
 {GFONTS}
-<link rel="stylesheet" href="assets/css/style.css?v=3">
+<link rel="stylesheet" href="assets/css/style.css?v=4">
 </head>
 <body>
 '''
@@ -603,7 +692,7 @@ def build(variant, out):
         ctx = Ctx(variant, page)
         body = page_body(page, ctx)
         p = ctx.prefix
-        script = '<script src="%sassets/js/main.js?v=3" defer></script>\n' % p
+        script = '<script src="%sassets/js/main.js?v=4" defer></script>\n' % p
         if variant == 'site':
             doc = head_site(page, ctx) + body + '\n' + script + '</body>\n</html>\n'
         else:
@@ -616,7 +705,8 @@ def build(variant, out):
         sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
         for f in urls:
             loc = SITE_URL + '/' + ('' if f == 'index.html' else f)
-            prio = '1.0' if f == 'index.html' else ('0.9' if f in ('guide-cool-roof.html', 'solutions.html', 'devis.html') else '0.7')
+            pg = next(x for x in PAGES if x['file'] == f)
+            prio = pg.get('prio') or ('1.0' if f == 'index.html' else ('0.9' if f in ('guide-cool-roof.html', 'solutions.html', 'devis.html') else '0.7'))
             sm.append('  <url><loc>%s</loc><lastmod>%s</lastmod><priority>%s</priority></url>' % (loc, LASTMOD, prio))
         sm.append('</urlset>')
         open(os.path.join(out, 'sitemap.xml'), 'w').write('\n'.join(sm) + '\n')

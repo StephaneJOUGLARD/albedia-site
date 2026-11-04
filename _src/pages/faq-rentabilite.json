@@ -1,0 +1,23 @@
+[
+ {"q": "Quel est le temps de retour d’un cool roof ?",
+  "a": ["Il dépend surtout de trois facteurs : la part de la climatisation dans la consommation du bâtiment, le nombre de niveaux sous la toiture et la zone climatique. Le temps de retour se calcule en divisant le montant des travaux, prime CEE déduite, par les économies annuelles.",
+        "Un magasin de plain-pied climatisé dans le Sud se rembourse bien plus vite qu’un immeuble de bureaux sur plusieurs niveaux dans le Nord. Le calculateur de cette page vous donne un premier ordre de grandeur ; notre étude le précise à partir de vos consommations réelles."]},
+ {"q": "Combien économise-t-on sur la climatisation ?",
+  "a": ["Dans plus de 25 études recensées par l’US EPA, une toiture réfléchissante a réduit la consommation de climatisation de 2 à 40 %, et de 20 % en moyenne. Le gain porte sur le volume situé sous la toiture : il est maximal pour un bâtiment de plain-pied et diminue avec le nombre de niveaux.",
+        "Une toiture déjà bien isolée laisse passer moins de chaleur : le gain y est plus faible."]},
+ {"q": "Pourquoi ne publiez-vous pas de prix au m² ?",
+  "a": ["Parce que le prix dépend moins de la surface que de l’état de la toiture : préparation du support, traitement de la corrosion ou des fissures, points singuliers, accès et sécurité, présence d’amiante. Un prix au m² affiché sans visite serait trompeur.",
+        "Nous établissons un devis détaillé, poste par poste, après la visite de votre toiture. Le calculateur de cette page vous indique en attendant le budget que vos économies et la prime rembourseraient en 5, 10 ou 20 ans."]},
+ {"q": "Un cool roof est-il rentable sur un bâtiment sans climatisation ?",
+  "a": ["Il n’y a alors pas de facture de climatisation à réduire, ni de prime CEE, qui exige un volume climatisé. L’intérêt se mesure autrement : moins de chaleur sous la toiture pour les équipes et les marchandises, et parfois une climatisation qu’on n’a pas besoin d’installer.",
+        "Depuis le 1er juillet 2025, l’employeur doit prévenir les risques liés à la chaleur, notamment en aménageant les lieux de travail : la toiture fait partie des leviers."]},
+ {"q": "Le cool roof fait-il perdre de l’argent en hiver ?",
+  "a": ["La toiture capte un peu moins de chaleur solaire en hiver. Selon l’US EPA, ce léger surcoût de chauffage est en général compensé par les économies d’été, car le soleil est plus bas et les jours plus courts.",
+        "Il pèse davantage dans les bâtiments surtout chauffés, peu climatisés, en climat froid : notre étude en tient compte avant de vous recommander un cool roof."]},
+ {"q": "La prime CEE est-elle garantie ?",
+  "a": ["Non. Elle est versée par un financeur si l’opération remplit toutes les conditions de la fiche BAT-EN-112 : bâtiment tertiaire à usage commercial, toiture au-dessus d’un volume fermé et climatisé, chauffage et climatisation par pompe à chaleur, aucun revêtement réflectif existant, produit aux performances justifiées.",
+        "La demande doit être engagée avant la signature du devis, et le montant dépend du cours des certificats et de l’offre du financeur. Nous vérifions l’éligibilité lors de l’étude."]},
+ {"q": "Comment vérifier les économies après les travaux ?",
+  "a": ["Le plus fiable est de comparer les consommations de climatisation d’un été à l’autre, en tenant compte de la météo : un été plus chaud consomme davantage. Des sous-compteurs sur la production de froid rendent la comparaison plus précise.",
+        "Des mesures de température de surface, sur la toiture traitée et sur une zone témoin, montrent aussi l’effet du revêtement. Un entretien régulier préserve ensuite la réflectance, et donc les économies."]}
+]
