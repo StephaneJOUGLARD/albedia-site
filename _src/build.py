@@ -362,9 +362,12 @@ def breadcrumb(ctx):
 
 
 # ------------------------------------------------------------------ gabarits communs
+# Signature sous le logo, justifiée sur la largeur du mot « albedia » : même repère horizontal que le
+# viewBox du logo (x de 2 à 656), texte étiré de x = 6 à x = 651,8 (bords des lettres) par textLength.
 def brand():
-    return '<a class="brand" href="index.html" aria-label="ALBEDIA, accueil">%s<span class="brand-tag" aria-hidden="true">%s</span></a>' % (
-        part('logo.svg'), BASELINE)
+    return ('<a class="brand" href="index.html" aria-label="ALBEDIA, accueil">%s'
+            '<svg class="brand-tag" viewBox="2 0 654 49.5" aria-hidden="true" focusable="false">'
+            '<text x="6" y="38.6" textLength="645.8" lengthAdjust="spacing">%s</text></svg></a>') % (part('logo.svg'), BASELINE)
 
 
 def menus(ctx):
@@ -625,7 +628,7 @@ def head_site(page, ctx):
 <link rel="icon" href="{p}favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{p}apple-touch-icon.png">
 <link rel="preload" href="{p}assets/fonts/plus-jakarta-sans-var.woff2" as="font" type="font/woff2" crossorigin>
-{preload_photo(page, ctx)}<link rel="stylesheet" href="{p}assets/css/style.css?v=4">
+{preload_photo(page, ctx)}<link rel="stylesheet" href="{p}assets/css/style.css?v=5">
 {jsonld(page)}</head>
 <body>
 '''
@@ -639,7 +642,7 @@ GFONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
 def head_preview(page, is_main):
     if is_main:
         return ('<title>Site albedia.eu</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n'
-                + GFONTS + '\n<link rel="stylesheet" href="assets/css/style.css?v=4">\n')
+                + GFONTS + '\n<link rel="stylesheet" href="assets/css/style.css?v=5">\n')
     return f'''<!doctype html>
 <html lang="fr">
 <head>
@@ -647,7 +650,7 @@ def head_preview(page, is_main):
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{esc(page['title'])}</title>
 {GFONTS}
-<link rel="stylesheet" href="assets/css/style.css?v=4">
+<link rel="stylesheet" href="assets/css/style.css?v=5">
 </head>
 <body>
 '''

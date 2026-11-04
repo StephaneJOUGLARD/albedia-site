@@ -24,7 +24,8 @@ Donc :
   - `build.py` : gabarits communs (en-tête, menu, pied de page, bandeau final), liste des pages
     (`PAGES`, dont l'ordre fixe l'alternance des slogans), secteurs (`SECTORS`), typographie française
     automatique, balises SEO, sitemap. Réglages en tête : `SITE_URL`, `EMAIL`, `PHONE`, `LASTMOD`,
-    `BASELINE` (« Augmentez votre albédo ! » sous le logo), `SUPPORTS` (pages par type de toiture),
+    `BASELINE` (« Augmentez votre albédo ! » sous le logo, en SVG justifié sur la largeur du mot « albedia »
+    par `textLength` : voir `brand()` et `.brand-tag`), `SUPPORTS` (pages par type de toiture),
     `MENUS` (menu principal à sous-menus) et `FOOTER_COLS` (colonnes du pied de page). Une nouvelle page
     s'ajoute dans `PAGES` (et dans `MENUS` / `FOOTER_COLS` si elle doit y figurer).
   - `?v=` des liens vers `style.css` et `main.js` (dans `build.py`) : à incrémenter à chaque modification
