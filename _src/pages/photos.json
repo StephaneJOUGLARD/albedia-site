@@ -320,5 +320,21 @@
   "author": "Ben Griffiths",
   "author_url": "https://unsplash.com/@benofthenorth",
   "url": "https://unsplash.com/photos/0uV7K96XwH0"
+ },
+ "toiture-photovoltaique": {
+  "alt": "Grande toiture industrielle équipée de panneaux photovoltaïques au coucher du soleil",
+  "pos": "50% 60%",
+  "widths": [
+   640,
+   1280,
+   1920
+  ],
+  "ratio": [
+   1920,
+   1299
+  ],
+  "author": "Nuno Marques",
+  "author_url": "https://unsplash.com/@logvisuals",
+  "url": "https://unsplash.com/photos/0GbrjL3vZF4"
  }
 }

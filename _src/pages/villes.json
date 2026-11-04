@@ -1,0 +1,383 @@
+[
+ {
+  "slug": "paris",
+  "nom": "Paris",
+  "pays": "FR",
+  "cp": "75001",
+  "dept": [
+   "75",
+   "Paris"
+  ],
+  "region": "Île-de-France",
+  "zone": "H1",
+  "agglo": "et de la Métropole du Grand Paris",
+  "climat": "Paris connaît un climat océanique dégradé, aux étés généralement modérés mais ponctués de vagues de chaleur. La densité du bâti y renforce l’îlot de chaleur urbain : les nuits d’été restent plus chaudes en ville qu’à la campagne.",
+  "contexte": "En Île-de-France, les toitures-terrasses des bureaux et des commerces, comme les grandes toitures des plateformes logistiques de la grande couronne, sont les premières concernées.",
+  "proches": [
+   "lille",
+   "rennes",
+   "nantes"
+  ]
+ },
+ {
+  "slug": "lyon",
+  "nom": "Lyon",
+  "pays": "FR",
+  "cp": "69001",
+  "dept": [
+   "69",
+   "Rhône"
+  ],
+  "region": "Auvergne-Rhône-Alpes",
+  "zone": "H1",
+  "agglo": "et de la Métropole de Lyon",
+  "climat": "Lyon connaît un climat semi-continental sous influence méridionale : des étés chauds et souvent orageux, des hivers frais.",
+  "contexte": "Ses zones d’activités et ses plateformes logistiques, notamment dans l’est lyonnais, rassemblent de grandes toitures de bâtiments de plain-pied, où la chaleur reçue par la toiture pèse directement sur la climatisation.",
+  "proches": [
+   "grenoble",
+   "saint-etienne",
+   "annecy",
+   "clermont-ferrand"
+  ]
+ },
+ {
+  "slug": "marseille",
+  "nom": "Marseille",
+  "pays": "FR",
+  "cp": "13001",
+  "dept": [
+   "13",
+   "Bouches-du-Rhône"
+  ],
+  "region": "Provence-Alpes-Côte d’Azur",
+  "zone": "H3",
+  "agglo": "et de la Métropole Aix-Marseille-Provence",
+  "climat": "Marseille bénéficie d’un climat méditerranéen : des étés chauds, secs et très ensoleillés, balayés par le mistral.",
+  "contexte": "En zone climatique H3, les besoins de climatisation des commerces, des entrepôts et des bureaux sont importants, et la prime CEE BAT-EN-112 y atteint son montant le plus élevé.",
+  "proches": [
+   "toulon",
+   "avignon",
+   "nice",
+   "montpellier"
+  ]
+ },
+ {
+  "slug": "toulouse",
+  "nom": "Toulouse",
+  "pays": "FR",
+  "cp": "31000",
+  "dept": [
+   "31",
+   "Haute-Garonne"
+  ],
+  "region": "Occitanie",
+  "zone": "H2",
+  "agglo": "et de Toulouse Métropole",
+  "climat": "Toulouse connaît un climat océanique aux influences méditerranéennes et continentales : des étés chauds et souvent secs, rythmés par le vent d’autan.",
+  "contexte": "L’aéronautique, l’industrie et la logistique y occupent de vastes bâtiments dont les toitures reçoivent un fort ensoleillement tout l’été.",
+  "proches": [
+   "montpellier",
+   "bordeaux"
+  ]
+ },
+ {
+  "slug": "nice",
+  "nom": "Nice",
+  "pays": "FR",
+  "cp": "06000",
+  "dept": [
+   "06",
+   "Alpes-Maritimes"
+  ],
+  "region": "Provence-Alpes-Côte d’Azur",
+  "zone": "H3",
+  "agglo": "et de la Métropole Nice Côte d’Azur",
+  "climat": "Nice jouit d’un climat méditerranéen adouci par la mer : des étés chauds et ensoleillés, des nuits estivales qui restent chaudes en bord de mer.",
+  "contexte": "Hôtels, commerces, bureaux et équipements publics y sollicitent la climatisation pendant tout l’été : la toiture est un levier direct pour la réduire.",
+  "proches": [
+   "toulon",
+   "marseille"
+  ]
+ },
+ {
+  "slug": "nantes",
+  "nom": "Nantes",
+  "pays": "FR",
+  "cp": "44000",
+  "dept": [
+   "44",
+   "Loire-Atlantique"
+  ],
+  "region": "Pays de la Loire",
+  "zone": "H2",
+  "agglo": "et de Nantes Métropole",
+  "climat": "Nantes connaît un climat océanique : des hivers doux, des étés tempérés, mais des épisodes de chaleur de plus en plus marqués.",
+  "contexte": "Pour les entrepôts, les ateliers et les commerces de plain-pied de l’agglomération, la toiture reste une source majeure de chaleur en été.",
+  "proches": [
+   "rennes",
+   "bordeaux",
+   "paris"
+  ]
+ },
+ {
+  "slug": "montpellier",
+  "nom": "Montpellier",
+  "pays": "FR",
+  "cp": "34000",
+  "dept": [
+   "34",
+   "Hérault"
+  ],
+  "region": "Occitanie",
+  "zone": "H3",
+  "agglo": "et de Montpellier Méditerranée Métropole",
+  "climat": "Montpellier connaît un climat méditerranéen : des étés chauds, secs et très ensoleillés, des hivers doux.",
+  "contexte": "Classée en zone H3, l’agglomération bénéficie du barème le plus élevé de la prime CEE BAT-EN-112 : une toiture réfléchissante y trouve ses meilleures conditions.",
+  "proches": [
+   "marseille",
+   "avignon",
+   "toulouse"
+  ]
+ },
+ {
+  "slug": "strasbourg",
+  "nom": "Strasbourg",
+  "pays": "FR",
+  "cp": "67000",
+  "dept": [
+   "67",
+   "Bas-Rhin"
+  ],
+  "region": "Grand Est",
+  "zone": "H1",
+  "agglo": "et de l’Eurométropole de Strasbourg",
+  "climat": "Strasbourg connaît un climat semi-continental : des étés chauds et orageux, des hivers froids.",
+  "contexte": "Avec des hivers froids, le bilan sur l’année se vérifie : une toiture réfléchissante s’y justifie surtout pour les bâtiments climatisés ou peu chauffés, comme de nombreux commerces et entrepôts.",
+  "proches": [
+   "dijon",
+   "paris"
+  ]
+ },
+ {
+  "slug": "bordeaux",
+  "nom": "Bordeaux",
+  "pays": "FR",
+  "cp": "33000",
+  "dept": [
+   "33",
+   "Gironde"
+  ],
+  "region": "Nouvelle-Aquitaine",
+  "zone": "H2",
+  "agglo": "et de Bordeaux Métropole",
+  "climat": "Bordeaux connaît un climat océanique aquitain : des hivers doux, des étés chauds et parfois caniculaires.",
+  "contexte": "Entrepôts, sites industriels et zones commerciales de la métropole présentent de grandes toitures exposées au soleil.",
+  "proches": [
+   "toulouse",
+   "nantes"
+  ]
+ },
+ {
+  "slug": "lille",
+  "nom": "Lille",
+  "pays": "FR",
+  "cp": "59000",
+  "dept": [
+   "59",
+   "Nord"
+  ],
+  "region": "Hauts-de-France",
+  "zone": "H1",
+  "agglo": "et de la Métropole européenne de Lille",
+  "climat": "Lille connaît un climat océanique dégradé : des étés modérés, mais des vagues de chaleur qui touchent aussi le nord de la France.",
+  "contexte": "Une toiture réfléchissante s’y adresse d’abord aux bâtiments climatisés de plain-pied, comme les commerces et les plateformes logistiques de la métropole.",
+  "proches": [
+   "paris"
+  ]
+ },
+ {
+  "slug": "rennes",
+  "nom": "Rennes",
+  "pays": "FR",
+  "cp": "35000",
+  "dept": [
+   "35",
+   "Ille-et-Vilaine"
+  ],
+  "region": "Bretagne",
+  "zone": "H2",
+  "agglo": "et de Rennes Métropole",
+  "climat": "Rennes connaît un climat océanique : des hivers doux et des étés tempérés, avec des épisodes de chaleur moins fréquents que dans le sud.",
+  "contexte": "L’intérêt d’une toiture réfléchissante y porte surtout sur les bâtiments climatisés, et sur les ateliers et entrepôts qui surchauffent sous leur couverture.",
+  "proches": [
+   "nantes",
+   "paris"
+  ]
+ },
+ {
+  "slug": "grenoble",
+  "nom": "Grenoble",
+  "pays": "FR",
+  "cp": "38000",
+  "dept": [
+   "38",
+   "Isère"
+  ],
+  "region": "Auvergne-Rhône-Alpes",
+  "zone": "H1",
+  "agglo": "et de Grenoble-Alpes Métropole",
+  "climat": "Grenoble est installée dans une cuvette entourée de massifs montagneux : l’air chaud s’y accumule l’été, ce qui rend les vagues de chaleur particulièrement pesantes, tandis que les hivers restent froids.",
+  "contexte": "C’est à Grenoble qu’ALBEDIA est basée : les zones d’activités de la cuvette grenobloise et du Grésivaudan sont à proximité immédiate.",
+  "proches": [
+   "lyon",
+   "annecy",
+   "saint-etienne",
+   "geneve"
+  ]
+ },
+ {
+  "slug": "saint-etienne",
+  "nom": "Saint-Étienne",
+  "pays": "FR",
+  "cp": "42000",
+  "dept": [
+   "42",
+   "Loire"
+  ],
+  "region": "Auvergne-Rhône-Alpes",
+  "zone": "H1",
+  "agglo": "et de Saint-Étienne Métropole",
+  "climat": "Saint-Étienne connaît un climat semi-continental tempéré par l’altitude : des journées d’été chaudes, des nuits plus fraîches.",
+  "contexte": "Son tissu industriel compte de nombreux ateliers et entrepôts couverts de bac acier ou de fibres-ciment, dont certains sont peu isolés.",
+  "proches": [
+   "lyon",
+   "clermont-ferrand",
+   "grenoble"
+  ]
+ },
+ {
+  "slug": "toulon",
+  "nom": "Toulon",
+  "pays": "FR",
+  "cp": "83000",
+  "dept": [
+   "83",
+   "Var"
+  ],
+  "region": "Provence-Alpes-Côte d’Azur",
+  "zone": "H3",
+  "agglo": "et de la Métropole Toulon Provence Méditerranée",
+  "climat": "Toulon jouit d’un climat méditerranéen parmi les plus ensoleillés de France métropolitaine : des étés chauds et secs.",
+  "contexte": "En zone H3, chaque m² de toiture traitée y ouvre droit, lorsque l’opération est éligible, au barème le plus élevé de la prime CEE.",
+  "proches": [
+   "marseille",
+   "nice"
+  ]
+ },
+ {
+  "slug": "clermont-ferrand",
+  "nom": "Clermont-Ferrand",
+  "pays": "FR",
+  "cp": "63000",
+  "dept": [
+   "63",
+   "Puy-de-Dôme"
+  ],
+  "region": "Auvergne-Rhône-Alpes",
+  "zone": "H1",
+  "agglo": "et de Clermont Auvergne Métropole",
+  "climat": "Clermont-Ferrand connaît un climat semi-continental, abrité par la chaîne des Puys : des étés chauds et orageux, des hivers froids.",
+  "contexte": "Industrie et logistique y occupent de grands bâtiments, dont le bilan été comme hiver se vérifie avant de choisir un revêtement.",
+  "proches": [
+   "lyon",
+   "saint-etienne"
+  ]
+ },
+ {
+  "slug": "dijon",
+  "nom": "Dijon",
+  "pays": "FR",
+  "cp": "21000",
+  "dept": [
+   "21",
+   "Côte-d’Or"
+  ],
+  "region": "Bourgogne-Franche-Comté",
+  "zone": "H1",
+  "agglo": "et de Dijon Métropole",
+  "climat": "Dijon connaît un climat semi-continental : des étés chauds, des hivers froids.",
+  "contexte": "Plateformes logistiques et zones d’activités de l’agglomération accueillent de grands bâtiments de plain-pied, où la toiture conditionne le confort d’été.",
+  "proches": [
+   "lyon",
+   "strasbourg",
+   "paris"
+  ]
+ },
+ {
+  "slug": "annecy",
+  "nom": "Annecy",
+  "pays": "FR",
+  "cp": "74000",
+  "dept": [
+   "74",
+   "Haute-Savoie"
+  ],
+  "region": "Auvergne-Rhône-Alpes",
+  "zone": "H1",
+  "agglo": "et du Grand Annecy",
+  "climat": "Annecy connaît un climat de transition entre influences montagnardes et semi-continentales : des étés chauds autour du lac, des hivers froids.",
+  "contexte": "Ses zones d’activités accueillent ateliers, commerces et bureaux dont les toitures reçoivent un fort ensoleillement estival.",
+  "proches": [
+   "grenoble",
+   "geneve",
+   "lyon"
+  ]
+ },
+ {
+  "slug": "avignon",
+  "nom": "Avignon",
+  "pays": "FR",
+  "cp": "84000",
+  "dept": [
+   "84",
+   "Vaucluse"
+  ],
+  "region": "Provence-Alpes-Côte d’Azur",
+  "zone": "H2",
+  "agglo": "et du Grand Avignon",
+  "climat": "Avignon connaît un climat méditerranéen aux influences continentales : des étés très chauds et secs, le mistral, des hivers frais.",
+  "contexte": "Malgré ses étés méditerranéens, le Vaucluse est classé en zone H2 pour les CEE : la prime BAT-EN-112 y est calculée sur 170 kWh cumac par m².",
+  "proches": [
+   "marseille",
+   "montpellier",
+   "lyon"
+  ]
+ },
+ {
+  "slug": "geneve",
+  "nom": "Genève",
+  "pays": "CH",
+  "canton": "Genève",
+  "agglo": "et de son agglomération",
+  "climat": "Genève connaît un climat tempéré à influence continentale, au bord du Léman : des étés chauds, des hivers frais.",
+  "contexte": "En Suisse, les mesures concernant la consommation d’énergie dans les bâtiments relèvent au premier chef des cantons : les exigences et les éventuels soutiens se vérifient auprès du canton de Genève.",
+  "proches": [
+   "lausanne",
+   "annecy",
+   "grenoble"
+  ]
+ },
+ {
+  "slug": "lausanne",
+  "nom": "Lausanne",
+  "pays": "CH",
+  "canton": "Vaud",
+  "agglo": "et de son agglomération",
+  "climat": "Lausanne connaît un climat tempéré, adouci par le Léman : des étés chauds sur les coteaux exposés au sud, des hivers frais.",
+  "contexte": "Comme partout en Suisse, les règles énergétiques des bâtiments relèvent d’abord du canton, ici le canton de Vaud.",
+  "proches": [
+   "geneve",
+   "annecy"
+  ]
+ }
+]

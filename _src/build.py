@@ -51,7 +51,8 @@ SUPPORTS = [('cool-roof-bac-acier.html', 'Bac acier'),
             ('cool-roof-membrane.html', 'Membranes PVC, TPO, EPDM'),
             ('cool-roof-bitume.html', 'Étanchéité bitumineuse'),
             ('cool-roof-toit-terrasse-beton.html', 'Toit-terrasse en béton'),
-            ('cool-roof-fibres-ciment.html', 'Fibres-ciment')]
+            ('cool-roof-fibres-ciment.html', 'Fibres-ciment'),
+            ('cool-roof-photovoltaique.html', 'Toitures photovoltaïques')]
 
 # Menu principal : (clé « nav » des pages, libellé, entrées (fichier, icône, libellé) ou ('-', intertitre))
 MENUS = [
@@ -72,8 +73,55 @@ MENUS = [
     ('albedia', 'ALBEDIA', [
         ('qui-sommes-nous.html', 'interlocuteur', 'Qui sommes-nous'),
         ('zones-intervention.html', 'lieu', 'Zones d’intervention'),
+        ('zones-intervention.html#villes', 'lieu', 'Le cool roof par ville'),
+        ('particuliers.html', 'question', 'Vous êtes un particulier ?'),
         ('devis.html', 'mail', 'Devis et contact')]),
 ]
+
+# Zones climatiques des fiches CEE, par département (France métropolitaine)
+ZONE_H1 = '01 02 03 05 08 10 14 15 19 21 23 25 27 28 38 39 42 43 45 51 52 54 55 57 58 59 60 61 62 63 67 68 69 70 71 73 74 75 76 77 78 80 87 88 89 90 91 92 93 94 95'.split()
+ZONE_H3 = '06 11 13 2A 2B 30 34 66 83'.split()
+def zone_of(dep):
+    return 'H1' if dep in ZONE_H1 else ('H3' if dep in ZONE_H3 else 'H2')
+CEE_KWHC = {'H1': 160, 'H2': 170, 'H3': 270}   # fiche BAT-EN-112, kWh cumac par m²
+CEE_PRIX = 8.70                                # €/MWh cumac, indice de prix des CEE classiques de juin 2026
+
+DEPTS = dict(x.split(':') for x in (
+    '01:Ain|02:Aisne|03:Allier|04:Alpes-de-Haute-Provence|05:Hautes-Alpes|06:Alpes-Maritimes|07:Ardèche|08:Ardennes|'
+    '09:Ariège|10:Aube|11:Aude|12:Aveyron|13:Bouches-du-Rhône|14:Calvados|15:Cantal|16:Charente|17:Charente-Maritime|'
+    '18:Cher|19:Corrèze|2A:Corse-du-Sud|2B:Haute-Corse|21:Côte-d’Or|22:Côtes-d’Armor|23:Creuse|24:Dordogne|25:Doubs|'
+    '26:Drôme|27:Eure|28:Eure-et-Loir|29:Finistère|30:Gard|31:Haute-Garonne|32:Gers|33:Gironde|34:Hérault|'
+    '35:Ille-et-Vilaine|36:Indre|37:Indre-et-Loire|38:Isère|39:Jura|40:Landes|41:Loir-et-Cher|42:Loire|43:Haute-Loire|'
+    '44:Loire-Atlantique|45:Loiret|46:Lot|47:Lot-et-Garonne|48:Lozère|49:Maine-et-Loire|50:Manche|51:Marne|'
+    '52:Haute-Marne|53:Mayenne|54:Meurthe-et-Moselle|55:Meuse|56:Morbihan|57:Moselle|58:Nièvre|59:Nord|60:Oise|'
+    '61:Orne|62:Pas-de-Calais|63:Puy-de-Dôme|64:Pyrénées-Atlantiques|65:Hautes-Pyrénées|66:Pyrénées-Orientales|'
+    '67:Bas-Rhin|68:Haut-Rhin|69:Rhône|70:Haute-Saône|71:Saône-et-Loire|72:Sarthe|73:Savoie|74:Haute-Savoie|75:Paris|'
+    '76:Seine-Maritime|77:Seine-et-Marne|78:Yvelines|79:Deux-Sèvres|80:Somme|81:Tarn|82:Tarn-et-Garonne|83:Var|'
+    '84:Vaucluse|85:Vendée|86:Vienne|87:Haute-Vienne|88:Vosges|89:Yonne|90:Territoire de Belfort|91:Essonne|'
+    '92:Hauts-de-Seine|93:Seine-Saint-Denis|94:Val-de-Marne|95:Val-d’Oise').split('|'))
+
+# Régions de France métropolitaine : (nom, ancre, départements, grandes villes)
+REGIONS = [
+    ('Auvergne-Rhône-Alpes', 'auvergne-rhone-alpes', '01 03 07 15 26 38 42 43 63 69 73 74',
+     ['Lyon', 'Grenoble', 'Saint-Étienne', 'Clermont-Ferrand', 'Annecy', 'Chambéry', 'Valence']),
+    ('Bourgogne-Franche-Comté', 'bourgogne-franche-comte', '21 25 39 58 70 71 89 90', ['Dijon', 'Besançon', 'Chalon-sur-Saône']),
+    ('Bretagne', 'bretagne', '22 29 35 56', ['Rennes', 'Brest', 'Lorient']),
+    ('Centre-Val de Loire', 'centre-val-de-loire', '18 28 36 37 41 45', ['Orléans', 'Tours', 'Bourges']),
+    ('Corse', 'corse', '2A 2B', ['Ajaccio', 'Bastia']),
+    ('Grand Est', 'grand-est', '08 10 51 52 54 55 57 67 68 88', ['Strasbourg', 'Reims', 'Metz', 'Nancy', 'Mulhouse']),
+    ('Hauts-de-France', 'hauts-de-france', '02 59 60 62 80', ['Lille', 'Amiens', 'Dunkerque']),
+    ('Île-de-France', 'ile-de-france', '75 77 78 91 92 93 94 95', ['Paris']),
+    ('Normandie', 'normandie', '14 27 50 61 76', ['Rouen', 'Caen', 'Le Havre']),
+    ('Nouvelle-Aquitaine', 'nouvelle-aquitaine', '16 17 19 23 24 33 40 47 64 79 86 87',
+     ['Bordeaux', 'Limoges', 'Poitiers', 'La Rochelle', 'Pau']),
+    ('Occitanie', 'occitanie', '09 11 12 30 31 32 34 46 48 65 66 81 82', ['Toulouse', 'Montpellier', 'Nîmes', 'Perpignan']),
+    ('Pays de la Loire', 'pays-de-la-loire', '44 49 53 72 85', ['Nantes', 'Angers', 'Le Mans']),
+    ('Provence-Alpes-Côte d’Azur', 'provence-alpes-cote-d-azur', '04 05 06 13 83 84',
+     ['Marseille', 'Nice', 'Toulon', 'Aix-en-Provence', 'Avignon']),
+]
+VILLES = json.load(open(os.path.join(SRC, 'pages', 'villes.json'), encoding='utf-8'))
+VILLE_PAR_NOM = {v['nom']: v for v in VILLES}
+VILLE_PAR_SLUG = {v['slug']: v for v in VILLES}
 
 # Pied de page : colonnes de liens (titre, [(lien, libellé)])
 FOOTER_COLS = [
@@ -88,7 +136,8 @@ FOOTER_COLS = [
                               ('decret-tertiaire.html', 'Décret tertiaire'),
                               ('chaleur-au-travail.html', 'Chaleur au travail')]),
     ('ALBEDIA', [('qui-sommes-nous.html', 'Qui sommes-nous'), ('zones-intervention.html', 'Zones d’intervention'),
-                 ('faq.html', 'Questions fréquentes'), ('devis.html', 'Demander un devis')]),
+                 ('faq.html', 'Questions fréquentes'), ('particuliers.html', 'Vous êtes un particulier ?'),
+                 ('devis.html', 'Demander un devis')]),
 ]
 
 # Ordre = ordre d'alternance des slogans (0, 1, 0, 1…)
@@ -166,11 +215,28 @@ PAGES = [
          title='Indice SRI, réflectance et émissivité d’une toiture | ALBEDIA',
          desc='L’indice SRI expliqué : norme ASTM E1980, réflectance, émissivité, valeurs à neuf et vieillies, seuils de la prime CEE, lecture d’une fiche technique.',
          crumbs=[('Solutions', 'solutions.html'), ('Indice SRI', None)], nav='solutions', cta=True, cta_bg='paper'),
+    dict(file='cool-roof-photovoltaique.html', src='cool-roof-photovoltaique.html', faq='faq-photovoltaique.json',
+         title='Cool roof et toiture photovoltaïque : panneaux et revêtement réfléchissant | ALBEDIA',
+         desc='Toiture équipée de panneaux solaires : revêtement réfléchissant entre les rangées, gain des modules bifaciaux, obligation de solarisation et précautions de chantier.',
+         crumbs=[('Solutions', 'solutions.html'), ('Toitures photovoltaïques', None)], nav='solutions', cta=True, cta_bg='paper'),
+    dict(file='particuliers.html', src='particuliers.html',
+         title='Particuliers : à qui vous adresser pour votre toiture ? | ALBEDIA',
+         desc='ALBEDIA intervient sur les bâtiments professionnels. Pour votre maison, France Rénov’, le service public de la rénovation, vous conseille gratuitement.',
+         crumbs=[('Vous êtes un particulier ?', None)], nav='albedia', cta=False),
     dict(file='zones-intervention.html', src='zones-intervention.html',
          title='Zones d’intervention : France, Suisse, Italie, Espagne | ALBEDIA',
          desc='ALBEDIA intervient sur les toitures professionnelles en France, en Suisse, en Italie et en Espagne : zones climatiques, aides et règles de chaque pays.',
          crumbs=[('Zones d’intervention', None)], nav='albedia', cta=True, cta_bg='paper'),
 ]
+PAGES += [
+    dict(file='cool-roof-%s.html' % v['slug'], city=v['slug'],
+         title='Cool roof à %s : toitures réfléchissantes | ALBEDIA' % v['nom'],
+         desc=('Revêtement réfléchissant pour les toitures des entrepôts, usines, commerces et bureaux de %s (%s) : zone climatique %s, prime CEE, simulation des économies.'
+               % (v['nom'], v['dept'][0], v['zone'])) if v['pays'] == 'FR' else
+              ('Revêtement réfléchissant pour les toitures des bâtiments professionnels de %s (canton de %s) : climat, règles cantonales et étude de votre toiture.'
+               % (v['nom'], v['canton'])),
+         crumbs=[('Zones d’intervention', 'zones-intervention.html'), (v['nom'], None)], nav='albedia', cta=True, cta_bg='paper')
+    for v in VILLES]
 for i, p in enumerate(PAGES):
     p['slogan'] = SLOGANS[i % 2]
 
@@ -307,6 +373,10 @@ def expand(text, ctx):
             return photo_credits()
         if key == 'AREA':
             return AREA
+        if key == 'REGIONS':
+            return regions_html()
+        if key == 'VILLES':
+            return villes_html()
         if key.startswith('img:'):
             slug, _, sizes = key[4:].partition('|')
             return photo(slug, ctx, sizes or SIZES_HALF)
@@ -439,6 +509,8 @@ def footer(ctx):
 </div>
 {cols}
 </div>
+<nav class="footer-cities" aria-labelledby="pied-villes"><h2 id="pied-villes">Le cool roof par ville</h2>
+<ul>{''.join('<li><a href="cool-roof-%s.html">%s</a></li>' % (v['slug'], esc(v['nom'])) for v in VILLES)}<li><a href="zones-intervention.html#regions">Toutes les régions</a></li></ul></nav>
 <div class="footer-bottom"><p>© 2026 ALBEDIA, marque déposée exploitée par CGBI, filiale de GROUPE NOVELIA.</p>
 <ul class="footer-legal"><li><a href="mentions-legales.html">Mentions légales</a></li><li><a href="confidentialite.html">Confidentialité</a></li><li>Ce site ne dépose aucun cookie.</li></ul></div>
 </div>
@@ -517,6 +589,148 @@ def sector_page(slug):
 '''
 
 
+# ------------------------------------------------------------------ pages ville et zones
+def fmt_int(n):
+    return '{:,}'.format(int(round(n))).replace(',', '\u00a0')
+
+
+def arrondi(x):
+    """Arrondis identiques à ceux du simulateur."""
+    if x >= 100000:
+        return round(x / 1000) * 1000
+    if x >= 10000:
+        return round(x / 100) * 100
+    if x >= 1000:
+        return round(x / 10) * 10
+    return round(x)
+
+
+def cee_1000(zone):
+    """Prime BAT-EN-112 estimée pour 1 000 m² de toiture, au prix de référence."""
+    return arrondi(1000 * CEE_KWHC[zone] / 1000 * CEE_PRIX)
+
+
+def city_chip(v):
+    # icône insérée directement : cette liste est aussi produite par la balise {{VILLES}}, après l'expansion
+    return '<li><a class="chip" href="cool-roof-%s.html">%s%s</a></li>' % (v['slug'], icon('lieu'), esc(v['nom']))
+
+
+def villes_html():
+    fr = ''.join(city_chip(v) for v in VILLES if v['pays'] == 'FR')
+    ch = ''.join(city_chip(v) for v in VILLES if v['pays'] == 'CH')
+    return ('<h3 class="villes-titre">France</h3><ul class="chips">%s</ul>'
+            '<h3 class="villes-titre">Suisse romande</h3><ul class="chips">%s</ul>') % (fr, ch)
+
+
+def regions_html():
+    out = []
+    for nom, ancre, deps, villes in REGIONS:
+        deps = deps.split()
+        zones = sorted({zone_of(d) for d in deps})
+        dl = ' · '.join('%s <span class="dep-n">%s</span>' % (esc(DEPTS[d]), d) for d in deps)
+        vl = ', '.join('<a href="cool-roof-%s.html">%s</a>' % (VILLE_PAR_NOM[x]['slug'], esc(x)) if x in VILLE_PAR_NOM else esc(x)
+                       for x in villes)
+        if len(zones) > 1:
+            detail = ' ; '.join('%s : %s' % (z, ', '.join(d for d in deps if zone_of(d) == z)) for z in zones)
+            zl = 'Zones climatiques %s et %s (%s)' % (', '.join(zones[:-1]), zones[-1], detail)
+        else:
+            zl = 'Zone climatique %s' % zones[0]
+        out.append('<article class="region" id="%s"><h3>%s</h3><p class="region-zones">%s</p>'
+                   '<p class="region-deps">%s</p><p class="region-villes"><strong>Grandes villes :</strong> %s</p></article>' % (
+                       ancre, esc(nom), zl, dl, vl))
+    return '<div class="regions">%s</div>' % ''.join(out)
+
+
+def city_page(slug):
+    v = VILLE_PAR_SLUG[slug]
+    nom = esc(v['nom'])
+    fr = v['pays'] == 'FR'
+    sectors = ''.join('<li><a class="chip" href="%s.html">{{icon:%s}}%s</a></li>' % (x['slug'], x['icon'], esc(x['label'])) for x in SECTORS)
+    supports = ''.join('<li><a class="chip" href="%s">{{icon:couches}}%s</a></li>' % (f, esc(label)) for f, label in SUPPORTS)
+    proches = ''.join(city_chip(VILLE_PAR_SLUG[x]) for x in v['proches'])
+    if fr:
+        zone = v['zone']
+        region = next(r for r in REGIONS if r[0] == v['region'])
+        sim = 'rentabilite-cool-roof.html?cp=%s#simulateur' % v['cp']
+        facts = [('Département', '%s (%s)' % (esc(v['dept'][1]), v['dept'][0])),
+                 ('Région', '<a href="zones-intervention.html#%s">%s</a>' % (region[1], esc(v['region']))),
+                 ('Zone climatique CEE', zone),
+                 ('Prime BAT-EN-112', '%d kWh cumac par m², soit ≈ %s € pour 1 000 m² de toiture' % (CEE_KWHC[zone], fmt_int(cee_1000(zone))))]
+        facts_note = '<p class="src">Prime estimée à 8,70 € le MWh cumac (indice de prix des CEE classiques, juin 2026), sous réserve d’éligibilité. <a href="aides-reglementation.html#bat-en-112">Les conditions</a></p>'
+        aides = ('<ul class="checklist">'
+                 '<li>{{icon:check}}<span><strong>Prime CEE BAT-EN-112</strong> : en zone %s, %d kWh cumac par m² de toiture traitée, pour un bâtiment tertiaire à usage commercial, climatisé par pompe à chaleur. <a href="aides-reglementation.html#bat-en-112">Les conditions</a></span></li>'
+                 '<li>{{icon:check}}<span><strong>Décret tertiaire</strong> : les bâtiments tertiaires de 1 000 m² et plus doivent réduire leur consommation d’énergie de 40 %% d’ici 2030. <a href="decret-tertiaire.html">En savoir plus</a></span></li>'
+                 '<li>{{icon:check}}<span><strong>Chaleur au travail</strong> : depuis le 1er juillet 2025, l’employeur doit prévenir les risques liés à la chaleur pendant les épisodes de chaleur intense. <a href="chaleur-au-travail.html">Les obligations</a></span></li>'
+                 '</ul>') % (zone, CEE_KWHC[zone])
+        region_link = '<a class="link-arrow" href="zones-intervention.html#%s">Toute la région %s{{icon:fleche}}</a>' % (region[1], esc(v['region']))
+    else:
+        sim = 'rentabilite-cool-roof.html?pays=CH#simulateur'
+        facts = [('Pays', 'Suisse'), ('Canton', esc(v['canton'])), ('Prime CEE', 'dispositif français, non applicable en Suisse')]
+        facts_note = '<p class="src">Source : <a href="https://www.fedlex.admin.ch/eli/cc/1999/404/fr#art_89" rel="noopener" target="_blank">Constitution fédérale, article 89</a>.</p>'
+        aides = ('<ul class="checklist">'
+                 '<li>{{icon:check}}<span><strong>Règles cantonales</strong> : les mesures concernant la consommation d’énergie dans les bâtiments relèvent au premier chef des cantons, ici le canton de %s.</span></li>'
+                 '<li>{{icon:check}}<span><strong>Pas de CEE</strong> : les certificats d’économies d’énergie sont un dispositif français.</span></li>'
+                 '<li>{{icon:check}}<span><strong>La même étude</strong> : diagnostic du support, intérêt été comme hiver, choix du système adapté à votre toiture.</span></li>'
+                 '</ul>') % esc(v['canton'])
+        region_link = '<a class="link-arrow" href="zones-intervention.html#suisse">La Suisse dans nos zones d’intervention{{icon:fleche}}</a>'
+    facts_html = ''.join('<div><dt>%s</dt><dd>%s</dd></div>' % (k, val) for k, val in facts)
+    return f'''<section class="page-head page-head--compact">
+<div class="wrap">
+{{{{BREADCRUMB}}}}
+{{{{EYEBROW}}}}
+<h1>Cool roof à {nom}</h1>
+<p class="lead">ALBEDIA applique des revêtements réfléchissants sur les toitures des entrepôts, usines, commerces, bureaux et équipements publics de {nom} {esc(v['agglo'])}.</p>
+<div class="hero-actions"><a class="btn btn--sun" href="devis.html">Demander un devis{{{{icon:fleche}}}}</a><a class="btn btn--line" href="{sim}">Simuler mes économies à {nom}</a></div>
+</div>
+</section>
+<section class="band" aria-labelledby="climat-titre">
+<div class="wrap split split--top">
+<div class="prose">
+<p class="kicker">Climat</p>
+<h2 id="climat-titre">Le climat de {nom} et vos toitures</h2>
+<p>{esc(v['climat'])}</p>
+<p>{esc(v['contexte'])}</p>
+<p>Une toiture traditionnelle sombre absorbe 85 à 95 % du rayonnement solaire. Une toiture réfléchissante en renvoie l’essentiel : au plus chaud de la journée, elle reste environ 28 à 33 °C plus fraîche en surface (US EPA).</p>
+</div>
+<div class="aside-box">
+<h3>{nom} en bref</h3>
+<dl class="city-facts">{facts_html}</dl>
+{facts_note}
+</div>
+</div>
+</section>
+<section class="band band--tint" aria-labelledby="batiments-titre">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker">Bâtiments</p>
+<h2 id="batiments-titre">Les toitures que nous traitons à {nom}</h2>
+<p class="lead">Nous intervenons sur les bâtiments professionnels de {nom} et de ses environs, quels que soient leur usage et leur couverture. Chaque projet commence par la visite de la toiture.</p>
+</div>
+<div class="grid-2 city-links">
+<nav aria-labelledby="par-secteur-titre"><h3 id="par-secteur-titre">Par secteur</h3><ul class="chips">{sectors}</ul></nav>
+<nav aria-labelledby="par-toiture-titre"><h3 id="par-toiture-titre">Par type de toiture</h3><ul class="chips">{supports}</ul></nav>
+</div>
+</div>
+</section>
+<section class="band" aria-labelledby="regles-titre">
+<div class="wrap split split--top">
+<div class="prose">
+<p class="kicker">Aides et obligations</p>
+<h2 id="regles-titre">Ce qui s’applique à votre bâtiment à {nom}</h2>
+{aides}
+<div class="hero-actions"><a class="btn btn--sun" href="{sim}">Estimer mes économies et ma prime{{{{icon:fleche}}}}</a></div>
+</div>
+<nav class="others" aria-labelledby="proches-titre">
+<h3 id="proches-titre">Villes proches</h3>
+<ul class="chips">{proches}</ul>
+{region_link}
+<a class="link-arrow" href="zones-intervention.html#villes">Toutes nos villes{{{{icon:fleche}}}}</a>
+</nav>
+</div>
+</section>
+'''
+
+
 # ------------------------------------------------------------------ JSON-LD
 def jsonld(page):
     blocks = []
@@ -544,6 +758,12 @@ def jsonld(page):
                 it['item'] = SITE_URL + '/' + link.replace('index.html', '')
             items.append(it)
         blocks.append({'@context': 'https://schema.org', '@type': 'BreadcrumbList', 'itemListElement': items})
+    if page.get('city'):
+        v = VILLE_PAR_SLUG[page['city']]
+        blocks.append({'@context': 'https://schema.org', '@type': 'Service', 'name': 'Cool roof à ' + v['nom'],
+                       'serviceType': 'Revêtement réfléchissant de toiture (cool roof)',
+                       'provider': {'@type': 'Organization', 'name': 'ALBEDIA', 'url': SITE_URL + '/'},
+                       'areaServed': {'@type': 'City', 'name': v['nom']}, 'url': SITE_URL + '/' + page['file']})
     faq_file = 'faq.json' if page['file'] == 'faq.html' else page.get('faq')
     if faq_file:
         faq = json.load(open(os.path.join(SRC, 'pages', faq_file), encoding='utf-8'))
@@ -562,7 +782,9 @@ def faq_html(items):
 
 # ------------------------------------------------------------------ assemblage
 def page_body(page, ctx):
-    if page.get('sector'):
+    if page.get('city'):
+        main = city_page(page['city'])
+    elif page.get('sector'):
         main = sector_page(page['sector'])
         d = SECTOR_DATA[page['sector']]
         page['title'] = d['title']
@@ -628,7 +850,7 @@ def head_site(page, ctx):
 <link rel="icon" href="{p}favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{p}apple-touch-icon.png">
 <link rel="preload" href="{p}assets/fonts/plus-jakarta-sans-var.woff2" as="font" type="font/woff2" crossorigin>
-{preload_photo(page, ctx)}<link rel="stylesheet" href="{p}assets/css/style.css?v=5">
+{preload_photo(page, ctx)}<link rel="stylesheet" href="{p}assets/css/style.css?v=6">
 {jsonld(page)}</head>
 <body>
 '''
@@ -642,7 +864,7 @@ GFONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
 def head_preview(page, is_main):
     if is_main:
         return ('<title>Site albedia.eu</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n'
-                + GFONTS + '\n<link rel="stylesheet" href="assets/css/style.css?v=5">\n')
+                + GFONTS + '\n<link rel="stylesheet" href="assets/css/style.css?v=6">\n')
     return f'''<!doctype html>
 <html lang="fr">
 <head>
@@ -650,7 +872,7 @@ def head_preview(page, is_main):
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{esc(page['title'])}</title>
 {GFONTS}
-<link rel="stylesheet" href="assets/css/style.css?v=5">
+<link rel="stylesheet" href="assets/css/style.css?v=6">
 </head>
 <body>
 '''
@@ -695,7 +917,7 @@ def build(variant, out):
         ctx = Ctx(variant, page)
         body = page_body(page, ctx)
         p = ctx.prefix
-        script = '<script src="%sassets/js/main.js?v=4" defer></script>\n' % p
+        script = '<script src="%sassets/js/main.js?v=5" defer></script>\n' % p
         if variant == 'site':
             doc = head_site(page, ctx) + body + '\n' + script + '</body>\n</html>\n'
         else:

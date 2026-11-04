@@ -361,6 +361,17 @@
       });
     }
 
+    /* code postal ou pays transmis dans l'adresse (liens des pages ville : ?cp=69001 ou ?pays=CH) */
+    try {
+      var params = new URLSearchParams(window.location.search);
+      var pPays = params.get('pays'), pCp = params.get('cp');
+      if (pPays && /^(FR|CH|IT|ES)$/.test(pPays)) {
+        var rPays = sForm.querySelector('input[name="pays"][value="' + pPays + '"]');
+        if (rPays) rPays.checked = true;
+      }
+      if (pCp && /^\d{5}$/.test(pCp)) cpInput.value = pCp;
+    } catch (err) { /* navigateur ancien : simulateur sans préremplissage */ }
+
     sForm.addEventListener('submit', function (e) { e.preventDefault(); });
     sForm.addEventListener('change', function () { calculer(false); });
     sForm.addEventListener('input', function (e) {

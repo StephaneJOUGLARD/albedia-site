@@ -36,6 +36,14 @@ Donc :
     du retour sur investissement), cinq pages par type de toiture (`cool-roof-*.html`), `decret-tertiaire.html`,
     `chaleur-au-travail.html`, `indice-sri.html`, `zones-intervention.html`. Leurs questions fréquentes sont dans
     `pages/faq-*.json` (clé `faq` de la page dans `PAGES`, balise `{{FAQ_PAGE}}`, données structurées FAQPage).
+  - Toitures photovoltaïques (`cool-roof-photovoltaique.html`) et page « Vous êtes un particulier ? »
+    (`particuliers.html`) : les particuliers sont orientés vers France Rénov’ (choix du propriétaire).
+  - Pages ville (« Le cool roof à … ») générées depuis `pages/villes.json` (climat, contexte, zone CEE, villes
+    proches) par `city_page()` : fichiers `cool-roof-<ville>.html`, données structurées Service, lien vers le
+    simulateur prérempli (`?cp=` ou `?pays=CH`). Les régions et départements (`REGIONS`, `DEPTS`, zones CEE) sont
+    dans `build.py` ; balises `{{REGIONS}}` et `{{VILLES}}` pour la page Zones d'intervention. La liste « Le cool
+    roof par ville » du pied de page reprend toutes les villes du fichier. Pour ajouter une ville : une entrée
+    dans `villes.json` (textes originaux et exacts, sans chiffre non sourcé), puis rebuild.
   - `partials/` : logo, soleil, illustrations SVG et icônes.
   - `assets/` : feuille de style, script, police auto-hébergée (Plus Jakarta Sans, licence OFL), logos, favicons.
   - `php/contact.php` (formulaire de devis, fonction `mail()` d'OVH), `php/simulation.php` (envoi par e-mail

@@ -1,0 +1,27 @@
+[
+ {
+  "q": "Peut-on appliquer le revêtement sur les panneaux solaires ?",
+  "a": [
+   "Non. Les panneaux restent entièrement dégagés : ils sont protégés pendant les travaux, et le revêtement s’applique sur la toiture autour et entre les rangées."
+  ]
+ },
+ {
+  "q": "Un cool roof augmente-t-il la production des panneaux ?",
+  "a": [
+   "Avec des modules bifaciaux, oui : leur face arrière capte la lumière renvoyée par la toiture. Sur une installation expérimentale près de Barcelone, des modules bifaciaux posés sur une toiture traitée ont produit 8,6 % de plus que des modules monofaciaux, contre 4 à 4,5 % sur la toiture non traitée.",
+   "Avec des modules monofaciaux, le revêtement n’augmente pas directement la production : il limite la chaleur qui entre dans le bâtiment par les surfaces restées libres."
+  ]
+ },
+ {
+  "q": "Faut-il arrêter l’installation photovoltaïque pendant les travaux ?",
+  "a": [
+   "Une installation photovoltaïque produit une tension dès qu’elle est éclairée. Les conditions d’intervention se définissent avec son exploitant ou son installateur avant le chantier : mise en sécurité, zones interdites, protection des câbles et des connecteurs."
+  ]
+ },
+ {
+  "q": "Un revêtement réfléchissant peut-il remplacer les panneaux imposés par la loi ?",
+  "a": [
+   "Non. L’obligation de l’article L. 171-4 du Code de la construction cite les procédés de production d’énergie renouvelable, la végétalisation ou un autre système aboutissant au même résultat. Un revêtement réfléchissant ne figure pas parmi ces dispositifs : il vient en complément, sur la surface que les panneaux laissent libre."
+  ]
+ }
+]

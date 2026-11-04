@@ -938,6 +938,30 @@ tr.hl > * { background: var(--sky-soft); }
 .simu-next { margin-top: 18px; }
 .nowrap { white-space: nowrap; }
 
+/* zones d'intervention : régions et villes */
+.regions { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); gap: 18px; }
+.region { display: grid; gap: 10px; align-content: start; padding: clamp(18px, 2.4vw, 24px); background: var(--paper); border-radius: var(--radius); scroll-margin-top: 96px; }
+.region h3 { font-size: 1.15rem; }
+.region-zones { font-size: 0.86rem; font-weight: 750; color: var(--sun-ink); }
+.region-deps { font-size: 0.9rem; line-height: 1.7; color: var(--text); }
+.dep-n { display: inline-block; padding: 0 5px; border-radius: 4px; background: var(--tint); color: var(--muted); font-size: 0.8rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.region-villes { font-size: 0.92rem; }
+.region-villes a { color: var(--sky-ink); font-weight: 650; }
+.villes-titre { margin: 8px 0 12px; font-size: 1.05rem; }
+.villes-titre ~ .chips + .villes-titre { margin-top: 26px; }
+.chips-row { margin-top: 26px; }
+.city-facts { display: grid; gap: 0; }
+.city-facts > div { display: grid; gap: 2px; padding: 10px 0; border-top: 1px solid #C9D8E4; }
+.city-facts > div:first-child { border-top: 0; padding-top: 0; }
+.city-facts dt { font-size: 0.82rem; font-weight: 700; color: var(--muted); }
+.city-facts dd { margin: 0; font-weight: 750; color: var(--navy); }
+.city-facts a { color: var(--sky-ink); }
+.city-links h3 { margin-bottom: 12px; font-size: 1.05rem; }
+.others .link-arrow + .link-arrow { margin-top: -4px; }
+.footer-cities { display: grid; gap: 12px; padding-top: 24px; border-top: 1px solid rgba(169, 193, 214, 0.22); }
+.footer-cities h2 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.14em; color: #fff; }
+.footer-cities ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 0.92rem; }
+
 /* ---------------------------------------------------------------- cadrage des photos (généré) */
 [data-photo="application-toiture"] { object-position: 68% 45%; }
 [data-photo="application-montagne"] { object-position: 58% 40%; }
@@ -953,3 +977,4 @@ tr.hl > * { background: var(--sky-soft); }
 [data-photo="etude-plans"] { object-position: 50% 30%; }
 [data-photo="ferme-toits-blancs"] { object-position: 30% 42%; }
 [data-photo="site-industriel"] { object-position: 55% 50%; }
+[data-photo="toiture-photovoltaique"] { object-position: 50% 60%; }
