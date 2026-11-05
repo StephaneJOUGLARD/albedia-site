@@ -5,6 +5,9 @@
  * Fonctionne sur les hébergements web OVHcloud avec PHP (fonction mail()).
  * L'adresse d'expédition doit appartenir à un domaine rattaché à l'hébergement (albedia.eu).
  * Pour recevoir les demandes ailleurs, modifiez DESTINATAIRE ci-dessous.
+ *
+ * Versions anglaise, italienne et espagnole du site (en/, it/, es/) : le formulaire envoie le champ « langue ».
+ * Les messages renvoyés au visiteur sont alors dans sa langue ; la demande reçue reste en français.
  */
 declare(strict_types=1);
 
@@ -19,15 +22,57 @@ header('Cache-Control: no-store');
 
 $wantsJson = isset($_SERVER['HTTP_ACCEPT']) && strpos((string) $_SERVER['HTTP_ACCEPT'], 'application/json') !== false;
 
+const LANGUES = ['fr' => 'français', 'en' => 'anglais', 'it' => 'italien', 'es' => 'espagnol'];
+const VERSIONS = ['en' => 'anglaise', 'it' => 'italienne', 'es' => 'espagnole'];
+$langue = isset($_POST['langue']) && is_string($_POST['langue']) && isset(LANGUES[$_POST['langue']]) ? $_POST['langue'] : 'fr';
+
+/* Messages renvoyés au visiteur (%s : adresse de contact). */
+const MESSAGES = [
+    'fr' => [
+        'delai'   => 'Merci de prendre quelques secondes pour remplir le formulaire avant de l’envoyer.',
+        'limite'  => 'Plusieurs demandes ont déjà été envoyées depuis cette connexion. Réessayez dans une heure ou écrivez-nous à %s.',
+        'champs'  => 'Merci d’indiquer votre nom, votre entreprise et une adresse e-mail valide.',
+        'tel'     => 'Le numéro de téléphone indiqué n’est pas valide.',
+        'echec'   => 'L’envoi n’a pas abouti. Réessayez ou écrivez-nous directement à %s.',
+    ],
+    'en' => [
+        'delai'   => 'Please take a few seconds to fill in the form before sending it.',
+        'limite'  => 'Several requests have already been sent from this connection. Please try again in an hour or email us at %s.',
+        'champs'  => 'Please enter your name, your company and a valid email address.',
+        'tel'     => 'The phone number entered is not valid.',
+        'echec'   => 'Your request could not be sent. Please try again or email us directly at %s.',
+    ],
+    'it' => [
+        'delai'   => 'Prendetevi qualche secondo per compilare il modulo prima di inviarlo.',
+        'limite'  => 'Da questa connessione sono già state inviate diverse richieste. Riprovate tra un’ora o scriveteci a %s.',
+        'champs'  => 'Indicate il vostro nome, la vostra azienda e un indirizzo e-mail valido.',
+        'tel'     => 'Il numero di telefono indicato non è valido.',
+        'echec'   => 'L’invio non è riuscito. Riprovate o scriveteci direttamente a %s.',
+    ],
+    'es' => [
+        'delai'   => 'Tómese unos segundos para rellenar el formulario antes de enviarlo.',
+        'limite'  => 'Ya se han enviado varias solicitudes desde esta conexión. Vuelva a intentarlo dentro de una hora o escríbanos a %s.',
+        'champs'  => 'Indique su nombre, su empresa y una dirección de correo electrónico válida.',
+        'tel'     => 'El número de teléfono indicado no es válido.',
+        'echec'   => 'No se ha podido enviar su solicitud. Vuelva a intentarlo o escríbanos directamente a %s.',
+    ],
+];
+
+function message(string $cle): string
+{
+    global $langue;
+    return sprintf(MESSAGES[$langue][$cle], DESTINATAIRE);
+}
+
 function repondre(bool $ok, string $erreur = ''): void
 {
-    global $wantsJson;
+    global $wantsJson, $langue;
     if ($wantsJson) {
         http_response_code($ok ? 200 : 400);
         header('Content-Type: application/json; charset=utf-8');
         echo json_encode(['ok' => $ok, 'error' => $erreur], JSON_UNESCAPED_UNICODE);
     } else {
-        header('Location: devis.html#' . ($ok ? 'merci' : 'erreur'), true, 303);
+        header('Location: ' . ($langue !== 'fr' ? $langue . '/' : '') . 'devis.html#' . ($ok ? 'merci' : 'erreur'), true, 303);
     }
     exit;
 }
@@ -46,7 +91,7 @@ if (!empty($_POST['website'])) {
 /* Formulaire envoyé trop vite pour avoir été rempli par une personne. */
 $delai = isset($_POST['elapsed']) && $_POST['elapsed'] !== '' ? (int) $_POST['elapsed'] : -1;
 if ($delai >= 0 && $delai < 3000) {
-    repondre(false, 'Merci de prendre quelques secondes pour remplir le formulaire avant de l’envoyer.');
+    repondre(false, message('delai'));
 }
 
 /* Limite d'envois par adresse IP. */
@@ -63,7 +108,7 @@ if (is_file($fichierLimite)) {
     }
 }
 if (count($envois) >= MAX_PAR_HEURE) {
-    repondre(false, 'Plusieurs demandes ont déjà été envoyées depuis cette connexion. Réessayez dans une heure ou écrivez-nous à ' . DESTINATAIRE . '.');
+    repondre(false, message('limite'));
 }
 
 function champ(string $cle, int $max): string
@@ -98,20 +143,22 @@ $toiture    = parmi(ligne(champ('toiture', 60)), [
     'Fibres-ciment', 'Plusieurs types', 'Je ne sais pas',
 ]);
 $codePostal = ligne(champ('code_postal', 10));
+$pays       = parmi(ligne(champ('pays', 20)), ['France', 'Suisse', 'Italie', 'Espagne', 'Autre']);   // versions traduites
 $clim       = parmi(ligne(champ('climatisation', 20)), ['Oui', 'En partie', 'Non', 'Je ne sais pas']);
 $message    = champ('message', 5000);
 
 if ($nom === '' || $entreprise === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    repondre(false, 'Merci d’indiquer votre nom, votre entreprise et une adresse e-mail valide.');
+    repondre(false, message('champs'));
 }
 if ($telephone !== '' && !preg_match('/^[0-9 +().\-]{6,30}$/', $telephone)) {
-    repondre(false, 'Le numéro de téléphone indiqué n’est pas valide.');
+    repondre(false, message('tel'));
 }
 if ($surface !== '' && !preg_match('/^[0-9]{1,7}$/', $surface)) {
     $surface = '';
 }
 
 $corps = "Nouvelle demande de devis envoyée depuis albedia.eu\n"
+    . ($langue !== 'fr' ? 'Langue du visiteur : ' . LANGUES[$langue] . ' (formulaire de la version ' . VERSIONS[$langue] . " du site)\n" : '')
     . str_repeat('-', 48) . "\n"
     . "Nom : $nom\n"
     . "Entreprise : $entreprise\n"
@@ -120,6 +167,7 @@ $corps = "Nouvelle demande de devis envoyée depuis albedia.eu\n"
     . 'Secteur : ' . ($secteur !== '' ? $secteur : 'non indiqué') . "\n"
     . 'Surface de toiture : ' . ($surface !== '' ? $surface . ' m²' : 'non indiquée') . "\n"
     . 'Type de toiture : ' . ($toiture !== '' ? $toiture : 'non indiqué') . "\n"
+    . ($pays !== '' ? 'Pays du bâtiment : ' . $pays . "\n" : '')
     . 'Code postal du bâtiment : ' . ($codePostal !== '' ? $codePostal : 'non indiqué') . "\n"
     . 'Bâtiment climatisé : ' . ($clim !== '' ? $clim : 'non indiqué') . "\n\n"
     . "Projet :\n" . ($message !== '' ? $message : '(aucun message)') . "\n\n"
@@ -127,7 +175,7 @@ $corps = "Nouvelle demande de devis envoyée depuis albedia.eu\n"
     . 'Envoyé le ' . date('d/m/Y à H:i') . "\n"
     . "Répondez directement à ce message pour écrire à $nom.\n";
 
-$sujet = '[Devis] ' . $entreprise . ($secteur !== '' ? ' – ' . $secteur : '');
+$sujet = '[Devis] ' . $entreprise . ($secteur !== '' ? ' – ' . $secteur : '') . ($langue !== 'fr' ? ' (' . strtoupper($langue) . ')' : '');
 
 $entetes = [
     'From: ' . mb_encode_mimeheader(NOM_SITE, 'UTF-8', 'Q') . ' <' . EXPEDITEUR . '>',
@@ -144,4 +192,4 @@ if ($envoye) {
     @file_put_contents($fichierLimite, implode(',', $envois), LOCK_EX);
     repondre(true);
 }
-repondre(false, 'L’envoi n’a pas abouti. Réessayez ou écrivez-nous directement à ' . DESTINATAIRE . '.');
+repondre(false, message('echec'));

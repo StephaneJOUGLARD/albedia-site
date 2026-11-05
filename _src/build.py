@@ -35,8 +35,11 @@ def plaquette_href():
     return '%s?v=%s' % (PLAQUETTE, hashlib.sha1(data).hexdigest()[:8])
 
 
-def plaquette_taille():
-    return ('PDF, %.1f Mo' % (os.path.getsize(os.path.join(SRC, PLAQUETTE)) / 1e6)).replace('.', ',')
+def plaquette_taille(lang='fr'):
+    mo = os.path.getsize(os.path.join(SRC, PLAQUETTE)) / 1e6
+    if lang == 'fr':
+        return ('PDF, %.1f Mo' % mo).replace('.', ',')
+    return UI[lang]['pdf_size'].replace('{n}', ('%.1f' % mo).replace('.', UI[lang]['dec']))
 
 
 # photo = vignette de l'accueil et bandeau de la page secteur ; photo2 = photo dans le contenu de la page
@@ -261,6 +264,43 @@ SECTOR_DATA = json.load(open(os.path.join(SRC, 'pages', 'secteurs.json'), encodi
 # Fichiers WebP dans assets/img/photos/<slug>-<largeur>.webp
 PHOTOS = json.load(open(os.path.join(SRC, 'pages', 'photos.json'), encoding='utf-8'))
 
+# ------------------------------------------------------------------ versions anglaise, italienne et espagnole
+# Pour chaque langue, _src/i18n/<langue>/ contient : ui.json (textes communs, menus, pied de page, titres et
+# descriptions des pages traduites, libellés des secteurs, textes alternatifs des photos), secteurs.json (pages
+# secteur), faq-*.json, js.json (textes du simulateur et des formulaires, lus par main.js), simulateur.html et
+# pages/*.html (contenu des pages). Les pages traduites sont publiées dans /en/, /it/ et /es/.
+I18N_DIR = os.path.join(SRC, 'i18n')
+I18N_LANGS = tuple(l for l in ('en', 'it', 'es') if os.path.isfile(os.path.join(I18N_DIR, l, 'ui.json')))
+UI = {l: json.load(open(os.path.join(I18N_DIR, l, 'ui.json'), encoding='utf-8')) for l in I18N_LANGS}
+I18N_SECTORS = {l: json.load(open(os.path.join(I18N_DIR, l, 'secteurs.json'), encoding='utf-8')) for l in I18N_LANGS}
+TRANSLATED = tuple(UI[I18N_LANGS[0]]['pages'].keys()) if I18N_LANGS else ()   # pages qui ont une version traduite
+
+
+def _lang_pages():
+    out = []
+    slugs = {x['slug'] for x in SECTORS}
+    for l in I18N_LANGS:
+        for i, (f, meta) in enumerate(UI[l]['pages'].items()):
+            fr = next(x for x in PAGES if x['file'] == f)
+            pg = dict(file=f, lang=l, src=f, nav=fr.get('nav'), cta=fr.get('cta'), cta_bg=fr.get('cta_bg', 'paper'),
+                      crumbs=[tuple(c) for c in meta['crumbs']] if meta.get('crumbs') else None,
+                      title=meta.get('title'), desc=meta.get('desc'), og=meta.get('og'), faq=meta.get('faq'),
+                      prio=fr.get('prio'), slogan=UI[l]['slogans'][i % 2])
+            if meta.get('cta2'):
+                pg['cta2'] = tuple(meta['cta2'])
+            if f[:-5] in slugs:
+                pg['sector'] = f[:-5]
+            out.append(pg)
+    return out
+
+
+LANG_PAGES = _lang_pages()
+
+
+def T(ctx, key):
+    """Texte commun dans la langue de la page (les pages françaises gardent leurs textes d'origine)."""
+    return UI[ctx.lang][key]
+
 # ------------------------------------------------------------------ helpers
 PART = os.path.join(SRC, 'partials')
 
@@ -277,8 +317,10 @@ def esc(t):
     return html.escape(t, quote=True)
 
 
-def typo(markup):
-    """Typographie française sur les nœuds texte (hors script, style et balises)."""
+def typo(markup, lang='fr'):
+    """Typographie française sur les nœuds texte (hors script, style et balises), pages françaises seulement."""
+    if lang != 'fr':
+        return markup
     out, skip = [], False
     for chunk in re.split(r'(<[^>]+>)', markup):
         if chunk.startswith('<'):
@@ -318,7 +360,7 @@ def photo(slug, ctx, sizes=SIZES_HALF, cls='', eager=False, alt=None):
     load = 'loading="eager" fetchpriority="high"' if eager else 'loading="lazy"'
     return '<img%s src="%s-%d.webp" srcset="%s" sizes="%s" width="%d" height="%d" alt="%s" data-photo="%s" %s decoding="async">' % (
         ' class="%s"' % cls if cls else '', base, default, srcset, sizes, w, h,
-        esc(p['alt'] if alt is None else alt), slug, load)
+        esc((p['alt'] if ctx.lang == 'fr' else UI[ctx.lang]['alts'].get(slug, p['alt'])) if alt is None else alt), slug, load)
 
 
 def photo_css():
@@ -336,7 +378,30 @@ def photo_credits():
     return '<ul class="credits">%s</ul>' % ''.join(items)
 
 
+def lang_url(ctx, lang, f):
+    """Lien relatif vers la version <lang> de la page f (« fr » : la page d'origine)."""
+    target = ('../' if ctx.lang != 'fr' else '') + ('' if lang == 'fr' else lang + '/') + ('' if f == 'index.html' else f)
+    if ctx.variant == 'preview' and (target == '' or target.endswith('/')):
+        target += 'index.html'
+    return target or './'
+
+
+LANG_NAMES = {'fr': 'Français', 'en': 'English', 'it': 'Italiano', 'es': 'Español'}
+
+
 def lang_switch(ctx):
+    f = ctx.page['file']
+    if f in TRANSLATED:
+        # page traduite : liens vers les vraies versions de la page dans chaque langue
+        items = []
+        for code in ('fr',) + I18N_LANGS:
+            if code == ctx.lang:
+                items.append('<span class="lang-cur" lang="%s" aria-current="true" title="%s">%s</span>' % (code, LANG_NAMES[code], code.upper()))
+            else:
+                items.append('<a class="lang-link" href="%s" lang="%s" hreflang="%s" title="%s"><span aria-hidden="true">%s</span>'
+                             '<span class="visually-hidden">%s</span></a>' % (lang_url(ctx, code, f), code, code, LANG_NAMES[code], code.upper(), LANG_NAMES[code]))
+        aria = 'Langue du site' if ctx.lang == 'fr' else T(ctx, 'lang_aria')
+        return '<div class="lang notranslate" translate="no" role="group" aria-label="%s">%s</div>' % (esc(aria), ''.join(items))
     page_url = SITE_URL + '/' + ('' if ctx.page['file'] in ('index.html', '404.html') else ctx.page['file'])
     links = ''.join(
         '<a class="lang-link" href="https://translate.google.com/translate?sl=fr&amp;tl=%s&amp;hl=%s&amp;u=%s" lang="%s" hreflang="%s" rel="nofollow" title="%s"><span aria-hidden="true">%s</span><span class="visually-hidden">%s</span></a>' % (
@@ -349,9 +414,18 @@ def lang_switch(ctx):
 class Ctx:
     def __init__(self, variant, page):
         self.variant, self.page = variant, page
-        self.prefix = '/' if page.get('absolute') and variant == 'site' else ''
+        self.lang = page.get('lang', 'fr')
+        if self.lang != 'fr':
+            self.prefix = '../'   # pages traduites : un dossier par langue
+        else:
+            self.prefix = '/' if page.get('absolute') and variant == 'site' else ''
 
     def href(self, target):
+        if self.lang != 'fr':
+            # page traduite : même dossier si la page existe dans la langue, sinon la page française
+            if target in ('', 'index.html'):
+                return 'index.html' if self.variant == 'preview' else './'
+            return target if target in TRANSLATED else '../' + target
         if target in ('', 'index.html'):
             if self.variant == 'preview':
                 return 'index.html'
@@ -385,23 +459,23 @@ def expand(text, ctx):
         if key == 'SECTOR_TILES':
             return sector_tiles(ctx)
         if key == 'SECTOR_OPTIONS':
-            return sector_options()
+            return sector_options(ctx)
         if key == 'PHOTO_CREDITS':
             return photo_credits()
         if key == 'AREA':
-            return AREA
+            return AREA if ctx.lang == 'fr' else T(ctx, 'area')
         if key == 'REGIONS':
             return regions_html()
         if key == 'VILLES':
             return villes_html()
         if key == 'CARTE_ZONES':
-            return carte_zones()
+            return carte_zones(ctx)
         if key == 'PLAQUETTE_HREF':
             return plaquette_href()
         if key == 'PLAQUETTE_ATTR':
             return PLAQUETTE_ATTR
         if key == 'PLAQUETTE_TAILLE':
-            return plaquette_taille()
+            return plaquette_taille(ctx.lang)
         if key.startswith('img:'):
             slug, _, sizes = key[4:].partition('|')
             return photo(slug, ctx, sizes or SIZES_HALF)
@@ -421,7 +495,8 @@ def expand(text, ctx):
     text = re.sub(r'\{\{([^{}]+)\}\}', repl, text)
     # liens internes relatifs → préfixe (page 404) / accueil
     text = re.sub(r'href="([a-z0-9-]+\.html)(#[^"]*)?"', lambda m: 'href="%s%s"' % (ctx.href(m.group(1)), m.group(2) or ''), text)
-    text = re.sub(r'action="(devis\.html|contact\.php|simulation\.php)"', lambda m: 'action="%s%s"' % (ctx.prefix, m.group(1)), text)
+    text = re.sub(r'action="(devis\.html|contact\.php|simulation\.php)"', lambda m: 'action="%s"' % (
+        ctx.href(m.group(1)) if m.group(1) == 'devis.html' else ctx.prefix + m.group(1)), text)
     text = re.sub(r'(href|src)="(assets/(?:docs|img)/[^"]+)"', lambda m: '%s="%s%s"' % (m.group(1), ctx.prefix, m.group(2)), text)
     return text
 
@@ -430,7 +505,11 @@ SECTOR_CHOICES = ['Industrie', 'Logistique et entreposage', 'Commerce et distrib
                   'Collectivité ou équipement public', 'Agricole', 'Autre']
 
 
-def sector_options():
+def sector_options(ctx=None):
+    if ctx is not None and ctx.lang != 'fr':
+        # valeurs en français (attendues par contact.php), libellés traduits
+        return '<option value="">%s</option>' % esc(T(ctx, 'choose')) + ''.join(
+            '<option value="%s">%s</option>' % (esc(v), esc(l)) for v, l in zip(SECTOR_CHOICES, T(ctx, 'sector_choices')))
     return '<option value="">Choisir…</option>' + ''.join('<option>%s</option>' % esc(c) for c in SECTOR_CHOICES)
 
 
@@ -439,13 +518,15 @@ def sector_tiles(ctx):
     return ''.join(
         '<a class="tile" href="%s.html"><span class="tile-media">%s</span>'
         '<span class="tile-body"><span class="tile-ico">%s</span><span class="tile-text"><strong>%s</strong><span>%s</span></span>%s</span></a>' % (
-            s['slug'], photo(s['photo'], ctx, sizes, alt=''), icon(s['icon']), esc(s['label']), esc(s['short']), icon('fleche'))
+            s['slug'], photo(s['photo'], ctx, sizes, alt=''), icon(s['icon']),
+            esc(s['label'] if ctx.lang == 'fr' else T(ctx, 'sectors')[s['slug']][0]),
+            esc(s['short'] if ctx.lang == 'fr' else T(ctx, 'sectors')[s['slug']][1]), icon('fleche'))
         for s in SECTORS)
 
 
 def breadcrumb(ctx):
     crumbs = ctx.page.get('crumbs') or []
-    items = ['<li><a href="index.html">Accueil</a></li>']
+    items = ['<li><a href="index.html">%s</a></li>' % ('Accueil' if ctx.lang == 'fr' else esc(T(ctx, 'home')))]
     for i, (label, link) in enumerate(crumbs):
         last = i == len(crumbs) - 1
         if last:
@@ -454,22 +535,25 @@ def breadcrumb(ctx):
             items.append('<li><a href="%s">%s</a></li>' % (link, esc(label)))
         else:
             items.append('<li><span>%s</span></li>' % esc(label))
-    return '<nav class="breadcrumb" aria-label="Fil d’Ariane"><ol>%s</ol></nav>' % ''.join(items)
+    aria = 'Fil d’Ariane' if ctx.lang == 'fr' else T(ctx, 'breadcrumb_aria')
+    return '<nav class="breadcrumb" aria-label="%s"><ol>%s</ol></nav>' % (esc(aria), ''.join(items))
 
 
 # ------------------------------------------------------------------ gabarits communs
 # Signature sous le logo, justifiée sur la largeur du mot « albedia » : même repère horizontal que le
 # viewBox du logo (x de 2 à 656), texte étiré de x = 6 à x = 651,8 (bords des lettres) par textLength.
-def brand():
-    return ('<a class="brand" href="index.html" aria-label="ALBEDIA, accueil">%s'
+def brand(ctx=None):
+    fr = ctx is None or ctx.lang == 'fr'
+    return ('<a class="brand" href="index.html" aria-label="%s">%s'
             '<svg class="brand-tag" viewBox="2 0 654 49.5" aria-hidden="true" focusable="false">'
-            '<text x="6" y="38.6" textLength="645.8" lengthAdjust="spacing">%s</text></svg></a>') % (part('logo.svg'), BASELINE)
+            '<text x="6" y="38.6" textLength="645.8" lengthAdjust="spacing">%s</text></svg></a>') % (
+        'ALBEDIA, accueil' if fr else esc(T(ctx, 'brand_aria')), part('logo.svg'), BASELINE if fr else T(ctx, 'baseline'))
 
 
 def menus(ctx):
     page = ctx.page
     out = []
-    for key, label, items in MENUS:
+    for key, label, items in (MENUS if ctx.lang == 'fr' else T(ctx, 'menus')):
         lis = []
         for item in items:
             if item[0] == '-':
@@ -488,24 +572,29 @@ def menus(ctx):
 
 def header(ctx):
     devis_cur = ' aria-current="page"' if ctx.page.get('nav') == 'devis' else ''
-    return f'''<a class="skip" href="#contenu">Aller au contenu</a>
+    fr = ctx.lang == 'fr'
+    skip, nav_aria = ('Aller au contenu', 'Navigation principale') if fr else (T(ctx, 'skip'), T(ctx, 'nav_aria'))
+    quote, menu = ('Demander un devis', 'Menu') if fr else (T(ctx, 'quote'), T(ctx, 'menu'))
+    return f'''<a class="skip" href="#contenu">{skip}</a>
 <header class="site-header">
 <div class="wrap">
-{brand()}
-<nav class="nav" id="nav-principale" aria-label="Navigation principale">
+{brand(ctx)}
+<nav class="nav" id="nav-principale" aria-label="{nav_aria}">
 <ul class="nav-list">
 {menus(ctx)}
 </ul>
-<a class="btn btn--sun btn--sm nav-cta" href="devis.html"{devis_cur}>Demander un devis</a>
+<a class="btn btn--sun btn--sm nav-cta" href="devis.html"{devis_cur}>{quote}</a>
 </nav>
 {lang_switch(ctx)}
-<button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-principale">{icon('menu')}<span>Menu</span></button>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-principale">{icon('menu')}<span>{menu}</span></button>
 </div>
 </header>'''
 
 
 def cta_band(ctx):
     page = ctx.page
+    if ctx.lang != 'fr':
+        return cta_band_i18n(ctx)
     href2, label2 = page.get('cta2', ('guide-cool-roof.html', 'Lire le guide du cool roof'))
     return f'''<div class="cta-outer cta-outer--{page.get('cta_bg', 'paper')}">
 <section class="cta-band" aria-labelledby="cta-titre">
@@ -522,6 +611,8 @@ def cta_band(ctx):
 
 
 def footer(ctx):
+    if ctx.lang != 'fr':
+        return footer_i18n(ctx)
     phone = ('<p class="footer-contact">%s<a href="tel:%s">%s</a></p>' % (icon('tel'), PHONE_TEL, PHONE)) if PHONE else ''
     cols = '\n'.join('<nav class="footer-col" aria-label="%s"><h2>%s</h2><ul>%s</ul></nav>' % (
         esc(title), esc(title), ''.join('<li><a href="%s">%s</a></li>' % (href, esc(label)) for href, label in links))
@@ -547,15 +638,76 @@ def footer(ctx):
 </footer>'''
 
 
+def cta_band_i18n(ctx):
+    page = ctx.page
+    href2, label2 = page.get('cta2') or tuple(T(ctx, 'cta2'))
+    tel = (' · <a href="tel:%s">%s</a>' % (PHONE_TEL, PHONE)) if PHONE else ''
+    return f'''<div class="cta-outer cta-outer--{page.get('cta_bg', 'paper')}">
+<section class="cta-band" aria-labelledby="cta-titre">
+<div class="wrap">
+{part('sun.svg').replace('class="sun"', 'class="sun sun--xl"')}
+<h2 class="cta-slogan" id="cta-titre">{page['slogan']}</h2>
+<p>{T(ctx, 'cta_text')}</p>
+<div class="cta-actions"><a class="btn btn--sun" href="devis.html">{T(ctx, 'quote')}{icon('fleche')}</a><a class="btn btn--line" href="{href2}">{label2}</a></div>
+<p class="cta-contact">{T(ctx, 'cta_contact')} <a href="mailto:{EMAIL}">{EMAIL}</a>{tel}</p>
+<p class="cta-contact cta-doc"><a href="{plaquette_href()}"{PLAQUETTE_ATTR} hreflang="fr">{icon('document')}{T(ctx, 'brochure').replace('{size}', plaquette_taille(ctx.lang))}</a></p>
+</div>
+</section>
+</div>'''
+
+
+def footer_i18n(ctx):
+    phone = ('<p class="footer-contact">%s<a href="tel:%s">%s</a></p>' % (icon('tel'), PHONE_TEL, PHONE)) if PHONE else ''
+
+    def col_links(links):
+        if links == 'LANGS':   # colonne « Langues » : accueil du site dans les autres langues
+            return ''.join('<li><a href="%s" lang="%s" hreflang="%s">%s</a></li>' % (lang_url(ctx, code, 'index.html'), code, code, LANG_NAMES[code])
+                           for code in ('fr',) + I18N_LANGS if code != ctx.lang)
+        return ''.join('<li><a href="%s">%s</a></li>' % (href, esc(label)) for href, label in links)
+    cols = '\n'.join('<nav class="footer-col" aria-label="%s"><h2>%s</h2><ul>%s</ul></nav>' % (
+        esc(title), esc(title), col_links(links)) for title, links in T(ctx, 'footer_cols'))
+    legal = ''.join('<li><a href="%s" hreflang="fr">%s</a></li>' % (h, esc(l)) for h, l in T(ctx, 'legal_links'))
+    return f'''<footer class="site-footer">
+<div class="wrap">
+<div class="footer-top">
+<div class="footer-brand">
+{brand(ctx)}
+<p>{T(ctx, 'footer_desc').replace('{area}', T(ctx, 'area'))}</p>
+<p class="footer-contact">{icon('mail')}<a href="mailto:{EMAIL}">{EMAIL}</a></p>
+{phone}
+<p class="footer-contact">{icon('lieu')}<a href="zones-intervention.html">{T(ctx, 'countries')}</a></p>
+<p class="footer-contact">{icon('document')}<a href="{plaquette_href()}"{PLAQUETTE_ATTR} hreflang="fr">{T(ctx, 'brochure_short')}</a></p>
+</div>
+{cols}
+</div>
+<div class="footer-bottom"><p>{T(ctx, 'footer_copy')}</p>
+<ul class="footer-legal">{legal}<li>{T(ctx, 'nocookie')}</li></ul></div>
+</div>
+</footer>'''
+
+
 # ------------------------------------------------------------------ pages secteur
-def sector_page(slug):
-    d = SECTOR_DATA[slug]
+SECTOR_TPL_FR = dict(
+    quote='Demander un devis', understand='Comprendre le cool roof', enjeux='Les enjeux', batiments='Bâtiments concernés',
+    gain_kicker='Ce que vous y gagnez', gain_title='Ce que le cool roof vous apporte', points_kicker='Avant les travaux',
+    points_title='Les points que nous étudions',
+    points_text='Chaque bâtiment a ses contraintes. La visite de la toiture sert à les relever avant de vous proposer un procédé et un devis.',
+    method='Voir notre méthode', aides_kicker='Aides et obligations', aides_title='Ce qui peut s’appliquer à votre bâtiment',
+    link1=['aides-reglementation.html', 'Aides CEE et réglementation'], link2=['rentabilite-cool-roof.html', 'Rentabilité et temps de retour'],
+    others='Autres secteurs')
+
+
+def sector_page(slug, ctx=None):
+    fr = ctx is None or ctx.lang == 'fr'
+    d = SECTOR_DATA[slug] if fr else I18N_SECTORS[ctx.lang][slug]
+    t = SECTOR_TPL_FR if fr else T(ctx, 'sector_tpl')
+    label = (lambda o: o['label']) if fr else (lambda o: T(ctx, 'sectors')[o['slug']][0])
     s = next(x for x in SECTORS if x['slug'] == slug)
     bats = ''.join('<li>%s<span>%s</span></li>' % ('{{icon:check}}', esc(b)) for b in d['batiments'])
     bens = ''.join('<div class="feature"><span class="ico-badge">{{icon:%s}}</span><h3>%s</h3><p>%s</p></div>' % (
         ic, esc(t), esc(p)) for ic, t, p in d['benefices'])
     pts = ''.join('<li>{{icon:loupe}}<span>%s</span></li>' % esc(p) for p in d['points'])
-    others = ''.join('<li><a class="chip" href="%s.html">{{icon:%s}}%s</a></li>' % (o['slug'], o['icon'], esc(o['label']))
+    others = ''.join('<li><a class="chip" href="%s.html">{{icon:%s}}%s</a></li>' % (o['slug'], o['icon'], esc(label(o)))
                      for o in SECTORS if o['slug'] != slug)
     enjeux = ''.join('<p>%s</p>' % esc(p) for p in d['enjeux'])
     return f'''<section class="page-head page-head--photo page-head--sector">
@@ -566,16 +718,16 @@ def sector_page(slug):
 {{{{EYEBROW}}}}
 <h1>{esc(d['h1'])}</h1>
 <p class="lead">{esc(d['lead'])}</p>
-<div class="hero-actions"><a class="btn btn--sun" href="devis.html">Demander un devis{{{{icon:fleche}}}}</a><a class="btn btn--light" href="guide-cool-roof.html">Comprendre le cool roof</a></div>
+<div class="hero-actions"><a class="btn btn--sun" href="devis.html">{t['quote']}{{{{icon:fleche}}}}</a><a class="btn btn--light" href="guide-cool-roof.html">{t['understand']}</a></div>
 </div>
 </section>
 <section class="band" aria-labelledby="enjeux-titre">
 <div class="wrap split split--top split--media">
 <div class="prose">
-<p class="kicker">Les enjeux</p>
+<p class="kicker">{t['enjeux']}</p>
 <h2 id="enjeux-titre">{esc(d['enjeux_titre'])}</h2>
 {enjeux}
-<h3 id="batiments-titre">Bâtiments concernés</h3>
+<h3 id="batiments-titre">{t['batiments']}</h3>
 <ul class="checklist checklist--cols">{bats}</ul>
 </div>
 <figure class="photo photo--tall">{{{{img:{s['photo2']}}}}}</figure>
@@ -584,8 +736,8 @@ def sector_page(slug):
 <section class="band band--tint" aria-labelledby="apports-titre">
 <div class="wrap">
 <div class="section-head">
-<p class="kicker">Ce que vous y gagnez</p>
-<h2 id="apports-titre">Ce que le cool roof vous apporte</h2>
+<p class="kicker">{t['gain_kicker']}</p>
+<h2 id="apports-titre">{t['gain_title']}</h2>
 </div>
 <div class="grid-3">{bens}</div>
 </div>
@@ -593,10 +745,10 @@ def sector_page(slug):
 <section class="band" aria-labelledby="points-titre">
 <div class="wrap split split--top">
 <div class="prose">
-<p class="kicker">Avant les travaux</p>
-<h2 id="points-titre">Les points que nous étudions</h2>
-<p>Chaque bâtiment a ses contraintes. La visite de la toiture sert à les relever avant de vous proposer un procédé et un devis.</p>
-<a class="link-arrow" href="solutions.html#methode">Voir notre méthode{{{{icon:fleche}}}}</a>
+<p class="kicker">{t['points_kicker']}</p>
+<h2 id="points-titre">{t['points_title']}</h2>
+<p>{t['points_text']}</p>
+<a class="link-arrow" href="solutions.html#methode">{t['method']}{{{{icon:fleche}}}}</a>
 </div>
 <ul class="checklist checklist--points">{pts}</ul>
 </div>
@@ -604,14 +756,14 @@ def sector_page(slug):
 <section class="band band--tint" aria-labelledby="aides-titre">
 <div class="wrap split split--top">
 <div class="prose">
-<p class="kicker">Aides et obligations</p>
-<h2 id="aides-titre">Ce qui peut s’appliquer à votre bâtiment</h2>
+<p class="kicker">{t['aides_kicker']}</p>
+<h2 id="aides-titre">{t['aides_title']}</h2>
 <p>{esc(d['aides'])}</p>
-<a class="link-arrow" href="aides-reglementation.html">Aides CEE et réglementation{{{{icon:fleche}}}}</a>
-<a class="link-arrow" href="rentabilite-cool-roof.html">Rentabilité et temps de retour{{{{icon:fleche}}}}</a>
+<a class="link-arrow" href="{t['link1'][0]}">{t['link1'][1]}{{{{icon:fleche}}}}</a>
+<a class="link-arrow" href="{t['link2'][0]}">{t['link2'][1]}{{{{icon:fleche}}}}</a>
 </div>
 <nav class="others" aria-labelledby="autres-titre">
-<h3 id="autres-titre">Autres secteurs</h3>
+<h3 id="autres-titre">{t['others']}</h3>
 <ul class="chips">{others}</ul>
 </nav>
 </div>
@@ -671,11 +823,19 @@ def regions_html():
     return '<div class="regions">%s</div>' % ''.join(out)
 
 
-def carte_zones():
+def carte_zones(ctx=None):
     """Carte des zones climatiques CEE par département (balise {{CARTE_ZONES}}, page Zones d'intervention).
-    Tracés : partials/carte-departements.json, produit par _src/carte.py. Noms et zones : DEPTS et zone_of()."""
+    Tracés : partials/carte-departements.json, produit par _src/carte.py. Noms et zones : DEPTS et zone_of().
+    Pages traduites : textes de la clé « carte » de ui.json."""
     carte = json.loads(part('carte-departements.json'))
     enc = carte['encart']
+    c = UI[ctx.lang]['carte'] if ctx is not None and ctx.lang != 'fr' else dict(
+        aria='Carte des départements de France métropolitaine, colorés selon leur zone climatique CEE (H1, H2 ou H3). '
+             'La zone de chaque département figure aussi dans la liste des régions, plus bas.',
+        zone='Zone {z}', deps='{n} départements', prime='Prime BAT-EN-112 : {k} kWh cumac par\u00a0m²',
+        hover='Passez le curseur sur un département pour afficher sa zone.',
+        touch='Touchez un département pour afficher sa zone.',
+        inset='Paris et la petite couronne sont agrandis dans l’encadré, en haut à gauche.')
 
     def dep(code, d):
         return '<path data-d="%s" data-z="%s" data-n="%s" d="%s"/>' % (code, zone_of(code), esc(DEPTS[code]), d)
@@ -683,25 +843,23 @@ def carte_zones():
     def rect(cls, r, rx):
         return '<rect class="%s" x="%d" y="%d" width="%d" height="%d" rx="%d"/>' % (cls, r[0], r[1], r[2], r[3], rx)
 
-    svg = ('<svg viewBox="%s" fill-rule="evenodd" role="img" aria-label="Carte des départements de France métropolitaine, '
-           'colorés selon leur zone climatique CEE (H1, H2 ou H3). La zone de chaque département figure aussi dans la '
-           'liste des régions, plus bas.">'
+    svg = ('<svg viewBox="%s" fill-rule="evenodd" role="img" aria-label="%s">'
            '<g class="carte-deps">%s</g>%s<g class="carte-encart">%s%s</g></svg>') % (
-        carte['viewBox'], ''.join(dep(c, d) for c, d in carte['paths'].items()),
+        carte['viewBox'], esc(c['aria']), ''.join(dep(k, d) for k, d in carte['paths'].items()),
         rect('carte-repere', enc['repere'], 3), rect('carte-cadre', enc['cadre'], 8),
-        ''.join(dep(c, d) for c, d in enc['paths'].items()))
+        ''.join(dep(k, d) for k, d in enc['paths'].items()))
     zones = ('H1', 'H2', 'H3')
     nb = {z: sum(1 for d in DEPTS if zone_of(d) == z) for z in zones}
     legende = ''.join(
-        '<li data-zone="%s"><span class="carte-pastille" aria-hidden="true"></span><span class="carte-l"><strong>Zone %s</strong>'
-        '<em>%d départements</em><small>Prime BAT-EN-112 : %d kWh cumac par\u00a0m²</small></span></li>' % (z, z, nb[z], CEE_KWHC[z])
+        '<li data-zone="%s"><span class="carte-pastille" aria-hidden="true"></span><span class="carte-l"><strong>%s</strong>'
+        '<em>%s</em><small>%s</small></span></li>' % (
+            z, c['zone'].replace('{z}', z), c['deps'].replace('{n}', str(nb[z])), c['prime'].replace('{k}', str(CEE_KWHC[z])))
         for z in zones)
     return ('<div class="zones-carte" data-carte-zones>'
             '<div class="carte">%s<div class="carte-tip" hidden><strong></strong><span></span></div></div>'
             '<div class="carte-infos"><ul class="carte-legende">%s</ul>'
-            '<p class="carte-aide"><span class="si-souris">Passez le curseur sur un département pour afficher sa zone.</span>'
-            '<span class="si-tactile">Touchez un département pour afficher sa zone.</span> '
-            'Paris et la petite couronne sont agrandis dans l’encadré, en haut à gauche.</p></div></div>') % (svg, legende)
+            '<p class="carte-aide"><span class="si-souris">%s</span><span class="si-tactile">%s</span> %s</p></div></div>') % (
+        svg, legende, c['hover'], c['touch'], c['inset'])
 
 
 def city_page(slug):
@@ -797,6 +955,27 @@ def city_page(slug):
 # ------------------------------------------------------------------ JSON-LD
 def jsonld(page):
     blocks = []
+    lang = page.get('lang', 'fr')
+    if lang != 'fr':
+        base = SITE_URL + '/' + lang + '/'
+        if page['file'] == 'index.html':
+            blocks.append({'@context': 'https://schema.org', '@type': 'WebSite', 'name': 'ALBEDIA', 'url': base,
+                           'inLanguage': UI[lang]['html_lang']})
+        elif page.get('crumbs'):
+            items = [{'@type': 'ListItem', 'position': 1, 'name': UI[lang]['home'], 'item': base}]
+            for i, (label, link) in enumerate(page['crumbs']):
+                it = {'@type': 'ListItem', 'position': i + 2, 'name': label}
+                if i == len(page['crumbs']) - 1:
+                    it['item'] = base + page['file']
+                elif link:
+                    it['item'] = base + link.replace('index.html', '')
+                items.append(it)
+            blocks.append({'@context': 'https://schema.org', '@type': 'BreadcrumbList', 'itemListElement': items})
+        if page.get('faq'):
+            faq = json.load(open(os.path.join(I18N_DIR, lang, page['faq']), encoding='utf-8'))
+            blocks.append({'@context': 'https://schema.org', '@type': 'FAQPage', 'mainEntity': [
+                {'@type': 'Question', 'name': q['q'], 'acceptedAnswer': {'@type': 'Answer', 'text': ' '.join(q['a'])}} for q in faq]})
+        return ''.join('<script type="application/ld+json">%s</script>\n' % json.dumps(b, ensure_ascii=False) for b in blocks)
     if page['file'] == 'index.html':
         blocks.append({
             '@context': 'https://schema.org', '@type': 'Organization', 'name': 'ALBEDIA', 'url': SITE_URL + '/',
@@ -845,21 +1024,28 @@ def faq_html(items):
 
 # ------------------------------------------------------------------ assemblage
 def page_body(page, ctx):
+    lang = ctx.lang
     if page.get('city'):
         main = city_page(page['city'])
     elif page.get('sector'):
-        main = sector_page(page['sector'])
-        d = SECTOR_DATA[page['sector']]
+        main = sector_page(page['sector'], ctx)
+        d = (SECTOR_DATA if lang == 'fr' else I18N_SECTORS[lang])[page['sector']]
         page['title'] = d['title']
         page['desc'] = d['desc']
+    elif lang != 'fr':
+        main = open(os.path.join(I18N_DIR, lang, 'pages', page['src']), encoding='utf-8').read()
     else:
         main = open(os.path.join(SRC, 'pages', page['src']), encoding='utf-8').read()
     m = re.search(r'\{\{bg:([a-z0-9-]+)\}\}', main)
     page['lcp'] = m.group(1) if m else None   # photo d'en-tête, préchargée dans le <head>
     if '{{SIMULATEUR}}' in main:
-        main = main.replace('{{SIMULATEUR}}', part('simulateur.html'))
+        main = main.replace('{{SIMULATEUR}}', part('simulateur.html') if lang == 'fr'
+                            else open(os.path.join(I18N_DIR, lang, 'simulateur.html'), encoding='utf-8').read())
     if '{{FAQ_PAGE}}' in main:
-        main = main.replace('{{FAQ_PAGE}}', faq_html(json.load(open(os.path.join(SRC, 'pages', page['faq']), encoding='utf-8'))))
+        base = os.path.join(SRC, 'pages') if lang == 'fr' else os.path.join(I18N_DIR, lang)
+        main = main.replace('{{FAQ_PAGE}}', faq_html(json.load(open(os.path.join(base, page['faq']), encoding='utf-8'))))
+    if lang != 'fr' and '{{FAQ_HOME}}' in main:
+        main = main.replace('{{FAQ_HOME}}', faq_html(json.load(open(os.path.join(I18N_DIR, lang, 'faq-home.json'), encoding='utf-8'))))
     if '{{FAQ_FULL}}' in main or '{{FAQ_HOME}}' in main:
         faq = json.load(open(os.path.join(SRC, 'pages', 'faq.json'), encoding='utf-8'))
         main = main.replace('{{FAQ_FULL}}', faq_html(faq))
@@ -868,7 +1054,7 @@ def page_body(page, ctx):
     if page.get('cta'):
         parts.append(cta_band(ctx))
     parts.append(footer(ctx))
-    return typo(expand('\n'.join(parts), ctx))
+    return typo(expand('\n'.join(parts), ctx), lang)
 
 
 def preload_photo(page, ctx):
@@ -881,39 +1067,54 @@ def preload_photo(page, ctx):
     return '<link rel="preload" as="image" type="image/webp" imagesrcset="%s" imagesizes="100vw" fetchpriority="high">\n' % srcset
 
 
+def alternates(page):
+    """Balises hreflang des pages qui existent en français, en anglais, en italien et en espagnol."""
+    if page['file'] not in TRANSLATED:
+        return ''
+    path = '' if page['file'] == 'index.html' else page['file']
+    out = ['<link rel="alternate" hreflang="fr" href="%s/%s">' % (SITE_URL, path)]
+    out += ['<link rel="alternate" hreflang="%s" href="%s/%s/%s">' % (l, SITE_URL, l, path) for l in I18N_LANGS]
+    out.append('<link rel="alternate" hreflang="x-default" href="%s/%s">' % (SITE_URL, path))
+    return '\n'.join(out) + '\n'
+
+
 def head_site(page, ctx):
     p = ctx.prefix
-    url = SITE_URL + '/' + ('' if page['file'] == 'index.html' else page['file'])
+    lang = ctx.lang
+    url = SITE_URL + '/' + ('' if lang == 'fr' else lang + '/') + ('' if page['file'] == 'index.html' else page['file'])
     robots = 'noindex, follow' if page.get('noindex') else 'index, follow'
     canonical = '' if page.get('noindex') else '<link rel="canonical" href="%s">\n' % url
     og_title = page.get('og') or page['title'].replace(' | ALBEDIA', '')
     gsc = ('<meta name="google-site-verification" content="%s">\n' % GSC_VERIFICATION
-           if GSC_VERIFICATION and page['file'] == 'index.html' else '')
+           if GSC_VERIFICATION and page['file'] == 'index.html' and lang == 'fr' else '')
+    html_lang = 'fr' if lang == 'fr' else UI[lang]['html_lang']
+    og_locale = 'fr_FR' if lang == 'fr' else UI[lang]['og_locale']
+    og_alt = 'ALBEDIA, cool roof pour toitures professionnelles' if lang == 'fr' else UI[lang]['og_alt']
     return f'''<!doctype html>
-<html lang="fr">
+<html lang="{html_lang}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{esc(page['title'])}</title>
 <meta name="description" content="{esc(page['desc'])}">
 <meta name="robots" content="{robots}">
-{gsc}{canonical}<meta name="theme-color" content="#0F2B46">
+{gsc}{canonical}{alternates(page)}<meta name="theme-color" content="#0F2B46">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ALBEDIA">
-<meta property="og:locale" content="fr_FR">
+<meta property="og:locale" content="{og_locale}">
 <meta property="og:title" content="{esc(og_title)}">
 <meta property="og:description" content="{esc(page['desc'])}">
 <meta property="og:url" content="{url}">
 <meta property="og:image" content="{SITE_URL}/assets/img/og-albedia.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="ALBEDIA, cool roof pour toitures professionnelles">
+<meta property="og:image:alt" content="{esc(og_alt)}">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="{p}favicon.ico" sizes="32x32">
 <link rel="icon" href="{p}favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{p}apple-touch-icon.png">
 <link rel="preload" href="{p}assets/fonts/plus-jakarta-sans-var.woff2" as="font" type="font/woff2" crossorigin>
-{preload_photo(page, ctx)}<link rel="stylesheet" href="{p}assets/css/style.css?v=8">
+{preload_photo(page, ctx)}<link rel="stylesheet" href="{p}assets/css/style.css?v=9">
 {jsonld(page)}</head>
 <body>
 '''
@@ -924,18 +1125,19 @@ GFONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
           '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400..800&amp;display=swap">')
 
 
-def head_preview(page, is_main):
+def head_preview(page, is_main, ctx):
     if is_main:
         return ('<title>Site albedia.eu</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n'
-                + GFONTS + '\n<link rel="stylesheet" href="assets/css/style.css?v=8">\n')
+                + GFONTS + '\n<link rel="stylesheet" href="assets/css/style.css?v=9">\n')
+    html_lang = 'fr' if ctx.lang == 'fr' else UI[ctx.lang]['html_lang']
     return f'''<!doctype html>
-<html lang="fr">
+<html lang="{html_lang}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{esc(page['title'])}</title>
 {GFONTS}
-<link rel="stylesheet" href="assets/css/style.css?v=8">
+<link rel="stylesheet" href="{ctx.prefix}assets/css/style.css?v=9">
 </head>
 <body>
 '''
@@ -979,20 +1181,27 @@ def build(variant, out):
         shutil.copy(os.path.join(SRC, 'php', 'simulation.php'), os.path.join(out, 'simulation.php'))
         shutil.copy(os.path.join(SRC, 'php', '.htaccess'), os.path.join(out, '.htaccess'))
     written = []
-    for page in PAGES:
+    for l in I18N_LANGS:
+        os.makedirs(os.path.join(out, l), exist_ok=True)
+    for page in PAGES + LANG_PAGES:
         if variant == 'preview' and page['file'] == '404.html':
             continue
         ctx = Ctx(variant, page)
         body = page_body(page, ctx)
         p = ctx.prefix
-        script = '<script src="%sassets/js/main.js?v=8" defer></script>\n' % p
+        script = '<script src="%sassets/js/main.js?v=9" defer></script>\n' % p
+        if ctx.lang != 'fr':
+            # textes du simulateur et des formulaires pour main.js
+            js = json.load(open(os.path.join(I18N_DIR, ctx.lang, 'js.json'), encoding='utf-8'))
+            script = ('<script type="application/json" id="i18n-js">%s</script>\n' % json.dumps(js, ensure_ascii=False).replace('</', '<\\/')) + script
+        rel = page['file'] if ctx.lang == 'fr' else ctx.lang + '/' + page['file']
         if variant == 'site':
             doc = head_site(page, ctx) + body + '\n' + script + '</body>\n</html>\n'
         else:
-            is_main = page['file'] == 'index.html'
-            doc = head_preview(page, is_main) + body + '\n' + script + ('' if is_main else '</body>\n</html>\n')
-        open(os.path.join(out, page['file']), 'w', encoding='utf-8').write(doc)
-        written.append(page['file'])
+            is_main = page['file'] == 'index.html' and ctx.lang == 'fr'
+            doc = head_preview(page, is_main, ctx) + body + '\n' + script + ('' if is_main else '</body>\n</html>\n')
+        open(os.path.join(out, rel), 'w', encoding='utf-8').write(doc)
+        written.append(rel)
     if variant == 'site':
         urls = [pg['file'] for pg in PAGES if not pg.get('noindex') and pg['file'] not in ('mentions-legales.html', 'confidentialite.html')]
         sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
@@ -1000,6 +1209,11 @@ def build(variant, out):
             loc = SITE_URL + '/' + ('' if f == 'index.html' else f)
             pg = next(x for x in PAGES if x['file'] == f)
             prio = pg.get('prio') or ('1.0' if f == 'index.html' else ('0.9' if f in ('guide-cool-roof.html', 'solutions.html', 'devis.html') else '0.7'))
+            sm.append('  <url><loc>%s</loc><lastmod>%s</lastmod><priority>%s</priority></url>' % (loc, LASTMOD, prio))
+        for pg in LANG_PAGES:
+            f = pg['file']
+            loc = '%s/%s/%s' % (SITE_URL, pg['lang'], '' if f == 'index.html' else f)
+            prio = pg.get('prio') or ('0.8' if f == 'index.html' else '0.6')
             sm.append('  <url><loc>%s</loc><lastmod>%s</lastmod><priority>%s</priority></url>' % (loc, LASTMOD, prio))
         sm.append('</urlset>')
         open(os.path.join(out, 'sitemap.xml'), 'w').write('\n'.join(sm) + '\n')

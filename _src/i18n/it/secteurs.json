@@ -1,0 +1,146 @@
+{
+  "industrie": {
+    "title": "Cool roof per edifici industriali e officine | ALBEDIA",
+    "desc": "Coperture riflettenti per officine e siti produttivi: meno calore dal tetto e postazioni di lavoro più sopportabili in estate.",
+    "h1": "Il cool roof per gli edifici industriali",
+    "lead": "Officine e siti produttivi sommano il calore delle macchine a quello della copertura. Una copertura riflettente riduce il secondo, su tutta la superficie dell’edificio.",
+    "enjeux_titre": "Quando la copertura si aggiunge al calore dei processi",
+    "enjeux": [
+      "In un’officina, la copertura è spesso la superficie più esposta al sole. Scura e poco isolata, somma i suoi apporti di calore a quelli di macchine, forni e compressori. Durante le ondate di calore, le condizioni di lavoro peggiorano rapidamente.",
+      "Ridurre il calore che entra dalla copertura aiuta a mantenere temperature più sopportabili per gli operatori, alleggerisce il carico degli impianti di ventilazione o raffrescamento e protegge i processi e le scorte sensibili alla temperatura."
+    ],
+    "batiments": ["Officine di produzione e di manutenzione", "Siti agroalimentari e farmaceutici", "Capannoni di stoccaggio di materie prime e prodotti finiti", "Locali tecnici e sale compressori"],
+    "benefices": [
+      ["thermo", "Officine più sopportabili", "Meno calore irradiato dalla copertura sulle postazioni di lavoro."],
+      ["clim", "Raffrescamento meno sollecitato", "Se il sito è climatizzato o ventilato, gli impianti lavorano meno nei picchi di calore."],
+      ["couches", "Una copertura che dura", "Escursioni termiche ridotte per il manto di copertura e l’impermeabilizzazione, giorno dopo giorno."]
+    ],
+    "points": [
+      "La natura e lo stato della copertura: lamiera grecata, impermeabilizzazione bituminosa o sintetica, fibrocemento",
+      "Evacuatori di fumo, lucernari, canalizzazioni e impianti da proteggere durante i lavori",
+      "I vincoli del sito: accessi, piano di sicurezza, zone a rischio e orari di intervento",
+      "La classe di reazione al fuoco richiesta per la copertura, in particolare negli stabilimenti soggetti a normative specifiche"
+    ],
+    "aides": "In Francia, la scheda CEE BAT-EN-112 riguarda gli edifici terziari a uso commerciale. Per un sito industriale, valutiamo caso per caso gli incentivi che possono applicarsi, in Francia o negli altri paesi in cui interveniamo."
+  },
+  "logistique": {
+    "title": "Cool roof per magazzini e piattaforme logistiche | ALBEDIA",
+    "desc": "Coperture riflettenti per magazzini e piattaforme logistiche: limitare il calore che si accumula sotto la copertura, per il personale e per le merci.",
+    "h1": "Il cool roof per magazzini e piattaforme logistiche",
+    "lead": "I magazzini hanno coperture molto estese, spesso poco isolate. Renderle riflettenti limita il calore che si accumula sotto il manto di copertura.",
+    "enjeux_titre": "Migliaia di metri quadrati in pieno sole",
+    "enjeux": [
+      "Un magazzino a un solo piano significa spesso diverse migliaia di metri quadrati di copertura esposti al sole, sopra un volume raramente climatizzato. In estate, il calore si accumula sotto la copertura e si diffonde nelle zone di preparazione e di stoccaggio.",
+      "Per gli addetti al picking, i carrellisti e le merci, ogni grado conta. Il cool roof agisce alla fonte, su tutta la copertura, senza cambiare il funzionamento dell’edificio."
+    ],
+    "batiments": ["Magazzini e centri di distribuzione", "Hub di smistamento pacchi e piattaforme cross-docking", "Stoccaggio di prodotti sensibili al calore", "Zone a temperatura controllata e uffici annessi"],
+    "benefices": [
+      ["thermo", "Condizioni di lavoro più sopportabili", "Meno calore irradiato verso le corsie, le banchine di carico e le postazioni di preparazione."],
+      ["bouclier", "Merci meglio protette", "Meno calore accumulato nelle zone di stoccaggio durante le ondate di calore."],
+      ["clim", "Meno freddo da produrre", "Uffici, zone a temperatura controllata e locali tecnici consumano meno energia."]
+    ],
+    "points": [
+      "La superficie e lo stato della copertura, spesso in lamiera grecata o con impermeabilizzazione bituminosa",
+      "Lucernari ed evacuatori di fumo e calore da preservare",
+      "Gli eventuali pannelli fotovoltaici e i relativi percorsi",
+      "Gli accessi in copertura e la sicurezza degli addetti"
+    ],
+    "aides": "In Francia, i magazzini rientrano nel decreto terziario a partire da 1000 m² di attività terziaria, e ridurre il fabbisogno di raffrescamento delle zone climatizzate può contribuire agli obiettivi. La scheda CEE BAT-EN-112 riguarda gli edifici terziari a uso commerciale: verifichiamo la vostra ammissibilità. In Svizzera, Italia e Spagna le regole sono diverse: esaminiamo il vostro caso durante lo studio."
+  },
+  "distribution": {
+    "title": "Cool roof per negozi e grande distribuzione | ALBEDIA",
+    "desc": "Coperture riflettenti per negozi e superfici di vendita climatizzate: meno calore da smaltire, climatizzazione meno sollecitata, possibili incentivi.",
+    "h1": "Il cool roof per negozi e superfici di vendita",
+    "lead": "Negozi e supermercati sono quasi sempre climatizzati: ogni unità di calore che non entra dalla copertura è calore che la climatizzazione non deve smaltire.",
+    "enjeux_titre": "Una climatizzazione che lotta contro il sole",
+    "enjeux": [
+      "Una superficie di vendita somma una copertura estesa, l’illuminazione, i banchi frigo e un grande afflusso di persone. In estate, la climatizzazione funziona a pieno regime per mantenere il comfort di clienti e personale.",
+      "Limitando gli apporti solari dalla copertura, il cool roof riduce il carico di raffrescamento. In Francia, è proprio il caso previsto dalla scheda CEE BAT-EN-112, che può finanziare una parte dei lavori."
+    ],
+    "batiments": ["Supermercati e ipermercati", "Negozi specializzati e showroom", "Gallerie e parchi commerciali", "Punti di ritiro e magazzini annessi"],
+    "benefices": [
+      ["clim", "Climatizzazione meno sollecitata", "Meno calore da smaltire e picchi di potenza ridotti durante le ondate di calore."],
+      ["thermo", "Più comfort nel punto vendita", "Per i clienti come per il personale, soprattutto sotto coperture poco isolate."],
+      ["euro", "Lavori finanziabili", "In Francia, a determinate condizioni, l’incentivo CEE BAT-EN-112 può coprire una parte dell’investimento."]
+    ],
+    "points": [
+      "L’impianto di riscaldamento e raffrescamento: in Francia, la scheda BAT-EN-112 richiede un sistema a pompa di calore",
+      "Gli impianti in copertura: gruppi frigoriferi, unità di trattamento aria, canalizzazioni",
+      "L’organizzazione dei lavori fuori dagli orari di apertura, se necessario",
+      "La reazione al fuoco della copertura negli edifici aperti al pubblico"
+    ],
+    "aides": "In Francia, la scheda CEE BAT-EN-112 può applicarsi se il vostro negozio è un edificio terziario a uso commerciale, con la copertura sopra un volume climatizzato e riscaldamento e raffrescamento a pompa di calore. Le superfici di 1000 m² e oltre rientrano anche nel decreto terziario. Negli altri paesi, esaminiamo gli incentivi disponibili per il vostro progetto."
+  },
+  "tertiaire": {
+    "title": "Cool roof per uffici ed edifici terziari | ALBEDIA",
+    "desc": "Coperture riflettenti per uffici ed edifici terziari: ridurre il fabbisogno di climatizzazione e abbassare i consumi energetici dell’edificio.",
+    "h1": "Il cool roof per uffici ed edifici terziari",
+    "lead": "Per un edificio per uffici climatizzato, la copertura è una leva semplice per ridurre il fabbisogno di raffrescamento, accanto alle altre azioni di risparmio energetico.",
+    "enjeux_titre": "Gli ultimi piani in prima linea",
+    "enjeux": [
+      "Gli ultimi piani e gli edifici a un solo livello ricevono direttamente il calore della copertura. Negli uffici climatizzati, ciò significa consumi estivi elevati. In quelli senza climatizzazione, un disagio che pesa sul lavoro.",
+      "Il cool roof è un intervento rapido, senza lavori all’interno dell’edificio. Il suo interesse dipende dal peso della climatizzazione nei consumi: lo valutiamo prima di proporvelo."
+    ],
+    "batiments": ["Edifici per uffici con tetto piano", "Locali professionali e misti", "Open space e call center climatizzati", "Sale server e locali tecnici"],
+    "benefices": [
+      ["clim", "Consumi estivi più bassi", "Meno apporti solari dalla copertura, quindi meno freddo da produrre."],
+      ["thermo", "Ultimi piani più confortevoli", "I piani sotto la copertura sono i primi a beneficiare di un tetto più fresco."],
+      ["document", "Un’azione di risparmio energetico", "Una misura di riduzione dei consumi da documentare nel vostro piano di azioni sull’energia."]
+    ],
+    "points": [
+      "Il peso del riscaldamento e della climatizzazione nei consumi",
+      "Il livello di isolamento della copertura",
+      "Gli impianti tecnici installati sul tetto",
+      "Le regole del condominio o del contratto di locazione per i lavori in copertura"
+    ],
+    "aides": "In Francia, il decreto terziario impone agli edifici di 1000 m² e oltre di ridurre il consumo di energia finale del 40% nel 2030, del 50% nel 2040 e del 60% nel 2050, e l’incentivo CEE BAT-EN-112 può applicarsi agli edifici terziari a uso commerciale: verifichiamo il vostro caso. Negli altri paesi, verifichiamo cosa si applica al vostro edificio."
+  },
+  "collectivites": {
+    "title": "Cool roof per scuole, palestre ed edifici pubblici | ALBEDIA",
+    "desc": "Coperture riflettenti per gli edifici pubblici: scuole, palestre e magazzini comunali che restano utilizzabili durante le ondate di calore.",
+    "h1": "Il cool roof per gli edifici pubblici",
+    "lead": "Scuole, palestre, magazzini comunali: edifici che devono restare utilizzabili durante i periodi di caldo intenso.",
+    "enjeux_titre": "Strutture pubbliche utilizzabili anche in estate",
+    "enjeux": [
+      "Le ondate di calore mettono alla prova gli edifici pubblici, spesso poco o per nulla climatizzati. Sotto una copertura scura, aule, palestre e spazi di accoglienza diventano difficili da utilizzare.",
+      "Il cool roof è una misura di adattamento semplice, applicabile alle coperture esistenti. Su scala di quartiere, tetti più chiari contribuiscono anche a limitare le isole di calore urbane."
+    ],
+    "batiments": ["Scuole primarie e secondarie", "Palestre e impianti sportivi", "Magazzini comunali e centri tecnici", "Sale polivalenti e luoghi culturali"],
+    "benefices": [
+      ["thermo", "Edifici utilizzabili in estate", "Meno calore sotto le coperture di aule, palestre e spazi di accoglienza."],
+      ["collectivites", "Una misura di adattamento concreta", "Un’azione visibile contro il caldo estremo, applicata agli edifici esistenti."],
+      ["clim", "Consumi sotto controllo", "Per i locali climatizzati, meno freddo da produrre."]
+    ],
+    "points": [
+      "I requisiti di reazione al fuoco della copertura negli edifici aperti al pubblico",
+      "Il calendario dei lavori, ad esempio durante le vacanze scolastiche",
+      "Lo stato e la natura delle coperture del vostro patrimonio",
+      "La ricerca dell’amianto negli edifici più vecchi, prima di qualsiasi intervento"
+    ],
+    "aides": "In Francia, gli edifici pubblici che ospitano 1000 m² o più di attività terziarie sono soggetti al decreto terziario. Ovunque si trovino i vostri edifici, vi aiutiamo a documentare l’interesse del cool roof nel vostro piano di azioni."
+  },
+  "agricole": {
+    "title": "Cool roof per edifici agricoli | ALBEDIA",
+    "desc": "Coperture riflettenti per edifici di allevamento, stoccaggio e trasformazione: meno calore sotto il tetto per animali, raccolti e persone.",
+    "h1": "Il cool roof per gli edifici agricoli",
+    "lead": "Edifici di allevamento, stoccaggio o trasformazione: limitare il calore che entra dalla copertura protegge gli animali, i raccolti e le persone che vi lavorano.",
+    "enjeux_titre": "Grandi coperture leggere, raramente isolate",
+    "enjeux": [
+      "Gli edifici agricoli hanno spesso grandi coperture leggere, in lamiera grecata o in fibrocemento, senza isolamento. In estate, il calore si accumula rapidamente.",
+      "Una copertura riflettente riduce gli apporti solari senza modificare la struttura dell’edificio. Il suo interesse si valuta caso per caso, in base all’utilizzo e alla ventilazione dell’edificio."
+    ],
+    "batiments": ["Edifici di allevamento", "Stoccaggio di raccolti e foraggi", "Cantine e locali di trasformazione", "Capannoni e officine agricole"],
+    "benefices": [
+      ["thermo", "Meno calore sotto la copertura", "Temperature più sopportabili per gli animali e per le persone."],
+      ["bouclier", "Raccolti meglio protetti", "Meno calore nelle zone di stoccaggio e di trasformazione."],
+      ["chantier", "Nessuna demolizione", "Il rivestimento si applica sul manto di copertura esistente."]
+    ],
+    "points": [
+      "Le lastre in fibrocemento: la ricerca dell’amianto è indispensabile prima dei lavori",
+      "La ventilazione dell’edificio, da cui dipende il guadagno ottenuto",
+      "La resistenza della copertura e l’accesso in sicurezza",
+      "Le lastre traslucide da preservare"
+    ],
+    "aides": "Gli incentivi variano in base all’attività, alla forma dell’azienda agricola e al paese. Li esaminiamo con voi durante lo studio."
+  }
+}

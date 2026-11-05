@@ -1,0 +1,81 @@
+<section class="page-head">
+<div class="wrap">
+{{BREADCRUMB}}
+{{EYEBROW}}
+<h1>Solicite un presupuesto</h1>
+<p class="lead">Describa su edificio en pocas líneas. Nos pondremos en contacto con usted para precisar sus necesidades y organizar la visita de su cubierta.</p>
+</div>
+</section>
+
+<section class="band" aria-label="Formulario de solicitud de presupuesto">
+<div class="wrap devis">
+<div class="form-card">
+<div id="merci" class="target-msg form-status ok" role="status">Gracias, su solicitud se ha enviado. Nos pondremos en contacto con usted en breve.</div>
+<div id="erreur" class="target-msg form-status err" role="alert">No se ha podido enviar su solicitud. Vuelva a intentarlo o escríbanos directamente a {{EMAIL}}.</div>
+<form id="devis-form" class="devis-form" action="contact.php" method="post"{{PREVIEW_ATTR}}>
+<fieldset>
+<legend>Sus datos</legend>
+<div class="form-grid">
+<div class="field"><label for="f-nom">Nombre y apellidos</label><input id="f-nom" name="nom" type="text" autocomplete="name" required maxlength="100"></div>
+<div class="field"><label for="f-entreprise">Empresa u organismo</label><input id="f-entreprise" name="entreprise" type="text" autocomplete="organization" required maxlength="120"></div>
+<div class="field"><label for="f-email">Correo electrónico profesional</label><input id="f-email" name="email" type="email" autocomplete="email" required maxlength="160"></div>
+<div class="field"><label for="f-tel">Teléfono <span class="opt">(opcional)</span></label><input id="f-tel" name="telephone" type="tel" autocomplete="tel" maxlength="30"></div>
+</div>
+</fieldset>
+<fieldset>
+<legend>Su edificio</legend>
+<div class="form-grid">
+<div class="field"><label for="f-secteur">Sector de actividad</label><select id="f-secteur" name="secteur">{{SECTOR_OPTIONS}}</select></div>
+<div class="field"><label for="f-surface">Superficie de cubierta (m²) <span class="opt">(aproximada)</span></label><input id="f-surface" name="surface" type="number" min="0" max="1000000" step="1" inputmode="numeric"></div>
+<div class="field"><label for="f-toiture">Tipo de cubierta</label><select id="f-toiture" name="toiture"><option value="">Elija…</option><option value="Bac acier">Chapa grecada</option><option value="Étanchéité bitumineuse">Impermeabilización bituminosa</option><option value="Membrane synthétique (PVC, TPO, EPDM)">Membrana sintética (PVC, TPO, EPDM)</option><option value="Béton">Hormigón</option><option value="Fibres-ciment">Fibrocemento</option><option value="Plusieurs types">Varios tipos</option><option value="Je ne sais pas">No lo sé</option></select></div>
+<div class="field"><label for="f-pays">País del edificio</label><select id="f-pays" name="pays"><option value="">Elija…</option><option value="Espagne">España</option><option value="France">Francia</option><option value="Italie">Italia</option><option value="Suisse">Suiza</option><option value="Autre">Otro</option></select></div>
+<div class="field"><label for="f-cp">Código postal del edificio</label><input id="f-cp" name="code_postal" type="text" autocomplete="postal-code" maxlength="10"></div>
+<div class="field field--full"><span class="label" id="f-clim-label">¿El edificio está climatizado?</span>
+<div class="choices" role="radiogroup" aria-labelledby="f-clim-label">
+<label class="choice"><input type="radio" name="climatisation" value="Oui"><span>Sí</span></label>
+<label class="choice"><input type="radio" name="climatisation" value="En partie"><span>En parte</span></label>
+<label class="choice"><input type="radio" name="climatisation" value="Non"><span>No</span></label>
+<label class="choice"><input type="radio" name="climatisation" value="Je ne sais pas"><span>No lo sé</span></label>
+</div></div>
+<div class="field field--full"><label for="f-message">Su proyecto <span class="opt">(opcional)</span></label><textarea id="f-message" name="message" rows="5" maxlength="5000" placeholder="Uso del edificio, problemas de calor observados, plazos deseados…"></textarea></div>
+</div>
+</fieldset>
+<div class="hp" aria-hidden="true"><label for="f-site">No rellene este campo</label><input id="f-site" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+<input type="hidden" name="elapsed" value="">
+<input type="hidden" name="langue" value="es">
+<div class="form-foot">
+<button class="btn btn--sun" type="submit">Enviar mi solicitud{{icon:fleche}}</button>
+<p class="form-legal">Sus datos solo se utilizan para responder a su solicitud. <a href="confidentialite.html" hreflang="fr">Más información sobre sus datos (en francés)</a></p>
+</div>
+<div class="form-status" id="form-status" role="status" aria-live="polite" hidden></div>
+</form>
+</div>
+<aside class="devis-aside">
+<div class="aside-block">
+<h2 class="h3">Lo que nos ayuda a responderle</h2>
+<ul class="checklist">
+<li>{{icon:check}}<span>La superficie aproximada y el tipo de cubierta</span></li>
+<li>{{icon:check}}<span>El uso del edificio y sus horarios</span></li>
+<li>{{icon:check}}<span>Si hay climatización y cómo se calefacta el edificio</span></li>
+<li>{{icon:check}}<span>Algunas fotos de la cubierta, que puede adjuntar al responder a nuestro correo</span></li>
+</ul>
+</div>
+<div class="aside-block">
+<h2 class="h3">Después de su solicitud</h2>
+<ol class="mini-steps">
+<li>Nos ponemos en contacto con usted para precisar sus necesidades.</li>
+<li>Visitamos la cubierta.</li>
+<li>Le entregamos el estudio y el presupuesto.</li>
+</ol>
+</div>
+<div class="aside-block">
+<h2 class="h3">Contacto</h2>
+<p class="contact-line">{{icon:mail}}{{EMAIL_LINK}}</p>
+<p class="contact-line">{{icon:tel}}{{PHONE_LINK}}</p>
+<p class="contact-line">{{icon:document}}<a href="{{PLAQUETTE_HREF}}"{{PLAQUETTE_ATTR}} hreflang="fr">Nuestro folleto (en francés, {{PLAQUETTE_TAILLE}})</a></p>
+<p class="muted">Trabajamos {{AREA}}.</p>
+<p class="muted">ALBEDIA solo trabaja en edificios profesionales, no en viviendas particulares.</p>
+</div>
+</aside>
+</div>
+</section>

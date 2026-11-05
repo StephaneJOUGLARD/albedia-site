@@ -1,0 +1,248 @@
+{
+  "industrie": {
+    "title": "Cool roofs for industrial buildings and workshops | ALBEDIA",
+    "desc": "Reflective roofs for workshops and production sites: less heat coming through the roof and more bearable workstations in summer.",
+    "h1": "Cool roofs for industrial buildings",
+    "lead": "Workshops and production sites combine the heat of the machines with the heat of the roof. A reflective roof reduces the second, over the whole surface of the building.",
+    "enjeux_titre": "When the roof adds to the heat of the process",
+    "enjeux": [
+      "In a workshop, the roof is often the largest surface exposed to the sun. Dark and poorly insulated, it adds its heat gains to the heat given off by machines, furnaces and compressors. During heatwaves, working conditions deteriorate quickly.",
+      "Reducing the heat that comes in through the roof helps keep temperatures more bearable for operators, eases the load on ventilation or cooling systems and protects temperature-sensitive processes and stock."
+    ],
+    "batiments": [
+      "Production and maintenance workshops",
+      "Food and pharmaceutical sites",
+      "Storage halls for materials and finished products",
+      "Plant rooms and compressor rooms"
+    ],
+    "benefices": [
+      [
+        "thermo",
+        "More bearable workshops",
+        "Less heat radiated by the roof above the workstations."
+      ],
+      [
+        "clim",
+        "Less strain on cooling",
+        "If the site is air-conditioned or ventilated, the equipment works less during heat peaks."
+      ],
+      [
+        "couches",
+        "A roof that lasts",
+        "Smaller temperature swings for the roof covering and waterproofing, day after day."
+      ]
+    ],
+    "points": [
+      "The type and condition of the roof: metal deck, bituminous or synthetic waterproofing, fibre cement",
+      "Smoke vents, rooflights, ducts and equipment to protect during the works",
+      "Site constraints: access, prevention plan, hazardous areas and working hours",
+      "The fire performance required for the roof, especially on classified industrial sites"
+    ],
+    "aides": "In France, CEE sheet BAT-EN-112 targets tertiary buildings in commercial use. For an industrial site, we review case by case the incentive schemes that may apply, in France or in the other countries where we work."
+  },
+  "logistique": {
+    "title": "Cool roofs for warehouses and logistics hubs | ALBEDIA",
+    "desc": "Reflective roofs for warehouses and logistics hubs: limit the heat that builds up under the roof, for staff and for goods.",
+    "h1": "Cool roofs for warehouses and logistics hubs",
+    "lead": "Warehouses have huge roofs that are often poorly insulated. Making them reflective limits the heat that builds up under the roof covering.",
+    "enjeux_titre": "Thousands of square metres in full sun",
+    "enjeux": [
+      "A single-storey warehouse often means several thousand square metres of roof exposed to the sun, above a volume that is rarely air-conditioned. In summer, heat builds up under the roof and spreads to the picking and storage areas.",
+      "For order pickers, forklift drivers and goods, every degree counts. A cool roof acts at the source, over the whole roof, without changing how the building is operated."
+    ],
+    "batiments": [
+      "Warehouses and distribution centres",
+      "Parcel hubs and cross-docking platforms",
+      "Storage of heat-sensitive products",
+      "Temperature-controlled areas and adjoining offices"
+    ],
+    "benefices": [
+      [
+        "thermo",
+        "More bearable working conditions",
+        "Less heat radiated towards the aisles, loading docks and picking stations."
+      ],
+      [
+        "bouclier",
+        "Better protected goods",
+        "Less heat building up in storage areas during heatwaves."
+      ],
+      [
+        "clim",
+        "Less cooling to produce",
+        "Offices, temperature-controlled areas and plant rooms need less energy."
+      ]
+    ],
+    "points": [
+      "The area and condition of the roof, often metal deck or bituminous waterproofing",
+      "Rooflights and smoke vents to preserve",
+      "Any solar panels and their walkways",
+      "Roof access and the safety of the people working on it"
+    ],
+    "aides": "In France, warehouses fall under the tertiary decree from 1,000 m² of tertiary activity, and reducing the cooling needs of air-conditioned areas can help meet its targets. CEE sheet BAT-EN-112 targets tertiary buildings in commercial use: we check your eligibility. Rules differ in Switzerland, Italy and Spain: we review your case during the study."
+  },
+  "distribution": {
+    "title": "Cool roofs for shops and retail stores | ALBEDIA",
+    "desc": "Reflective roofs for air-conditioned shops and sales floors: less heat to remove, air conditioning under less strain, possible incentives.",
+    "h1": "Cool roofs for shops and sales floors",
+    "lead": "Shops and supermarkets are almost always air-conditioned: every unit of heat that does not come in through the roof is one the air conditioning does not have to remove.",
+    "enjeux_titre": "Air conditioning working against the sun",
+    "enjeux": [
+      "A sales floor combines a large roof, lighting, refrigeration equipment and many visitors. In summer, the air conditioning runs at full power to keep customers and staff comfortable.",
+      "By limiting the solar gains through the roof, a cool roof reduces the cooling load. In France, this is exactly the case covered by the CEE scheme BAT-EN-112, which can fund part of the works."
+    ],
+    "batiments": [
+      "Supermarkets and hypermarkets",
+      "Specialist stores and showrooms",
+      "Shopping arcades and retail parks",
+      "Click-and-collect points and adjoining stockrooms"
+    ],
+    "benefices": [
+      [
+        "clim",
+        "Air conditioning under less strain",
+        "Less heat to remove and lower power peaks during heatwaves."
+      ],
+      [
+        "thermo",
+        "More comfort in store",
+        "For customers and staff alike, especially under poorly insulated roofs."
+      ],
+      [
+        "euro",
+        "Works that can be funded",
+        "In France, under conditions, the CEE bonus BAT-EN-112 can cover part of the investment."
+      ]
+    ],
+    "points": [
+      "The heating and cooling system: in France, sheet BAT-EN-112 requires a heat pump system",
+      "Rooftop equipment: chillers, air handling units, ducts",
+      "Organising the works outside opening hours if necessary",
+      "The fire performance of the roof for buildings open to the public"
+    ],
+    "aides": "In France, CEE sheet BAT-EN-112 can apply if your shop is a tertiary building in commercial use, with the roof above an air-conditioned volume and heating and cooling by heat pump. Premises of 1,000 m² and more are also subject to the tertiary decree. In the other countries, we review the incentives available for your project."
+  },
+  "tertiaire": {
+    "title": "Cool roofs for offices and service buildings | ALBEDIA",
+    "desc": "Reflective roofs for offices and service buildings: reduce cooling needs and lower the energy consumption of the building.",
+    "h1": "Cool roofs for offices and service buildings",
+    "lead": "For an air-conditioned office building, the roof is a simple lever to reduce cooling needs, alongside the other energy-saving actions.",
+    "enjeux_titre": "Top floors on the front line",
+    "enjeux": [
+      "Top floors and single-storey buildings take the heat of the roof directly. In air-conditioned offices, this means high summer consumption. In offices without air conditioning, it means discomfort that weighs on work.",
+      "A cool roof is a quick action to carry out, with no work inside the building. Its value depends on the share of air conditioning in the building's consumption: we assess it before proposing it to you."
+    ],
+    "batiments": [
+      "Office buildings with flat roofs",
+      "Business and mixed-use premises",
+      "Air-conditioned open-plan offices and call centres",
+      "Server rooms and plant rooms"
+    ],
+    "benefices": [
+      [
+        "clim",
+        "Lower summer consumption",
+        "Fewer solar gains through the roof, so less cooling to produce."
+      ],
+      [
+        "thermo",
+        "More comfortable top floors",
+        "The floors under the roof are the first to benefit from a cooler roof."
+      ],
+      [
+        "document",
+        "An energy-saving action",
+        "A consumption-reduction measure to document in your energy action plan."
+      ]
+    ],
+    "points": [
+      "The share of heating and cooling in the consumption",
+      "The insulation level of the roof",
+      "Technical equipment installed on the roof terrace",
+      "Co-ownership or lease rules for work on the roof"
+    ],
+    "aides": "In France, the tertiary decree requires buildings of 1,000 m² and more to cut their final energy consumption by 40% in 2030, 50% in 2040 and 60% in 2050, and the CEE bonus BAT-EN-112 can apply to tertiary buildings in commercial use: we check your case. In the other countries, we check what applies to your building."
+  },
+  "collectivites": {
+    "title": "Cool roofs for schools, sports halls and public buildings | ALBEDIA",
+    "desc": "Reflective roofs for public buildings: schools, sports halls and municipal workshops that stay usable during heatwaves.",
+    "h1": "Cool roofs for public buildings",
+    "lead": "Schools, sports halls, municipal workshops: buildings that must remain usable during periods of intense heat.",
+    "enjeux_titre": "Keeping public facilities usable in summer",
+    "enjeux": [
+      "Heatwaves put public buildings to the test, as they often have little or no air conditioning. Under a dark roof, classrooms, sports halls and reception areas become hard to use.",
+      "A cool roof is a simple adaptation measure that can be applied to existing roofs. At neighbourhood scale, lighter roofs also help limit urban heat islands."
+    ],
+    "batiments": [
+      "Primary and secondary schools",
+      "Sports halls and facilities",
+      "Municipal workshops and technical centres",
+      "Community halls and cultural venues"
+    ],
+    "benefices": [
+      [
+        "thermo",
+        "Buildings that stay usable in summer",
+        "Less heat under the roofs of classrooms, sports halls and reception areas."
+      ],
+      [
+        "collectivites",
+        "A concrete adaptation measure",
+        "A visible action against extreme heat, applied to your existing buildings."
+      ],
+      [
+        "clim",
+        "Controlled consumption",
+        "For air-conditioned rooms, less cooling to produce."
+      ]
+    ],
+    "points": [
+      "The fire performance requirements for the roof of buildings open to the public",
+      "The timing of the works, for example during school holidays",
+      "The condition and type of the roofs across your buildings",
+      "An asbestos survey for older buildings, before any work"
+    ],
+    "aides": "In France, public buildings housing 1,000 m² or more of tertiary activities are subject to the tertiary decree. Wherever your buildings are, we help you document the value of a cool roof in your action plan."
+  },
+  "agricole": {
+    "title": "Cool roofs for agricultural buildings | ALBEDIA",
+    "desc": "Reflective roofs for livestock, storage and processing buildings: less heat under the roof for animals, crops and people.",
+    "h1": "Cool roofs for agricultural buildings",
+    "lead": "Livestock, storage and processing buildings: limiting the heat that comes in through the roof protects the animals, the crops and the people who work there.",
+    "enjeux_titre": "Large lightweight roofs, rarely insulated",
+    "enjeux": [
+      "Agricultural buildings often have large lightweight roofs, in metal deck or fibre cement, with no insulation. In summer, heat builds up quickly.",
+      "A reflective roof reduces solar gains without changing the structure of the building. Its value is assessed case by case, depending on how the building is used and ventilated."
+    ],
+    "batiments": [
+      "Livestock buildings",
+      "Crop and fodder storage",
+      "Wineries, cellars and processing rooms",
+      "Farm sheds and workshops"
+    ],
+    "benefices": [
+      [
+        "thermo",
+        "Less heat under the roof",
+        "More bearable temperatures for animals and people."
+      ],
+      [
+        "bouclier",
+        "Better protected crops",
+        "Less heat in storage and processing areas."
+      ],
+      [
+        "chantier",
+        "No demolition",
+        "The coating is applied to the existing roof covering."
+      ]
+    ],
+    "points": [
+      "Fibre cement sheets: an asbestos survey is essential before any work",
+      "The ventilation of the building, which determines the gain",
+      "The strength of the roof covering and safe access",
+      "Translucent rooflight sheets to preserve"
+    ],
+    "aides": "Incentives vary with the activity, the status of the farm and the country. We review them with you during the study."
+  }
+}

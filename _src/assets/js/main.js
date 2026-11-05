@@ -2,6 +2,24 @@
 (function () {
   'use strict';
 
+  /* ---------- textes des pages traduites (en/, it/, es/) : le script JSON #i18n-js, produit au build depuis
+     _src/i18n/<langue>/js.json, remplace les textes français ci-dessous (clé absente : texte français) */
+  var I18N = {};
+  try {
+    var i18nEl = document.getElementById('i18n-js');
+    if (i18nEl) I18N = JSON.parse(i18nEl.textContent) || {};
+  } catch (err) { I18N = {}; }
+  var tr = function (cle, fr, vars) {
+    var s = Object.prototype.hasOwnProperty.call(I18N, cle) ? I18N[cle] : fr;
+    if (vars && typeof s === 'string') {
+      s = s.replace(/\{(\w+)\}/g, function (m, k) { return Object.prototype.hasOwnProperty.call(vars, k) ? String(vars[k]) : m; });
+    }
+    return s;
+  };
+  var LOCALE = I18N.locale || 'fr-FR';   // séparateur des milliers
+  var DEC = I18N.dec || ',';             // séparateur décimal
+  var eur = function (n) { return tr('eur', '{n}\u00a0€', { n: n }); };   // « 1 234 € », « €1,234 »
+
   /* ---------- menu principal (mobile) */
   var header = document.querySelector('.site-header');
   var menuBtn = document.querySelector('.menu-btn');
@@ -63,17 +81,17 @@
     var update = function () {
       var a = parseFloat(range.value);
       var r = Math.round(a * 100);
-      out.textContent = a.toFixed(2).replace('.', ',');
-      refTxt.textContent = r + ' %';
-      absTxt.textContent = (100 - r) + ' %';
+      out.textContent = a.toFixed(2).replace('.', DEC);
+      refTxt.textContent = tr('pct', '{n} %', { n: r });
+      absTxt.textContent = tr('pct', '{n} %', { n: 100 - r });
       barRef.style.width = r + '%';
       barAbs.style.width = (100 - r) + '%';
       var t;
-      if (a <= 0.15) t = 'C’est l’ordre de grandeur d’une toiture traditionnelle sombre, qui renvoie 5 à 15 % du rayonnement (US EPA).';
-      else if (a < 0.3) t = 'Comparable à une toiture grise, qui renvoie environ 20 % du rayonnement (Lawrence Berkeley National Laboratory).';
-      else if (a < 0.65) t = 'Zone des toitures claires et des teintes « cool » colorées : une toiture qui renvoie 35 % du soleil reste environ 12 °C plus fraîche qu’une toiture sombre du même aspect (LBNL).';
-      else if (a < 0.8) t = 'Niveau des matériaux cool roof, qui renvoient plus de 65 % du rayonnement (US EPA).';
-      else t = 'Niveau d’une toiture blanche propre, qui renvoie environ 80 % du rayonnement et reste environ 31 °C plus fraîche qu’une toiture grise (LBNL).';
+      if (a <= 0.15) t = tr('albedo_1', 'C’est l’ordre de grandeur d’une toiture traditionnelle sombre, qui renvoie 5 à 15 % du rayonnement (US EPA).');
+      else if (a < 0.3) t = tr('albedo_2', 'Comparable à une toiture grise, qui renvoie environ 20 % du rayonnement (Lawrence Berkeley National Laboratory).');
+      else if (a < 0.65) t = tr('albedo_3', 'Zone des toitures claires et des teintes « cool » colorées : une toiture qui renvoie 35 % du soleil reste environ 12 °C plus fraîche qu’une toiture sombre du même aspect (LBNL).');
+      else if (a < 0.8) t = tr('albedo_4', 'Niveau des matériaux cool roof, qui renvoient plus de 65 % du rayonnement (US EPA).');
+      else t = tr('albedo_5', 'Niveau d’une toiture blanche propre, qui renvoie environ 80 % du rayonnement et reste environ 31 °C plus fraîche qu’une toiture grise (LBNL).');
       msg.textContent = t;
     };
     range.addEventListener('input', update);
@@ -98,7 +116,7 @@
     var MULTI_NIVEAUX = { tertiaire: true, collectivites: true };
     var HAUTEUR_NIVEAU = 3.5;
     var CONSO_MAX = 50000000;
-    var PAYS = { FR: 'France', CH: 'Suisse', IT: 'Italie', ES: 'Espagne' };
+    var PAYS = tr('pays', { FR: 'France', CH: 'Suisse', IT: 'Italie', ES: 'Espagne' });
 
     var sForm = document.getElementById('simu-form');
     var cpInput = document.getElementById('s-cp');
@@ -125,7 +143,7 @@
     var consoManuelle = null;   // null : on affiche l'estimation
     var dernier = {};           // dernier calcul, envoyé avec l'e-mail
 
-    var nf = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 });
+    var nf = new Intl.NumberFormat(LOCALE, { maximumFractionDigits: 0 });
     var fmt = function (x) { return nf.format(x).replace(/[  ]/g, ' '); };
     var arrondi = function (x) {
       if (x >= 100000) return Math.round(x / 1000) * 1000;
@@ -165,18 +183,19 @@
       }
       remplir(consoRange);
       if (document.activeElement !== consoNum) consoNum.value = fmt(Math.round(valeur));
-      consoTag.textContent = consoManuelle === null ? 'Estimation' : 'Votre consommation';
+      consoTag.textContent = consoManuelle === null ? tr('tag_est', 'Estimation') : tr('tag_user', 'Votre consommation');
       consoTag.classList.toggle('is-user', consoManuelle !== null);
       consoReset.hidden = consoManuelle === null;
     };
-    var lireNombre = function (texte, max) {   // « 440 000 », « 440.000 », « 440000,5 »… ; null si vide
+    var lireNombre = function (texte, max) {   // « 440 000 », « 440.000 », « 440000,5 », « 440,000.5 »… ; null si vide
       var t = String(texte).replace(/[\s\u00a0\u202f]/g, '');
       if (t === '') return null;
+      t = t.replace(DEC === '.' ? /,(?=\d{3}(?!\d))/g : /\.(?=\d{3}(?!\d))/g, '');   // séparateur des milliers
       var v = /^\d+([.,]\d{1,2})?$/.test(t) ? parseFloat(t.replace(',', '.')) : parseFloat(t.replace(/\D/g, ''));
       return isFinite(v) ? Math.min(v, max) : null;
     };
     var lireConso = function (texte) { return lireNombre(texte, CONSO_MAX); };
-    var fmtDec = function (x) { return (Math.round(x * 10) / 10).toFixed(1).replace('.', ','); };
+    var fmtDec = function (x) { return (Math.round(x * 10) / 10).toFixed(1).replace('.', DEC); };
     var point = function (texte) {
       var li = document.createElement('li');
       li.textContent = texte;
@@ -191,9 +210,9 @@
       simu.classList.toggle('is-abroad', pays !== 'FR');
 
       if (pays !== 'FR') zoneTxt.textContent = '';
-      else if (zone) zoneTxt.textContent = 'Zone climatique ' + zone + '.';
-      else if (cp.length === 5) zoneTxt.textContent = 'Code postal non reconnu : la zone H2 est retenue.';
-      else zoneTxt.textContent = 'Indiquez le code postal pour connaître la zone climatique.';
+      else if (zone) zoneTxt.textContent = tr('zone_ok', 'Zone climatique {z}.', { z: zone });
+      else if (cp.length === 5) zoneTxt.textContent = tr('zone_unknown', 'Code postal non reconnu : la zone H2 est retenue.');
+      else zoneTxt.textContent = tr('zone_hint', 'Indiquez le code postal pour connaître la zone climatique.');
 
       var secteur = choix('secteur') || 'distribution';
       var L = nombre('s-long', 80, 5, 1000);
@@ -201,15 +220,15 @@
       var H = nombre('s-haut', 8, 2, 60);
       var S = Math.round(L * l);
       var niveaux = MULTI_NIVEAUX[secteur] ? Math.max(1, Math.round(H / HAUTEUR_NIVEAU)) : 1;
-      surfaceTxt.textContent = 'Surface de toiture : ' + fmt(S) + ' m²' +
-        (niveaux > 1 ? ' · ' + niveaux + ' niveaux, soit ' + fmt(S * niveaux) + ' m² de plancher' : ' · bâtiment de plain-pied');
+      surfaceTxt.textContent = tr('surface', 'Surface de toiture : {s} m²', { s: fmt(S) }) +
+        (niveaux > 1 ? tr('niveaux', ' · {n} niveaux, soit {p} m² de plancher', { n: niveaux, p: fmt(S * niveaux) }) : tr('plainpied', ' · bâtiment de plain-pied'));
 
       var estimation = arrondi(S * niveaux * INTENSITE[secteur]);
       var conso = consoManuelle === null ? estimation : consoManuelle;
       majConso(conso, estimation, depuisCurseur);
 
       var prix = parseFloat(prixRange.value) || 0.2;
-      prixOut.textContent = prix.toFixed(2).replace('.', ',') + ' €';
+      prixOut.textContent = eur(prix.toFixed(2).replace('.', DEC));
       remplir(prixRange);
 
       var clim = choix('clim'), chauffage = choix('chauffage'), aspect = choix('aspect') || 'sombre';
@@ -219,19 +238,19 @@
       var reste = Math.max(0, conso - ete);
       var gainKwh = ete / niveaux * GAIN * GAIN_ASPECT[aspect];
       var gainEur = gainKwh * prix;
-      var lieu = pays === 'FR' ? 'en zone ' + cleClimat : 'en ' + PAYS[pays];
+      var lieu = pays === 'FR' ? tr('lieu_zone', 'en zone {z}', { z: cleClimat }) : tr('lieu_pays', 'en {p}', { p: PAYS[pays] });
       var qualitatif = aspect === 'reflechissant' || facteurClim === 0;
       simu.classList.toggle('is-qualitative', qualitatif);
 
       if (aspect === 'reflechissant') {
-        rEur.textContent = 'Gain faible';
-        rLine.textContent = 'Votre toiture est déjà réfléchissante : un nouveau revêtement apporterait peu. Un nettoyage peut lui rendre une partie de sa réflectance.';
+        rEur.textContent = tr('low_gain', 'Gain faible');
+        rLine.textContent = tr('refl_line', 'Votre toiture est déjà réfléchissante : un nouveau revêtement apporterait peu. Un nettoyage peut lui rendre une partie de sa réflectance.');
       } else if (facteurClim === 0) {
-        rEur.textContent = 'Confort d’été';
-        rLine.textContent = 'Sans climatisation, pas de facture d’été à réduire, mais moins de surchauffe : en plein été, une toiture traditionnelle sombre dépasse la température de l’air de 31 à 47 °C, une toiture réfléchissante de 6 à 11 °C seulement (US EPA).';
+        rEur.textContent = tr('comfort', 'Confort d’été');
+        rLine.textContent = tr('noclim_line', 'Sans climatisation, pas de facture d’été à réduire, mais moins de surchauffe : en plein été, une toiture traditionnelle sombre dépasse la température de l’air de 31 à 47 °C, une toiture réfléchissante de 6 à 11 °C seulement (US EPA).');
       } else {
-        rEur.textContent = '≈ ' + fmt(arrondi(gainEur)) + ' €';
-        rLine.textContent = 'Soit environ ' + fmt(arrondi(gainKwh)) + ' kWh de climatisation en moins chaque année, pour une toiture de ' + fmt(S) + ' m² ' + lieu + '.';
+        rEur.textContent = '≈ ' + eur(fmt(arrondi(gainEur)));
+        rLine.textContent = tr('gain_line', 'Soit environ {k} kWh de climatisation en moins chaque année, pour une toiture de {s} m² {l}.', { k: fmt(arrondi(gainKwh)), s: fmt(S), l: lieu });
       }
       rUnit.hidden = qualitatif;
 
@@ -244,51 +263,51 @@
       var cee = null, statut = '', ceeStatut = 'ok', notes = [];
       if (pays !== 'FR') {
         ceeStatut = 'etranger';
-        statut = 'Non applicable';
-        notes.push('Les CEE sont un dispositif français : d’autres aides peuvent exister en Suisse, en Italie et en Espagne.');
+        statut = tr('na', 'Non applicable');
+        notes.push(tr('cee_abroad', 'Les CEE sont un dispositif français : d’autres aides peuvent exister en Suisse, en Italie et en Espagne.'));
       } else if (secteur === 'industrie' || secteur === 'agricole') {
         ceeStatut = 'secteur';
-        statut = 'Non éligible à la fiche BAT-EN-112';
-        notes.push('Cette fiche concerne les bâtiments tertiaires à usage commercial. Nous vérifions lors de l’étude si un autre dispositif s’applique à votre site.');
+        statut = tr('ne_sheet', 'Non éligible à la fiche BAT-EN-112');
+        notes.push(tr('cee_sector', 'Cette fiche concerne les bâtiments tertiaires à usage commercial. Nous vérifions lors de l’étude si un autre dispositif s’applique à votre site.'));
       } else if (aspect === 'reflechissant') {
         ceeStatut = 'reflechissant';
-        statut = 'Non éligible';
-        notes.push('La fiche BAT-EN-112 exige une toiture sans revêtement réflectif avant les travaux.');
+        statut = tr('ne', 'Non éligible');
+        notes.push(tr('cee_refl', 'La fiche BAT-EN-112 exige une toiture sans revêtement réflectif avant les travaux.'));
       } else if (facteurClim === 0) {
         ceeStatut = 'sans-clim';
-        statut = 'Non éligible';
-        notes.push('La toiture doit couvrir un volume fermé et climatisé.');
+        statut = tr('ne', 'Non éligible');
+        notes.push(tr('cee_noclim', 'La toiture doit couvrir un volume fermé et climatisé.'));
       } else if (chauffage !== 'pac') {
         ceeStatut = 'chauffage';
-        statut = 'Non éligible';
-        notes.push('La fiche exige un chauffage et une climatisation assurés par une pompe à chaleur.');
+        statut = tr('ne', 'Non éligible');
+        notes.push(tr('cee_heat', 'La fiche exige un chauffage et une climatisation assurés par une pompe à chaleur.'));
       } else {
         cee = S * facteurClim * CEE_KWHC[cleClimat] / 1000 * CEE_PRIX;
-        statut = '≈ ' + fmt(arrondi(cee)) + ' €';
-        notes.push('Sous réserve d’éligibilité, sur la base de 8,70 € le MWh cumac (indice de prix des CEE classiques, juin 2026). Le montant versé dépend du financeur.');
-        if (facteurClim < 1) notes.push('Calculée sur la moitié de la toiture, au-dessus de la partie climatisée.');
-        if (secteur !== 'distribution') notes.push('L’usage commercial du bâtiment, exigé par la fiche, est à vérifier.');
-        if (!zone) notes.push('Zone H2 retenue en attendant votre code postal.');
+        statut = '≈ ' + eur(fmt(arrondi(cee)));
+        notes.push(tr('cee_ok', 'Sous réserve d’éligibilité, sur la base de 8,70 € le MWh cumac (indice de prix des CEE classiques, juin 2026). Le montant versé dépend du financeur.'));
+        if (facteurClim < 1) notes.push(tr('cee_half', 'Calculée sur la moitié de la toiture, au-dessus de la partie climatisée.'));
+        if (secteur !== 'distribution') notes.push(tr('cee_use', 'L’usage commercial du bâtiment, exigé par la fiche, est à vérifier.'));
+        if (!zone) notes.push(tr('cee_zone', 'Zone H2 retenue en attendant votre code postal.'));
       }
       rCee.textContent = statut;
       rCee.classList.toggle('is-off', cee === null);
       rCeeNote.textContent = notes.join(' ');
 
       rPoints.innerHTML = '';
-      if (consoManuelle === null) point('Consommation estimée : ' + fmt(conso) + ' kWh par an (' + INTENSITE[secteur] + ' kWh par m² de plancher).');
-      else point('Votre consommation : ' + fmt(Math.round(conso)) + ' kWh par an.');
-      point('Toiture de ' + fmt(S) + ' m² sans ombrage' + (niveaux > 1 ? ', sur ' + niveaux + ' niveaux : le gain porte sur le dernier niveau.' : '.'));
-      if (aspect === 'clair') point('Toiture déjà grise ou claire : le gain retenu est la moitié de celui d’une toiture sombre.');
-      if (etat === 'degradee') point('Toiture dégradée : une réfection d’étanchéité s’impose avant tout revêtement.');
-      else if (etat === 'reprises') point('Quelques reprises à prévoir avant l’application, chiffrées lors de la visite.');
-      else point('Toiture en bon état : application après nettoyage et préparation du support.');
-      if (couverture === 'fibres-ciment') point('Fibres-ciment : repérage de l’amiante obligatoire avant travaux sur les bâtiments construits avant le 1er juillet 1997.');
-      if (chauffage === 'aucun') point('Bâtiment non chauffé : aucun surcoût de chauffage en hiver.');
-      else if (aspect !== 'reflechissant') point('En hiver, la toiture capte un peu moins de chaleur solaire : ce léger surcoût de chauffage est en général compensé par les économies d’été (US EPA).');
+      if (consoManuelle === null) point(tr('pt_est', 'Consommation estimée : {c} kWh par an ({i} kWh par m² de plancher).', { c: fmt(conso), i: INTENSITE[secteur] }));
+      else point(tr('pt_user', 'Votre consommation : {c} kWh par an.', { c: fmt(Math.round(conso)) }));
+      point(tr('pt_roof', 'Toiture de {s} m² sans ombrage', { s: fmt(S) }) + (niveaux > 1 ? tr('pt_levels', ', sur {n} niveaux : le gain porte sur le dernier niveau.', { n: niveaux }) : '.'));
+      if (aspect === 'clair') point(tr('pt_light', 'Toiture déjà grise ou claire : le gain retenu est la moitié de celui d’une toiture sombre.'));
+      if (etat === 'degradee') point(tr('pt_damaged', 'Toiture dégradée : une réfection d’étanchéité s’impose avant tout revêtement.'));
+      else if (etat === 'reprises') point(tr('pt_repairs', 'Quelques reprises à prévoir avant l’application, chiffrées lors de la visite.'));
+      else point(tr('pt_good', 'Toiture en bon état : application après nettoyage et préparation du support.'));
+      if (couverture === 'fibres-ciment') point(tr('pt_asbestos', 'Fibres-ciment : repérage de l’amiante obligatoire avant travaux sur les bâtiments construits avant le 1er juillet 1997.'));
+      if (chauffage === 'aucun') point(tr('pt_noheat', 'Bâtiment non chauffé : aucun surcoût de chauffage en hiver.'));
+      else if (aspect !== 'reflechissant') point(tr('pt_winter', 'En hiver, la toiture capte un peu moins de chaleur solaire : ce léger surcoût de chauffage est en général compensé par les économies d’été (US EPA).'));
 
       if (peek) {
-        peekEur.textContent = qualitatif ? rEur.textContent : rEur.textContent + ' / an';
-        peekCee.textContent = cee === null ? (pays !== 'FR' ? 'Non applicable' : 'Non éligible') : statut;
+        peekEur.textContent = qualitatif ? rEur.textContent : rEur.textContent + tr('per_year', ' / an');
+        peekCee.textContent = cee === null ? (pays !== 'FR' ? tr('na', 'Non applicable') : tr('ne', 'Non éligible')) : statut;
       }
 
       dernier = {
@@ -319,38 +338,38 @@
       var cee = d.cee_eur === '' || !d.cee_eur ? 0 : d.cee_eur;
       var S = d.surface || 0;
       var montant = lireNombre(roiMontant.value, 1000000000);
-      roiSet('roi-eco', eco > 0 ? '≈\u00a0' + fmt(arrondi(eco)) + '\u00a0€ par an' : 'non chiffrées');
-      roiSet('roi-cee', cee > 0 ? '≈\u00a0' + fmt(arrondi(cee)) + '\u00a0€' : (d.pays !== 'FR' ? 'non applicable' : 'non éligible'));
+      roiSet('roi-eco', eco > 0 ? tr('roi_eco', '≈\u00a0{e} par an', { e: eur(fmt(arrondi(eco))) }) : tr('roi_eco_none', 'non chiffrées'));
+      roiSet('roi-cee', cee > 0 ? '≈\u00a0' + eur(fmt(arrondi(cee))) : (d.pays !== 'FR' ? tr('roi_na', 'non applicable') : tr('roi_ne', 'non éligible')));
       roiSet('roi-surface', fmt(S) + '\u00a0m²');
       [5, 10, 20].forEach(function (n) {
         var b = cee + eco * n;
         var ok = b > 0;
-        roiSet('roi-b' + n, ok ? '≈\u00a0' + fmt(arrondi(b)) + '\u00a0€' : '—');
-        roiSet('roi-b' + n + 'm', ok && S > 0 ? 'soit ' + fmtDec(b / S) + '\u00a0€ HT par m²' : '');
+        roiSet('roi-b' + n, ok ? '≈\u00a0' + eur(fmt(arrondi(b))) : '—');
+        roiSet('roi-b' + n + 'm', ok && S > 0 ? tr('roi_m2', 'soit {n}\u00a0€ HT par m²', { n: fmtDec(b / S) }) : '');
       });
       if (eco <= 0) {
-        roiSet('roi-retour', 'Non chiffrable', true);
+        roiSet('roi-retour', tr('roi_nc', 'Non chiffrable'), true);
         roiSet('roi-retour-txt', d.aspect === 'reflechissant'
-          ? 'Votre toiture est déjà réfléchissante : un nouveau revêtement apporterait peu d’économies.'
-          : 'Sans climatisation, il n’y a pas de facture d’été à réduire : la rentabilité se juge sur le confort des équipes, la protection des marchandises et la toiture.');
+          ? tr('roi_refl', 'Votre toiture est déjà réfléchissante : un nouveau revêtement apporterait peu d’économies.')
+          : tr('roi_noclim', 'Sans climatisation, il n’y a pas de facture d’été à réduire : la rentabilité se juge sur le confort des équipes, la protection des marchandises et la toiture.'));
         roiSet('roi-gain', '—', false);
         roiSet('roi-gain-txt', '');
       } else if (montant === null) {
-        roiSet('roi-retour', 'Indiquez votre devis', true);
-        roiSet('roi-retour-txt', 'Saisissez le montant de votre devis, ou comparez-le au budget remboursé ci-dessous.');
+        roiSet('roi-retour', tr('roi_enter', 'Indiquez votre devis'), true);
+        roiSet('roi-retour-txt', tr('roi_enter_txt', 'Saisissez le montant de votre devis, ou comparez-le au budget remboursé ci-dessous.'));
         roiSet('roi-gain', '—', false);
-        roiSet('roi-gain-txt', 'Sur 20 ans, vos économies estimées représentent ≈\u00a0' + fmt(arrondi(eco * HORIZON)) + '\u00a0€.');
+        roiSet('roi-gain-txt', tr('roi_20y', 'Sur 20 ans, vos économies estimées représentent ≈\u00a0{e}.', { e: eur(fmt(arrondi(eco * HORIZON))) }));
       } else {
         var net = Math.max(0, montant - cee);
         var ans = net / eco;
         var gain = eco * HORIZON - net;
-        if (net === 0) roiSet('roi-retour', 'Immédiat', true);
-        else roiSet('roi-retour', '≈\u00a0' + (ans < 10 ? fmtDec(ans) : fmt(Math.round(ans))) + (ans < 2 ? '\u00a0an' : '\u00a0ans'), false);
-        roiSet('roi-retour-txt', net === 0 ? 'La prime CEE estimée couvre le montant de votre devis.' :
-          'Pour un investissement net de ' + fmt(arrondi(net)) + '\u00a0€ HT, prime CEE déduite.' +
-          (ans > HORIZON ? ' Au-delà de 20 ans, les seules économies d’énergie ne remboursent pas les travaux.' : ''));
-        roiSet('roi-gain', (gain < 0 ? '≈\u00a0−' : '≈\u00a0') + fmt(arrondi(Math.abs(gain))) + '\u00a0€', false);
-        roiSet('roi-gain-txt', '20 ans d’économies, soit ≈\u00a0' + fmt(arrondi(eco * HORIZON)) + '\u00a0€, moins l’investissement net.');
+        if (net === 0) roiSet('roi-retour', tr('roi_now', 'Immédiat'), true);
+        else roiSet('roi-retour', '≈\u00a0' + (ans < 10 ? fmtDec(ans) : fmt(Math.round(ans))) + (ans < 2 ? tr('an', '\u00a0an') : tr('ans', '\u00a0ans')), false);
+        roiSet('roi-retour-txt', net === 0 ? tr('roi_cover', 'La prime CEE estimée couvre le montant de votre devis.') :
+          tr('roi_net', 'Pour un investissement net de {e} HT, prime CEE déduite.', { e: eur(fmt(arrondi(net))) }) +
+          (ans > HORIZON ? tr('roi_over', ' Au-delà de 20 ans, les seules économies d’énergie ne remboursent pas les travaux.') : ''));
+        roiSet('roi-gain', (gain < 0 ? '≈\u00a0−' : '≈\u00a0') + eur(fmt(arrondi(Math.abs(gain)))), false);
+        roiSet('roi-gain-txt', tr('roi_gain_txt', '20 ans d’économies, soit ≈\u00a0{e}, moins l’investissement net.', { e: eur(fmt(arrondi(eco * HORIZON))) }));
       }
     };
     if (roiMontant) {
@@ -408,43 +427,45 @@
       obs.observe(cible);
     }
 
-    /* envoi de la simulation par e-mail */
+    /* envoi de la simulation par e-mail (pages françaises seulement : le récapitulatif envoyé est en français) */
     var mail = document.getElementById('simu-mail');
-    var mailStatus = document.getElementById('simu-status');
-    var mailBtn = mail.querySelector('button[type="submit"]');
-    var mailBtnHtml = mailBtn.innerHTML;
-    var mailDebut = Date.now();
-    var mailMsg = function (kind, text) {
-      mailStatus.className = 'form-status ' + kind;
-      mailStatus.textContent = text;
-      mailStatus.hidden = false;
-    };
-    mail.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var email = mail.elements.email;
-      if (!email.value || !email.checkValidity()) {
-        mailMsg('err', 'Indiquez une adresse e-mail valide.');
-        email.focus();
-        return;
-      }
-      if (mail.getAttribute('data-preview')) {
-        mailMsg('info', 'Aperçu du site : l’envoi de la simulation sera actif une fois le site en ligne sur albedia.eu.');
-        return;
-      }
-      var data = new FormData(mail);
-      data.append('elapsed', String(Date.now() - mailDebut));
-      Object.keys(dernier).forEach(function (k) { data.append(k, String(dernier[k])); });
-      mailBtn.disabled = true;
-      mailBtn.textContent = 'Envoi en cours…';
-      fetch(mail.getAttribute('action'), { method: 'POST', body: data, headers: { 'Accept': 'application/json' } })
-        .then(function (res) { return res.json().catch(function () { return { ok: false }; }); })
-        .then(function (res) {
-          if (res && res.ok) mailMsg('ok', 'C’est envoyé : vous allez recevoir votre simulation par e-mail. Nous revenons vers vous rapidement.');
-          else mailMsg('err', (res && res.error) || 'L’envoi n’a pas abouti. Réessayez ou écrivez-nous à contact@albedia.eu.');
-        })
-        .catch(function () { mailMsg('err', 'L’envoi n’a pas abouti. Vérifiez votre connexion ou écrivez-nous à contact@albedia.eu.'); })
-        .then(function () { mailBtn.disabled = false; mailBtn.innerHTML = mailBtnHtml; });
-    });
+    if (mail) {
+      var mailStatus = document.getElementById('simu-status');
+      var mailBtn = mail.querySelector('button[type="submit"]');
+      var mailBtnHtml = mailBtn.innerHTML;
+      var mailDebut = Date.now();
+      var mailMsg = function (kind, text) {
+        mailStatus.className = 'form-status ' + kind;
+        mailStatus.textContent = text;
+        mailStatus.hidden = false;
+      };
+      mail.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var email = mail.elements.email;
+        if (!email.value || !email.checkValidity()) {
+          mailMsg('err', 'Indiquez une adresse e-mail valide.');
+          email.focus();
+          return;
+        }
+        if (mail.getAttribute('data-preview')) {
+          mailMsg('info', 'Aperçu du site : l’envoi de la simulation sera actif une fois le site en ligne sur albedia.eu.');
+          return;
+        }
+        var data = new FormData(mail);
+        data.append('elapsed', String(Date.now() - mailDebut));
+        Object.keys(dernier).forEach(function (k) { data.append(k, String(dernier[k])); });
+        mailBtn.disabled = true;
+        mailBtn.textContent = 'Envoi en cours…';
+        fetch(mail.getAttribute('action'), { method: 'POST', body: data, headers: { 'Accept': 'application/json' } })
+          .then(function (res) { return res.json().catch(function () { return { ok: false }; }); })
+          .then(function (res) {
+            if (res && res.ok) mailMsg('ok', 'C’est envoyé : vous allez recevoir votre simulation par e-mail. Nous revenons vers vous rapidement.');
+            else mailMsg('err', (res && res.error) || 'L’envoi n’a pas abouti. Réessayez ou écrivez-nous à contact@albedia.eu.');
+          })
+          .catch(function () { mailMsg('err', 'L’envoi n’a pas abouti. Vérifiez votre connexion ou écrivez-nous à contact@albedia.eu.'); })
+          .then(function () { mailBtn.disabled = false; mailBtn.innerHTML = mailBtnHtml; });
+      });
+    }
   }
 
   /* ---------- langues : pages traduites par Google Traduction (adresse en *.translate.goog)
@@ -521,7 +542,7 @@
     var montrer = function (p, cx, cy) {
       allumer(p.getAttribute('data-d'));
       bNom.textContent = p.getAttribute('data-n') + ' (' + p.getAttribute('data-d') + ')';
-      bZone.textContent = 'Zone climatique ' + p.getAttribute('data-z');
+      bZone.textContent = tr('map_zone', 'Zone climatique {z}', { z: p.getAttribute('data-z') });
       bulle.hidden = false;
       var r = cBoite.getBoundingClientRect();
       var x = cx - r.left, y = cy - r.top;
@@ -584,10 +605,10 @@
       e.preventDefault();
       if (form.elements.elapsed) form.elements.elapsed.value = String(Date.now() - started);
       if (form.getAttribute('data-preview')) {
-        show('info', 'Aperçu du site : l’envoi du formulaire sera actif une fois le site en ligne sur albedia.eu.');
+        show('info', tr('form_preview', 'Aperçu du site : l’envoi du formulaire sera actif une fois le site en ligne sur albedia.eu.'));
         return;
       }
-      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Envoi en cours…'; }
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = tr('sending', 'Envoi en cours…'); }
       fetch(form.getAttribute('action'), {
         method: 'POST',
         body: new FormData(form),
@@ -600,13 +621,13 @@
           if (data && data.ok) {
             form.reset();
             started = Date.now();
-            show('ok', 'Merci, votre demande est bien partie. Nous revenons vers vous rapidement.');
+            show('ok', tr('form_ok', 'Merci, votre demande est bien partie. Nous revenons vers vous rapidement.'));
           } else {
-            show('err', (data && data.error) || 'L’envoi n’a pas abouti. Réessayez ou écrivez-nous directement à contact@albedia.eu.');
+            show('err', (data && data.error) || tr('form_err', 'L’envoi n’a pas abouti. Réessayez ou écrivez-nous directement à contact@albedia.eu.'));
           }
         })
         .catch(function () {
-          show('err', 'L’envoi n’a pas abouti. Vérifiez votre connexion ou écrivez-nous directement à contact@albedia.eu.');
+          show('err', tr('form_err_net', 'L’envoi n’a pas abouti. Vérifiez votre connexion ou écrivez-nous directement à contact@albedia.eu.'));
         })
         .then(function () {
           if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = submitHtml; }

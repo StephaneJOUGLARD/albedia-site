@@ -1,0 +1,115 @@
+<div class="simu" data-simu>
+<form class="simu-form" id="simu-form" novalidate>
+<fieldset class="simu-group">
+<legend>Location</legend>
+<div class="choices" role="radiogroup" aria-label="Country">
+<label class="choice"><input type="radio" name="pays" value="FR" checked><span>France</span></label>
+<label class="choice"><input type="radio" name="pays" value="CH"><span>Switzerland</span></label>
+<label class="choice"><input type="radio" name="pays" value="IT"><span>Italy</span></label>
+<label class="choice"><input type="radio" name="pays" value="ES"><span>Spain</span></label>
+</div>
+<div class="field simu-cp" data-show-fr><label for="s-cp">Postcode of the building</label><input id="s-cp" name="code_postal" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="e.g. 38000"><p class="simu-hint" id="s-zone" aria-live="polite">Enter the postcode to find the French climate zone.</p></div>
+</fieldset>
+<fieldset class="simu-group">
+<legend>The building</legend>
+<div class="choices" role="radiogroup" aria-label="Type of building">
+<label class="choice"><input type="radio" name="secteur" value="industrie"><span>Industry</span></label>
+<label class="choice"><input type="radio" name="secteur" value="logistique"><span>Logistics</span></label>
+<label class="choice"><input type="radio" name="secteur" value="distribution" checked><span>Retail</span></label>
+<label class="choice"><input type="radio" name="secteur" value="tertiaire"><span>Offices and services</span></label>
+<label class="choice"><input type="radio" name="secteur" value="collectivites"><span>Public buildings</span></label>
+<label class="choice"><input type="radio" name="secteur" value="agricole"><span>Agriculture</span></label>
+</div>
+<div class="simu-dims">
+<div class="field"><label for="s-long">Length (m)</label><input id="s-long" name="longueur" type="number" min="5" max="1000" step="1" inputmode="numeric" value="80"></div>
+<div class="field"><label for="s-larg">Width (m)</label><input id="s-larg" name="largeur" type="number" min="5" max="1000" step="1" inputmode="numeric" value="50"></div>
+<div class="field"><label for="s-haut">Height (m)</label><input id="s-haut" name="hauteur" type="number" min="2" max="60" step="0.5" inputmode="decimal" value="8"></div>
+</div>
+<p class="simu-hint" id="s-surface" aria-live="polite"></p>
+</fieldset>
+<fieldset class="simu-group">
+<legend>The roof</legend>
+<p class="simu-sub-legend">Roof covering</p>
+<div class="choices" role="radiogroup" aria-label="Roof covering">
+<label class="choice"><input type="radio" name="couverture" value="bac-acier" checked><span>Metal deck</span></label>
+<label class="choice"><input type="radio" name="couverture" value="bitume"><span>Bituminous waterproofing</span></label>
+<label class="choice"><input type="radio" name="couverture" value="membrane"><span>Synthetic membrane</span></label>
+<label class="choice"><input type="radio" name="couverture" value="beton"><span>Concrete</span></label>
+<label class="choice"><input type="radio" name="couverture" value="fibres-ciment"><span>Fibre cement</span></label>
+</div>
+<p class="simu-sub-legend">Current appearance</p>
+<div class="choices" role="radiogroup" aria-label="Current appearance of the roof">
+<label class="choice"><input type="radio" name="aspect" value="sombre" checked><span>Dark</span></label>
+<label class="choice"><input type="radio" name="aspect" value="clair"><span>Grey or light</span></label>
+<label class="choice"><input type="radio" name="aspect" value="reflechissant"><span>Already white and reflective</span></label>
+</div>
+<p class="simu-sub-legend">Condition</p>
+<div class="choices" role="radiogroup" aria-label="Condition of the roof">
+<label class="choice"><input type="radio" name="etat" value="bon" checked><span>Good condition</span></label>
+<label class="choice"><input type="radio" name="etat" value="reprises"><span>Needs repairs in places</span></label>
+<label class="choice"><input type="radio" name="etat" value="degradee"><span>Damaged</span></label>
+</div>
+</fieldset>
+<fieldset class="simu-group">
+<legend>Heating, cooling and consumption</legend>
+<p class="simu-sub-legend">Air conditioning</p>
+<div class="choices" role="radiogroup" aria-label="Air conditioning">
+<label class="choice"><input type="radio" name="clim" value="totale" checked><span>Whole building</span></label>
+<label class="choice"><input type="radio" name="clim" value="partielle"><span>Part of it</span></label>
+<label class="choice"><input type="radio" name="clim" value="aucune"><span>None</span></label>
+</div>
+<p class="simu-sub-legend">Heating</p>
+<div class="choices" role="radiogroup" aria-label="Heating">
+<label class="choice"><input type="radio" name="chauffage" value="pac" checked><span>Heat pump</span></label>
+<label class="choice"><input type="radio" name="chauffage" value="gaz"><span>Gas or oil</span></label>
+<label class="choice"><input type="radio" name="chauffage" value="electrique"><span>Electric</span></label>
+<label class="choice"><input type="radio" name="chauffage" value="aucun"><span>None</span></label>
+</div>
+<div class="simu-slider">
+<div class="simu-slider-head"><label for="s-conso">Annual energy consumption</label><span class="simu-tag" id="s-conso-tag">Estimate</span></div>
+<input id="s-conso" type="range" min="0" max="1000000" step="1000" value="440000" aria-describedby="s-conso-help">
+<div class="simu-slider-foot"><div class="simu-num"><input id="s-conso-num" type="text" inputmode="numeric" autocomplete="off" maxlength="14" aria-label="Annual consumption in kWh" value="440,000"><span>kWh per year</span></div><button class="simu-reset" type="button" id="s-conso-reset" hidden>Back to the estimate</button></div>
+<p class="simu-hint" id="s-conso-help">Know your consumption? Move the slider or type it in.</p>
+</div>
+<div class="simu-slider">
+<div class="simu-slider-head"><label for="s-prix">Price per kWh (excl. VAT)</label><output id="s-prix-out" for="s-prix">€0.20</output></div>
+<input id="s-prix" type="range" min="0.10" max="0.40" step="0.01" value="0.20">
+</div>
+</fieldset>
+</form>
+<aside class="simu-result" id="simu-resultat" aria-label="Simulation result">
+<div aria-live="polite">
+<p class="simu-label">Estimated savings</p>
+<p class="simu-big"><span class="simu-big-num" id="r-eur">…</span><span class="simu-unit">per year*</span></p>
+<p class="simu-line" id="r-line"></p>
+<div class="simu-split">
+<p class="simu-label">Estimated annual consumption</p>
+<div class="simu-split-bar" aria-hidden="true"><span class="is-ete" id="r-bar-ete"></span><span class="is-reste"></span></div>
+<p class="simu-split-legend"><span><i class="dot dot--ete"></i>Summer air conditioning <b id="r-kwh-ete"></b></span><span><i class="dot dot--reste"></i>Heating and other uses <b id="r-kwh-reste"></b></span></p>
+</div>
+<div class="simu-cee">
+<p class="simu-label">Estimated CEE bonus (France)</p>
+<p class="simu-mid" id="r-cee"></p>
+<p class="simu-small" id="r-cee-note"></p>
+</div>
+<ul class="simu-points" id="r-points"></ul>
+</div>
+</aside>
+<a class="simu-peek" id="simu-peek" href="#simu-resultat" aria-hidden="true" tabindex="-1"><span><small>Savings</small><strong id="p-eur"></strong></span><span><small>CEE bonus</small><strong id="p-cee"></strong></span><span class="simu-peek-go"><span class="simu-peek-txt">Details</span>{{icon:fleche}}</span></a>
+</div>
+<noscript><p class="form-status info">The calculator needs JavaScript to work. You can also <a href="devis.html">ask us directly to study your roof</a>.</p></noscript>
+<p class="note">* Indicative, non-contractual estimate, based on published average values and on the assumptions detailed below, for an unshaded roof. The actual gain depends on your building: this is what our preliminary study assesses.</p>
+<details class="simu-method">
+<summary>Calculator method and sources</summary>
+<div class="simu-method-body">
+<ul>
+<li><strong>Climate zone</strong>: in France, derived from the department, according to the H1, H2 and H3 zoning used in the CEE sheets.</li>
+<li><strong>Estimated consumption</strong>: floor area × average consumption for the type of building (French Sustainable Real Estate Observatory, OID, 2025 barometer, 2024 data): offices 126 kWh/m²/year, non-food retail 110, logistics warehouses 65, unheated storage 19 (agriculture). In the absence of published data, industry uses the warehouse value and public buildings the office value. Replace it with your actual consumption if you know it.</li>
+<li><strong>Share of air conditioning</strong>: ALBEDIA assumption of 15% of the consumption of a fully air-conditioned building in zone H1, 20% in zone H2 and 30% in zone H3 (Switzerland 15%, Italy and Spain 30%), half if only part of the building is air-conditioned.</li>
+<li><strong>Savings</strong>: 20% of the air conditioning of the top storey, under the roof. This is the average gain found by the US EPA across more than 25 studies, ranging from 2 to 40% depending on the building. For a roof that is already grey or light-coloured, the gain is halved (ALBEDIA assumption). The slight extra heating cost in winter is not deducted: according to the US EPA, it is generally offset by the summer savings, because the sun is lower and the days shorter.</li>
+<li><strong>CEE bonus (France only)</strong>: sheet BAT-EN-112, i.e. 160, 170 or 270 kWh cumac per m² of treated roof in zone H1, H2 or H3, valued at €8.70 per MWh cumac (forward price index for standard CEEs, June 2026, French Ministry for the Ecological Transition). The amount paid depends on the funder. Conditions: tertiary building in commercial use, roof above an enclosed air-conditioned volume, heating and cooling by heat pump, no existing reflective coating, product with a solar reflectance index (SRI) above 100 when new and 90 when aged, works carried out by a professional.</li>
+<li><strong>Price per kWh</strong>: €0.20 excluding VAT by default, to be adjusted to your contract. Benchmark: €0.25 excluding VAT for small business customers in France in the first half of 2026 (Eurostat).</li>
+</ul>
+<p class="src">Sources: <a href="https://www.epa.gov/sites/default/files/2017-05/documents/reducing_urban_heat_islands_ch_4.pdf" rel="noopener" target="_blank">US EPA</a> (<a href="https://www.epa.gov/heatislands/using-cool-roofs-reduce-heat-islands" rel="noopener" target="_blank">winter penalty</a>) · <a href="https://www.ecologie.gouv.fr/sites/default/files/documents/BAT-EN-112%20vA38-1%20%C3%A0%20compter%20du%2031-07-2021.pdf" rel="noopener" target="_blank" hreflang="fr">sheet BAT-EN-112</a> · <a href="https://www.ecologie.gouv.fr/sites/default/files/documents/2026-07-09%20Flash%20Info%20Indices%20de%20prix%20%C3%A0%20terme.pdf" rel="noopener" target="_blank" hreflang="fr">CEE price indices</a> · <a href="https://www.meilleurescpi.com/actualites/barometre-2025-de-la-performance-energetique-des-batiments/" rel="noopener" target="_blank" hreflang="fr">OID 2025 barometer</a> · <a href="https://selectra.info/energie/actualites/marche/electricite-petits-pros-plus-cher-menages-2026" rel="noopener" target="_blank" hreflang="fr">Eurostat prices</a> (sources in French, except the US EPA)</p>
+</div>
+</details>

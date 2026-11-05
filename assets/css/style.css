@@ -162,7 +162,7 @@ body::before {
   font: inherit; font-weight: 700; cursor: pointer;
 }
 
-/* langues : traduction automatique (Google Traduction) */
+/* langues : versions traduites (en/, it/, es/) et traduction automatique (Google Traduction) */
 .lang { display: flex; align-items: center; gap: 2px; flex: none; padding: 3px; border: 1px solid var(--line); border-radius: 999px; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.04em; line-height: 1; }
 .lang-cur, .lang-link { display: inline-grid; place-items: center; min-width: 36px; height: 34px; padding: 0 7px; border-radius: 999px; text-decoration: none; }
 .lang-cur { background: var(--navy); color: #fff; }
@@ -789,6 +789,11 @@ tr.hl > * { background: var(--sky-soft); }
   .simu-peek { display: flex; }
 }
 @media (max-width: 420px) {
+  /* barre de résultat sur petit écran : flèche seule, pour laisser la place aux montants (libellés plus longs en IT, ES, EN) */
+  .simu-peek { gap: 10px; padding-left: 16px; }
+  .simu-peek small { white-space: nowrap; }
+  .simu-peek .simu-peek-go { padding: 10px; }
+  .simu-peek-txt { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .simu-dims { gap: 8px; }
   .simu-group legend { font-size: 1.02rem; }
   .simu .choice span { padding: 8px 13px; font-size: 0.92rem; }

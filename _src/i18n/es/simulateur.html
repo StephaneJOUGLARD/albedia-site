@@ -1,0 +1,115 @@
+<div class="simu" data-simu>
+<form class="simu-form" id="simu-form" novalidate>
+<fieldset class="simu-group">
+<legend>Ubicación</legend>
+<div class="choices" role="radiogroup" aria-label="País">
+<label class="choice"><input type="radio" name="pays" value="FR"><span>Francia</span></label>
+<label class="choice"><input type="radio" name="pays" value="CH"><span>Suiza</span></label>
+<label class="choice"><input type="radio" name="pays" value="IT"><span>Italia</span></label>
+<label class="choice"><input type="radio" name="pays" value="ES" checked><span>España</span></label>
+</div>
+<div class="field simu-cp" data-show-fr><label for="s-cp">Código postal del edificio</label><input id="s-cp" name="code_postal" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="p. ej. 38000"><p class="simu-hint" id="s-zone" aria-live="polite">Indique el código postal para conocer la zona climática francesa.</p></div>
+</fieldset>
+<fieldset class="simu-group">
+<legend>El edificio</legend>
+<div class="choices" role="radiogroup" aria-label="Tipo de edificio">
+<label class="choice"><input type="radio" name="secteur" value="industrie"><span>Industria</span></label>
+<label class="choice"><input type="radio" name="secteur" value="logistique"><span>Logística</span></label>
+<label class="choice"><input type="radio" name="secteur" value="distribution" checked><span>Comercio</span></label>
+<label class="choice"><input type="radio" name="secteur" value="tertiaire"><span>Oficinas y terciario</span></label>
+<label class="choice"><input type="radio" name="secteur" value="collectivites"><span>Edificios públicos</span></label>
+<label class="choice"><input type="radio" name="secteur" value="agricole"><span>Agrícola</span></label>
+</div>
+<div class="simu-dims">
+<div class="field"><label for="s-long">Longitud (m)</label><input id="s-long" name="longueur" type="number" min="5" max="1000" step="1" inputmode="numeric" value="80"></div>
+<div class="field"><label for="s-larg">Anchura (m)</label><input id="s-larg" name="largeur" type="number" min="5" max="1000" step="1" inputmode="numeric" value="50"></div>
+<div class="field"><label for="s-haut">Altura (m)</label><input id="s-haut" name="hauteur" type="number" min="2" max="60" step="0.5" inputmode="decimal" value="8"></div>
+</div>
+<p class="simu-hint" id="s-surface" aria-live="polite"></p>
+</fieldset>
+<fieldset class="simu-group">
+<legend>La cubierta</legend>
+<p class="simu-sub-legend">Tipo de cubierta</p>
+<div class="choices" role="radiogroup" aria-label="Tipo de cubierta">
+<label class="choice"><input type="radio" name="couverture" value="bac-acier" checked><span>Chapa grecada</span></label>
+<label class="choice"><input type="radio" name="couverture" value="bitume"><span>Impermeabilización bituminosa</span></label>
+<label class="choice"><input type="radio" name="couverture" value="membrane"><span>Membrana sintética</span></label>
+<label class="choice"><input type="radio" name="couverture" value="beton"><span>Hormigón</span></label>
+<label class="choice"><input type="radio" name="couverture" value="fibres-ciment"><span>Fibrocemento</span></label>
+</div>
+<p class="simu-sub-legend">Aspecto actual</p>
+<div class="choices" role="radiogroup" aria-label="Aspecto actual de la cubierta">
+<label class="choice"><input type="radio" name="aspect" value="sombre" checked><span>Oscura</span></label>
+<label class="choice"><input type="radio" name="aspect" value="clair"><span>Gris o clara</span></label>
+<label class="choice"><input type="radio" name="aspect" value="reflechissant"><span>Ya blanca y reflectante</span></label>
+</div>
+<p class="simu-sub-legend">Estado</p>
+<div class="choices" role="radiogroup" aria-label="Estado de la cubierta">
+<label class="choice"><input type="radio" name="etat" value="bon" checked><span>Buen estado</span></label>
+<label class="choice"><input type="radio" name="etat" value="reprises"><span>Con reparaciones puntuales</span></label>
+<label class="choice"><input type="radio" name="etat" value="degradee"><span>Deteriorada</span></label>
+</div>
+</fieldset>
+<fieldset class="simu-group">
+<legend>Calefacción, climatización y consumo</legend>
+<p class="simu-sub-legend">Climatización</p>
+<div class="choices" role="radiogroup" aria-label="Climatización">
+<label class="choice"><input type="radio" name="clim" value="totale" checked><span>Todo el edificio</span></label>
+<label class="choice"><input type="radio" name="clim" value="partielle"><span>Una parte</span></label>
+<label class="choice"><input type="radio" name="clim" value="aucune"><span>Ninguna</span></label>
+</div>
+<p class="simu-sub-legend">Calefacción</p>
+<div class="choices" role="radiogroup" aria-label="Calefacción">
+<label class="choice"><input type="radio" name="chauffage" value="pac" checked><span>Bomba de calor</span></label>
+<label class="choice"><input type="radio" name="chauffage" value="gaz"><span>Gas o gasóleo</span></label>
+<label class="choice"><input type="radio" name="chauffage" value="electrique"><span>Eléctrica</span></label>
+<label class="choice"><input type="radio" name="chauffage" value="aucun"><span>Ninguna</span></label>
+</div>
+<div class="simu-slider">
+<div class="simu-slider-head"><label for="s-conso">Consumo anual de energía</label><span class="simu-tag" id="s-conso-tag">Estimación</span></div>
+<input id="s-conso" type="range" min="0" max="1000000" step="1000" value="440000" aria-describedby="s-conso-help">
+<div class="simu-slider-foot"><div class="simu-num"><input id="s-conso-num" type="text" inputmode="numeric" autocomplete="off" maxlength="14" aria-label="Consumo anual en kWh" value="440.000"><span>kWh al año</span></div><button class="simu-reset" type="button" id="s-conso-reset" hidden>Volver a la estimación</button></div>
+<p class="simu-hint" id="s-conso-help">¿Conoce su consumo? Mueva el cursor o introdúzcalo.</p>
+</div>
+<div class="simu-slider">
+<div class="simu-slider-head"><label for="s-prix">Precio del kWh (IVA no incluido)</label><output id="s-prix-out" for="s-prix">0,20 €</output></div>
+<input id="s-prix" type="range" min="0.10" max="0.40" step="0.01" value="0.20">
+</div>
+</fieldset>
+</form>
+<aside class="simu-result" id="simu-resultat" aria-label="Resultado de la simulación">
+<div aria-live="polite">
+<p class="simu-label">Ahorro estimado</p>
+<p class="simu-big"><span class="simu-big-num" id="r-eur">…</span><span class="simu-unit">al año*</span></p>
+<p class="simu-line" id="r-line"></p>
+<div class="simu-split">
+<p class="simu-label">Consumo anual estimado</p>
+<div class="simu-split-bar" aria-hidden="true"><span class="is-ete" id="r-bar-ete"></span><span class="is-reste"></span></div>
+<p class="simu-split-legend"><span><i class="dot dot--ete"></i>Climatización en verano <b id="r-kwh-ete"></b></span><span><i class="dot dot--reste"></i>Calefacción y otros usos <b id="r-kwh-reste"></b></span></p>
+</div>
+<div class="simu-cee">
+<p class="simu-label">Incentivo CEE estimado (Francia)</p>
+<p class="simu-mid" id="r-cee"></p>
+<p class="simu-small" id="r-cee-note"></p>
+</div>
+<ul class="simu-points" id="r-points"></ul>
+</div>
+</aside>
+<a class="simu-peek" id="simu-peek" href="#simu-resultat" aria-hidden="true" tabindex="-1"><span><small>Ahorro</small><strong id="p-eur"></strong></span><span><small>Incentivo CEE</small><strong id="p-cee"></strong></span><span class="simu-peek-go"><span class="simu-peek-txt">Detalle</span>{{icon:fleche}}</span></a>
+</div>
+<noscript><p class="form-status info">El simulador necesita JavaScript para calcular. También puede <a href="devis.html">pedirnos directamente el estudio de su cubierta</a>.</p></noscript>
+<p class="note">* Estimación orientativa y no contractual, basada en valores medios publicados y en las hipótesis detalladas a continuación, para una cubierta sin sombras. El ahorro real depende de su edificio: es lo que evalúa nuestro estudio previo.</p>
+<details class="simu-method">
+<summary>Método y fuentes del simulador</summary>
+<div class="simu-method-body">
+<ul>
+<li><strong>Zona climática</strong>: en Francia, se deduce del departamento, según la división H1, H2 y H3 de las fichas CEE.</li>
+<li><strong>Consumo estimado</strong>: superficie construida × consumo medio del tipo de edificio (Observatorio francés del inmobiliario sostenible, OID, barómetro 2025, datos de 2024): oficinas 126 kWh/m²/año, comercio no alimentario 110, almacenes logísticos 65, almacenamiento sin calefacción 19 (agrícola). A falta de datos publicados, para la industria se toma el valor de los almacenes y para los edificios públicos el de las oficinas. Sustitúyalo por su consumo real si lo conoce.</li>
+<li><strong>Peso de la climatización</strong>: hipótesis de ALBEDIA del 15% del consumo de un edificio totalmente climatizado en la zona H1, del 20% en la zona H2 y del 30% en la zona H3 (Suiza 15%, Italia y España 30%), la mitad si solo una parte del edificio está climatizada.</li>
+<li><strong>Ahorro</strong>: el 20% de la climatización de la última planta, bajo la cubierta. Es el ahorro medio observado por la US EPA en más de 25 estudios, que va del 2 al 40% según los edificios. Para una cubierta ya gris o clara, el ahorro considerado se divide por dos (hipótesis de ALBEDIA). El ligero sobrecoste de calefacción en invierno no se descuenta: según la US EPA, suele quedar compensado por el ahorro de verano, porque el sol está más bajo y los días son más cortos.</li>
+<li><strong>Incentivo CEE (solo Francia)</strong>: ficha BAT-EN-112, es decir, 160, 170 o 270 kWh cumac por m² de cubierta tratada en la zona H1, H2 o H3, valorados a 8,70 € por MWh cumac (índice de precios a plazo de los CEE clásicos de junio de 2026, Ministerio francés de Transición Ecológica). El importe abonado depende de la entidad financiadora. Condiciones: edificio terciario de uso comercial, cubierta sobre un volumen cerrado y climatizado, calefacción y refrigeración por bomba de calor, sin revestimiento reflectante previo, producto con un índice de reflectancia solar (SRI) superior a 100 en estado nuevo y a 90 tras el envejecimiento, obras realizadas por un profesional.</li>
+<li><strong>Precio del kWh</strong>: 0,20 € sin IVA por defecto, que puede ajustar según su contrato. Referencia: 0,25 € sin IVA para los pequeños clientes profesionales en Francia en el primer semestre de 2026 (Eurostat).</li>
+</ul>
+<p class="src">Fuentes: <a href="https://www.epa.gov/sites/default/files/2017-05/documents/reducing_urban_heat_islands_ch_4.pdf" rel="noopener" target="_blank" hreflang="en">US EPA</a> (<a href="https://www.epa.gov/heatislands/using-cool-roofs-reduce-heat-islands" rel="noopener" target="_blank" hreflang="en">efecto en invierno</a>) · <a href="https://www.ecologie.gouv.fr/sites/default/files/documents/BAT-EN-112%20vA38-1%20%C3%A0%20compter%20du%2031-07-2021.pdf" rel="noopener" target="_blank" hreflang="fr">ficha BAT-EN-112</a> · <a href="https://www.ecologie.gouv.fr/sites/default/files/documents/2026-07-09%20Flash%20Info%20Indices%20de%20prix%20%C3%A0%20terme.pdf" rel="noopener" target="_blank" hreflang="fr">índices de precios de los CEE</a> · <a href="https://www.meilleurescpi.com/actualites/barometre-2025-de-la-performance-energetique-des-batiments/" rel="noopener" target="_blank" hreflang="fr">barómetro OID 2025</a> · <a href="https://selectra.info/energie/actualites/marche/electricite-petits-pros-plus-cher-menages-2026" rel="noopener" target="_blank" hreflang="fr">precios Eurostat</a> (fuentes en inglés y en francés)</p>
+</div>
+</details>

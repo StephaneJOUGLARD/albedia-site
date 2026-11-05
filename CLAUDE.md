@@ -58,12 +58,13 @@ Donc :
     `assets/img/plaquette-albedia.webp`) et devis ; balises `{{PLAQUETTE_HREF}}` (lien avec une empreinte `?v=` du
     fichier, recalculée au build), `{{PLAQUETTE_ATTR}}` et `{{PLAQUETTE_TAILLE}}`. Nouvelle version : remplacer le PDF
     et la vignette, puis rebuild. La plaquette ne parle de CGBI qu'en pied de la dernière page (choix du propriétaire).
+  - `i18n/en/`, `i18n/it/`, `i18n/es/` : versions anglaise, italienne et espagnole de 13 pages (voir « Langues »).
   - `partials/` : logo, soleil, illustrations SVG et icônes.
   - `assets/` : feuille de style, script, police auto-hébergée (Plus Jakarta Sans, licence OFL), logos, favicons.
   - `php/contact.php` (formulaire de devis, fonction `mail()` d'OVH), `php/simulation.php` (envoi par e-mail
     d'une simulation, au visiteur et à contact@albedia.eu) et `php/.htaccess`.
-- À la racine : le site généré (pages `.html`, `assets/`, `contact.php`, `.htaccess`, `sitemap.xml`,
-  `robots.txt`). **Ne pas modifier ces fichiers à la main** : ils sont écrasés à chaque build.
+- À la racine : le site généré (pages `.html`, dossiers `en/`, `it/` et `es/`, `assets/`, `contact.php`, `.htaccess`,
+  `sitemap.xml`, `robots.txt`). **Ne pas modifier ces fichiers à la main** : ils sont écrasés à chaque build.
 
 Après toute modification de `_src/` : `python3 _src/build.py`, puis commit des sources ET des fichiers
 générés. Si une page est renommée ou supprimée, supprimer aussi l'ancien fichier `.html` à la racine.
@@ -104,15 +105,44 @@ qui calcule aussi le retour sur investissement de la page Rentabilité, `[data-r
 `partials/simulateur.html`. Ses hypothèses et sources sont exposées sous le simulateur (« Méthode et sources du
 simulateur », dans ce même partiel) :
 toute modification d'une valeur (intensités OID, part de la climatisation, gain EPA, barème BAT-EN-112, prix du
-MWh cumac) se fait aux deux endroits. `simulation.php` ne recalcule rien : il contrôle les valeurs reçues (listes
+MWh cumac) se fait aux deux endroits, ainsi que dans les versions traduites (`_src/i18n/*/simulateur.html` pour la
+méthode, `_src/i18n/*/js.json` pour les textes de résultat). `simulation.php` ne recalcule rien : il contrôle les valeurs reçues (listes
 autorisées, nombres bornés) et envoie un récapitulatif au texte fixe. Le prix du MWh cumac (indice du ministère)
 est à actualiser de temps en temps.
 
 ## Langues
 
-Les boutons EN, IT et ES de l'en-tête ouvrent la page courante traduite par Google Traduction (simple lien
-vers translate.google.com, `LANGS` dans `build.py`) : aucun script ni cookie sur albedia.eu. C'est décrit
-dans `confidentialite.html` et `mentions-legales.html`.
+Versions traduites (novembre 2026) : 13 pages existent en anglais, en italien et en espagnol, publiées dans `/en/`,
+`/it/` et `/es/` : accueil, solutions, guide, rentabilité (avec le simulateur), les six secteurs, qui sommes-nous,
+zones d'intervention et devis. Sources dans `_src/i18n/<langue>/` :
+- `ui.json` : textes communs (en-tête, menus, pied de page, bandeau final), libellés des secteurs, textes
+  alternatifs des photos, textes de la carte, et les pages traduites (`pages` : titre, description, fil d'Ariane,
+  FAQ, second bouton du bandeau). La clé `pages` de la première langue fixe la liste `TRANSLATED` de `build.py`.
+  La signature sous le logo (`baseline`) doit rester assez courte pour tenir sur la largeur du mot « albedia ».
+- `secteurs.json` (pages secteur), `faq-home.json`, `faq-rentabilite.json`, `pages/*.html` (contenu des pages) et
+  `simulateur.html`, sans l'envoi par e-mail (le récapitulatif de `simulation.php` est en français). Pays par défaut
+  du simulateur : France en anglais, Italie en italien, Espagne en espagnol.
+- `js.json` : textes et formats (séparateur décimal, place du symbole €) lus par `main.js`, injectés dans chaque page
+  traduite (`<script type="application/json" id="i18n-js">`). Dans `main.js`, chaque texte passe par
+  `tr('clé', 'texte français')` : une clé absente garde le texte français.
+
+Contenu adapté à chaque pays, sans chiffre nouveau : les CEE ne valent qu'en France ; Italie : décret sur les
+exigences minimales du 28 octobre 2025 (réflectance d'au moins 0,65 en toiture plate et 0,30 en pente) ; Espagne :
+Real Decreto 36/2023 ; Suisse : compétence des cantons (Constitution fédérale, art. 89). Les exemples chiffrés de la
+page Rentabilité sont ceux du simulateur, avec ses hypothèses par défaut. Les liens vers les pages restées en français
+pointent vers `../page.html` avec la mention « en français ». Toute modification d'un texte réglementaire ou chiffré
+(CEE, décret tertiaire, hypothèses du simulateur) est à reporter dans les trois langues. Une relecture par des
+locuteurs natifs reste conseillée.
+
+Formulaire de devis traduit : les valeurs envoyées restent en français (celles qu'attend `contact.php`), seuls les
+libellés sont traduits ; deux champs en plus : `langue` (caché) et `pays`. `contact.php` répond dans la langue du
+visiteur, renvoie vers `<langue>/devis.html` sans JavaScript, et indique la langue et le pays dans l'e-mail reçu, qui
+reste en français.
+
+Sur les 13 pages traduites, les boutons FR, EN, IT et ES mènent aux vraies versions de la page (`lang_switch` dans
+`build.py`), avec les balises hreflang et les entrées du sitemap. Sur les autres pages, EN, IT et ES ouvrent la page
+traduite par Google Traduction (simple lien vers translate.google.com, `LANGS` dans `build.py`) : aucun script ni
+cookie sur albedia.eu. C'est décrit dans `confidentialite.html` et `mentions-legales.html`.
 
 La page traduite est servie par Google à l'adresse albedia-eu.translate.goog. Google y réécrit nos liens EN, IT, ES
 vers son propre service, ce qui imbrique deux traductions et affiche « Can't translate this page ». Le bloc « langues »

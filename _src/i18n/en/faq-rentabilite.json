@@ -1,0 +1,23 @@
+[
+ {"q": "What is the payback period of a cool roof?",
+  "a": ["It depends mainly on three factors: the share of air conditioning in the building’s consumption, the number of storeys under the roof and the climate. The payback period is calculated by dividing the cost of the works, minus any incentive such as the CEE bonus in France, by the annual savings.",
+        "An air-conditioned single-storey shop in a hot climate pays for itself much faster than a multi-storey office building in a cooler one. The calculator on this page gives you a first order of magnitude; our study refines it using your actual consumption."]},
+ {"q": "How much can you save on air conditioning?",
+  "a": ["In more than 25 studies reviewed by the US EPA, a reflective roof reduced air-conditioning consumption by 2 to 40%, and by 20% on average. The gain applies to the volume under the roof: it is greatest for a single-storey building and decreases with the number of storeys.",
+        "A roof that is already well insulated lets less heat through: the gain is smaller."]},
+ {"q": "Why don’t you publish a price per square metre?",
+  "a": ["Because the price depends less on the area than on the condition of the roof: surface preparation, treatment of corrosion or cracks, roof details, access and safety, presence of asbestos. A price per m² shown without a visit would be misleading.",
+        "We draw up a detailed quote, item by item, after visiting your roof. In the meantime, the calculator on this page shows you the budget that your savings and any bonus would pay back in 5, 10 or 20 years."]},
+ {"q": "Is a cool roof profitable on a building without air conditioning?",
+  "a": ["There is then no air-conditioning bill to reduce, and no CEE bonus in France, since the scheme requires an air-conditioned volume. The value is measured differently: less heat under the roof for staff and goods, and sometimes air conditioning that does not need to be installed.",
+        "In France, since 1 July 2025, employers must prevent heat-related risks, in particular by adapting workplaces: the roof is one of the levers."]},
+ {"q": "Does a cool roof cost money in winter?",
+  "a": ["The roof captures a little less solar heat in winter. According to the US EPA, this slight extra heating cost is generally offset by the summer savings, because the sun is lower and the days shorter.",
+        "It weighs more in buildings that are mainly heated, with little air conditioning, in a cold climate: our study takes it into account before recommending a cool roof."]},
+ {"q": "Is the CEE bonus guaranteed in France?",
+  "a": ["No. It is paid by a funding company if the project meets all the conditions of sheet BAT-EN-112: tertiary building in commercial use, roof above an enclosed air-conditioned volume, heating and cooling by heat pump, no existing reflective coating, product with proven performance.",
+        "The application must be made before the quote is signed, and the amount depends on the certificate price and on the funder’s offer. We check eligibility during the study."]},
+ {"q": "How can you check the savings after the works?",
+  "a": ["The most reliable way is to compare air-conditioning consumption from one summer to the next, taking the weather into account: a hotter summer uses more energy. Sub-meters on the cooling plant make the comparison more accurate.",
+        "Surface temperature measurements, on the treated roof and on a reference area, also show the effect of the coating. Regular maintenance then preserves the reflectance, and therefore the savings."]}
+]

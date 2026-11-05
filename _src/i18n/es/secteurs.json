@@ -1,0 +1,146 @@
+{
+  "industrie": {
+    "title": "Cool roof para naves industriales y talleres | ALBEDIA",
+    "desc": "Cubiertas reflectantes para talleres y centros de producción: menos calor a través de la cubierta y puestos de trabajo más soportables en verano.",
+    "h1": "El cool roof para edificios industriales",
+    "lead": "Los talleres y centros de producción suman el calor de las máquinas al de la cubierta. Una cubierta reflectante reduce el segundo, en toda la superficie del edificio.",
+    "enjeux_titre": "Cuando la cubierta se suma al calor de los procesos",
+    "enjeux": [
+      "En un taller, la cubierta suele ser la superficie más expuesta al sol. Oscura y poco aislada, suma su aporte de calor al de las máquinas, los hornos y los compresores. Durante las olas de calor, las condiciones de trabajo empeoran rápidamente.",
+      "Reducir el calor que entra por la cubierta ayuda a mantener temperaturas más soportables para los operarios, alivia la carga de los equipos de ventilación o refrigeración y protege los procesos y existencias sensibles a la temperatura."
+    ],
+    "batiments": ["Talleres de producción y de mantenimiento", "Centros agroalimentarios y farmacéuticos", "Naves de almacenamiento de materias primas y productos terminados", "Salas técnicas y de compresores"],
+    "benefices": [
+      ["thermo", "Talleres más soportables", "Menos calor irradiado por la cubierta sobre los puestos de trabajo."],
+      ["clim", "Menos carga para la refrigeración", "Si el centro está climatizado o ventilado, los equipos trabajan menos en los picos de calor."],
+      ["couches", "Una cubierta que dura", "Menos variaciones de temperatura para la cubierta y la impermeabilización, día tras día."]
+    ],
+    "points": [
+      "El estado y el tipo de cubierta: chapa grecada, impermeabilización bituminosa o sintética, fibrocemento",
+      "Exutorios, lucernarios, conductos y equipos que hay que proteger durante las obras",
+      "Los condicionantes del centro: accesos, plan de prevención, zonas de riesgo y horarios de intervención",
+      "La clasificación de reacción al fuego exigida para la cubierta, en particular en instalaciones industriales sujetas a normativa específica"
+    ],
+    "aides": "En Francia, la ficha CEE BAT-EN-112 se dirige a los edificios terciarios de uso comercial. Para un centro industrial, analizamos caso por caso los incentivos que pueden aplicarse, en Francia o en los demás países donde trabajamos."
+  },
+  "logistique": {
+    "title": "Cool roof para almacenes y plataformas logísticas | ALBEDIA",
+    "desc": "Cubiertas reflectantes para almacenes y plataformas logísticas: limitar el calor que se acumula bajo la cubierta, para el personal y para la mercancía.",
+    "h1": "El cool roof para almacenes y plataformas logísticas",
+    "lead": "Los almacenes tienen cubiertas muy grandes, a menudo poco aisladas. Hacerlas reflectantes limita el calor que se acumula bajo la cubierta.",
+    "enjeux_titre": "Miles de metros cuadrados a pleno sol",
+    "enjeux": [
+      "Un almacén de una sola planta supone a menudo varios miles de metros cuadrados de cubierta expuestos al sol, sobre un volumen pocas veces climatizado. En verano, el calor se acumula bajo la cubierta y se extiende a las zonas de preparación y almacenamiento.",
+      "Para los preparadores de pedidos, los carretilleros y la mercancía, cada grado cuenta. El cool roof actúa en el origen, en toda la cubierta, sin cambiar el funcionamiento del edificio."
+    ],
+    "batiments": ["Almacenes y centros de distribución", "Centros de paquetería y plataformas de cross-docking", "Almacenamiento de productos sensibles al calor", "Zonas de temperatura controlada y oficinas anexas"],
+    "benefices": [
+      ["thermo", "Condiciones de trabajo más soportables", "Menos calor irradiado hacia los pasillos, los muelles de carga y los puestos de preparación."],
+      ["bouclier", "Mercancía mejor protegida", "Menos calor acumulado en las zonas de almacenamiento durante las olas de calor."],
+      ["clim", "Menos frío que producir", "Oficinas, zonas de temperatura controlada y salas técnicas consumen menos energía."]
+    ],
+    "points": [
+      "La superficie y el estado de la cubierta, a menudo de chapa grecada o con impermeabilización bituminosa",
+      "Los lucernarios y exutorios de humos que hay que preservar",
+      "Los posibles paneles fotovoltaicos y sus zonas de paso",
+      "Los accesos a la cubierta y la seguridad de los operarios"
+    ],
+    "aides": "En Francia, los almacenes entran en el ámbito del decreto terciario a partir de 1000 m² de actividad terciaria, y reducir las necesidades de frío de las zonas climatizadas puede contribuir a sus objetivos. La ficha CEE BAT-EN-112 se dirige a los edificios terciarios de uso comercial: comprobamos su elegibilidad. En Suiza, Italia y España las reglas son distintas: analizamos su caso durante el estudio."
+  },
+  "distribution": {
+    "title": "Cool roof para tiendas y gran distribución | ALBEDIA",
+    "desc": "Cubiertas reflectantes para tiendas y superficies de venta climatizadas: menos calor que evacuar, una climatización menos exigida, posibles incentivos.",
+    "h1": "El cool roof para tiendas y superficies de venta",
+    "lead": "Las tiendas y los supermercados están casi siempre climatizados: cada unidad de calor que no entra por la cubierta es calor que la climatización no tiene que evacuar.",
+    "enjeux_titre": "Una climatización que lucha contra el sol",
+    "enjeux": [
+      "Una superficie de venta suma una gran cubierta, la iluminación, los equipos de frío y una gran afluencia de público. En verano, la climatización funciona a pleno rendimiento para mantener el confort de clientes y personal.",
+      "Al limitar el aporte solar a través de la cubierta, el cool roof reduce la carga de refrigeración. En Francia, es justo el caso previsto por la ficha CEE BAT-EN-112, que puede financiar una parte de las obras."
+    ],
+    "batiments": ["Supermercados e hipermercados", "Tiendas especializadas y showrooms", "Galerías y parques comerciales", "Puntos de recogida y almacenes anexos"],
+    "benefices": [
+      ["clim", "Una climatización menos exigida", "Menos calor que evacuar y picos de potencia más bajos durante las olas de calor."],
+      ["thermo", "Más confort en tienda", "Tanto para los clientes como para el personal, sobre todo bajo cubiertas poco aisladas."],
+      ["euro", "Obras que pueden financiarse", "En Francia, bajo condiciones, el incentivo CEE BAT-EN-112 puede cubrir una parte de la inversión."]
+    ],
+    "points": [
+      "El sistema de calefacción y refrigeración: en Francia, la ficha BAT-EN-112 exige un sistema de bomba de calor",
+      "Los equipos en cubierta: grupos de frío, unidades de tratamiento de aire, conductos",
+      "La organización de las obras fuera del horario de apertura, si es necesario",
+      "La reacción al fuego de la cubierta en los edificios abiertos al público"
+    ],
+    "aides": "En Francia, la ficha CEE BAT-EN-112 puede aplicarse si su tienda es un edificio terciario de uso comercial, con la cubierta sobre un volumen climatizado y calefacción y refrigeración por bomba de calor. Las superficies de 1000 m² o más también están sujetas al decreto terciario. En los demás países, analizamos los incentivos disponibles para su proyecto."
+  },
+  "tertiaire": {
+    "title": "Cool roof para oficinas y edificios terciarios | ALBEDIA",
+    "desc": "Cubiertas reflectantes para oficinas y edificios terciarios: reducir las necesidades de climatización y el consumo de energía del edificio.",
+    "h1": "El cool roof para oficinas y edificios terciarios",
+    "lead": "En un edificio de oficinas climatizado, la cubierta es una palanca sencilla para reducir las necesidades de refrigeración, junto a las demás acciones de ahorro energético.",
+    "enjeux_titre": "Las últimas plantas, en primera línea",
+    "enjeux": [
+      "Las últimas plantas y los edificios de una sola planta reciben directamente el calor de la cubierta. En oficinas climatizadas, eso supone un consumo elevado en verano. Sin climatización, un malestar que pesa sobre el trabajo.",
+      "El cool roof es una actuación rápida, sin obras en el interior del edificio. Su interés depende del peso de la climatización en el consumo: lo evaluamos antes de proponérselo."
+    ],
+    "batiments": ["Edificios de oficinas con cubierta plana", "Locales profesionales y mixtos", "Oficinas diáfanas y centros de llamadas climatizados", "Salas de servidores y salas técnicas"],
+    "benefices": [
+      ["clim", "Menor consumo en verano", "Menos aporte solar a través de la cubierta y, por tanto, menos frío que producir."],
+      ["thermo", "Últimas plantas más confortables", "Las plantas bajo cubierta son las primeras en beneficiarse de una cubierta más fresca."],
+      ["document", "Una acción de ahorro energético", "Una medida de reducción del consumo que documentar en su plan de acción energética."]
+    ],
+    "points": [
+      "El peso de la calefacción y la climatización en el consumo",
+      "El nivel de aislamiento de la cubierta",
+      "Los equipos técnicos instalados en la azotea",
+      "Las normas de la comunidad de propietarios o del contrato de arrendamiento para las obras en cubierta"
+    ],
+    "aides": "En Francia, el decreto terciario obliga a los edificios de 1000 m² o más a reducir su consumo de energía final un 40% en 2030, un 50% en 2040 y un 60% en 2050, y el incentivo CEE BAT-EN-112 puede aplicarse a los edificios terciarios de uso comercial: comprobamos su caso. En los demás países, comprobamos lo que se aplica a su edificio."
+  },
+  "collectivites": {
+    "title": "Cool roof para colegios, polideportivos y edificios públicos | ALBEDIA",
+    "desc": "Cubiertas reflectantes para edificios públicos: colegios, polideportivos y naves municipales que siguen siendo utilizables durante las olas de calor.",
+    "h1": "El cool roof para edificios públicos",
+    "lead": "Colegios, polideportivos, naves municipales: edificios que deben seguir siendo utilizables durante los periodos de calor intenso.",
+    "enjeux_titre": "Equipamientos públicos utilizables también en verano",
+    "enjeux": [
+      "Las olas de calor ponen a prueba los edificios públicos, a menudo poco o nada climatizados. Bajo una cubierta oscura, las aulas, los polideportivos y los espacios de atención al público se vuelven difíciles de utilizar.",
+      "El cool roof es una medida de adaptación sencilla, aplicable a las cubiertas existentes. A escala de barrio, unas cubiertas más claras también ayudan a limitar las islas de calor urbanas."
+    ],
+    "batiments": ["Colegios e institutos", "Polideportivos e instalaciones deportivas", "Naves municipales y centros técnicos", "Salas polivalentes y espacios culturales"],
+    "benefices": [
+      ["thermo", "Edificios utilizables en verano", "Menos calor bajo las cubiertas de aulas, polideportivos y espacios de atención al público."],
+      ["collectivites", "Una medida de adaptación concreta", "Una acción visible contra el calor extremo, aplicada a sus edificios existentes."],
+      ["clim", "Un consumo bajo control", "En los locales climatizados, menos frío que producir."]
+    ],
+    "points": [
+      "Las exigencias de reacción al fuego de la cubierta en los edificios abiertos al público",
+      "El calendario de las obras, por ejemplo durante las vacaciones escolares",
+      "El estado y el tipo de las cubiertas de su patrimonio",
+      "La localización del amianto en los edificios más antiguos, antes de cualquier intervención"
+    ],
+    "aides": "En Francia, los edificios públicos que albergan 1000 m² o más de actividades terciarias están sujetos al decreto terciario. Estén donde estén sus edificios, le ayudamos a documentar el interés del cool roof en su plan de acción."
+  },
+  "agricole": {
+    "title": "Cool roof para edificios agrícolas | ALBEDIA",
+    "desc": "Cubiertas reflectantes para naves de ganadería, almacenamiento y transformación: menos calor bajo la cubierta para los animales, las cosechas y las personas.",
+    "h1": "El cool roof para edificios agrícolas",
+    "lead": "Naves de ganadería, almacenamiento o transformación: limitar el calor que entra por la cubierta protege a los animales, las cosechas y las personas que trabajan en ellas.",
+    "enjeux_titre": "Grandes cubiertas ligeras, pocas veces aisladas",
+    "enjeux": [
+      "Los edificios agrícolas tienen a menudo grandes cubiertas ligeras, de chapa grecada o de fibrocemento, sin aislamiento. En verano, el calor se acumula rápidamente.",
+      "Una cubierta reflectante reduce el aporte solar sin modificar la estructura del edificio. Su interés se valora caso por caso, según el uso y la ventilación del edificio."
+    ],
+    "batiments": ["Naves ganaderas", "Almacenamiento de cosechas y forrajes", "Bodegas y salas de transformación", "Cobertizos y talleres agrícolas"],
+    "benefices": [
+      ["thermo", "Menos calor bajo la cubierta", "Temperaturas más soportables para los animales y las personas."],
+      ["bouclier", "Cosechas mejor protegidas", "Menos calor en las zonas de almacenamiento y de transformación."],
+      ["chantier", "Sin demolición", "El revestimiento se aplica sobre la cubierta existente."]
+    ],
+    "points": [
+      "Las placas de fibrocemento: la localización del amianto es imprescindible antes de las obras",
+      "La ventilación del edificio, de la que depende el ahorro obtenido",
+      "La resistencia de la cubierta y el acceso en condiciones de seguridad",
+      "Las placas translúcidas que hay que preservar"
+    ],
+    "aides": "Los incentivos varían según la actividad, la forma jurídica de la explotación y el país. Los analizamos con usted durante el estudio."
+  }
+}

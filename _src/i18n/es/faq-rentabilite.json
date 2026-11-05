@@ -1,0 +1,23 @@
+[
+ {"q": "¿Cuál es el plazo de amortización de un cool roof?",
+  "a": ["Depende sobre todo de tres factores: el peso de la climatización en el consumo del edificio, el número de plantas bajo la cubierta y el clima. El plazo de amortización se calcula dividiendo el importe de las obras, descontados los posibles incentivos como el incentivo CEE en Francia, entre el ahorro anual.",
+        "Una tienda climatizada de una planta en un clima cálido se amortiza mucho más deprisa que un edificio de oficinas de varias plantas en un clima más fresco. El simulador de esta página le da un primer orden de magnitud; nuestro estudio lo precisa a partir de sus consumos reales."]},
+ {"q": "¿Cuánto se ahorra en climatización?",
+  "a": ["En más de 25 estudios recopilados por la US EPA, una cubierta reflectante redujo el consumo de climatización entre un 2 y un 40%, y un 20% de media. El ahorro se refiere al volumen situado bajo la cubierta: es máximo en un edificio de una planta y disminuye con el número de plantas.",
+        "Una cubierta ya bien aislada deja pasar menos calor: el ahorro es menor."]},
+ {"q": "¿Por qué no publican un precio por metro cuadrado?",
+  "a": ["Porque el precio depende menos de la superficie que del estado de la cubierta: preparación del soporte, tratamiento de la corrosión o de las fisuras, puntos singulares, accesos y seguridad, presencia de amianto. Un precio por m² anunciado sin visita sería engañoso.",
+        "Elaboramos un presupuesto detallado, partida por partida, tras la visita de su cubierta. Mientras tanto, el simulador de esta página le indica el presupuesto que su ahorro y los posibles incentivos amortizarían en 5, 10 o 20 años."]},
+ {"q": "¿Es rentable un cool roof en un edificio sin climatización?",
+  "a": ["En ese caso no hay factura de climatización que reducir, ni incentivo CEE en Francia, que exige un volumen climatizado. El interés se mide de otra forma: menos calor bajo la cubierta para el personal y la mercancía, y a veces una climatización que no hace falta instalar.",
+        "En Francia, desde el 1 de julio de 2025, el empleador debe prevenir los riesgos relacionados con el calor, en particular adaptando los lugares de trabajo: la cubierta es una de las palancas."]},
+ {"q": "¿El cool roof hace perder dinero en invierno?",
+  "a": ["En invierno, la cubierta capta algo menos de calor solar. Según la US EPA, este ligero sobrecoste de calefacción suele quedar compensado por el ahorro de verano, porque el sol está más bajo y los días son más cortos.",
+        "Pesa más en los edificios sobre todo calefactados, poco climatizados, en un clima frío: nuestro estudio lo tiene en cuenta antes de recomendarle un cool roof."]},
+ {"q": "En Francia, ¿está garantizado el incentivo CEE?",
+  "a": ["No. Lo abona una entidad financiadora si la actuación cumple todas las condiciones de la ficha BAT-EN-112: edificio terciario de uso comercial, cubierta sobre un volumen cerrado y climatizado, calefacción y refrigeración por bomba de calor, sin revestimiento reflectante previo, producto con prestaciones acreditadas.",
+        "La solicitud debe tramitarse antes de firmar el presupuesto, y el importe depende de la cotización de los certificados y de la oferta de la entidad financiadora. Comprobamos la elegibilidad durante el estudio."]},
+ {"q": "¿Cómo comprobar el ahorro después de las obras?",
+  "a": ["Lo más fiable es comparar el consumo de climatización de un verano a otro, teniendo en cuenta la meteorología: un verano más caluroso consume más. Unos submedidores en la producción de frío hacen la comparación más precisa.",
+        "Las mediciones de la temperatura superficial, en la cubierta tratada y en una zona de referencia, también muestran el efecto del revestimiento. Un mantenimiento regular preserva después la reflectancia y, por tanto, el ahorro."]}
+]

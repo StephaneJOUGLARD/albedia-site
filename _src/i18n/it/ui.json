@@ -1,0 +1,164 @@
+{
+  "html_lang": "it",
+  "og_locale": "it_IT",
+  "locale": "it-IT",
+  "dec": ",",
+  "pdf_size": "PDF, {n} MB",
+  "skip": "Vai al contenuto",
+  "nav_aria": "Navigazione principale",
+  "menu": "Menu",
+  "quote": "Richiedete un preventivo",
+  "lang_aria": "Lingua del sito",
+  "brand_aria": "ALBEDIA, home",
+  "baseline": "Aumentate l’albedo!",
+  "slogans": ["I vostri tetti riflettono!", "Aumentate l’albedo!"],
+  "home": "Home",
+  "breadcrumb_aria": "Percorso di navigazione",
+  "area": "in Francia, in Svizzera, in Italia e in Spagna",
+  "countries": "Francia · Svizzera · Italia · Spagna",
+  "cta_text": "Parlateci del vostro edificio: superficie, tipo di copertura, utilizzo. Vi ricontatteremo per organizzare il sopralluogo della copertura.",
+  "cta2": ["guide-cool-roof.html", "Leggete la guida al cool roof"],
+  "cta_contact": "Oppure contattateci:",
+  "brochure": "Scaricate la nostra brochure (in francese, {size})",
+  "brochure_short": "Brochure (PDF, in francese)",
+  "footer_desc": "Rivestimenti riflettenti (cool roof) per le coperture degli edifici professionali, {area}.",
+  "footer_copy": "© 2026 ALBEDIA, marchio registrato gestito da CGBI, società del GROUPE NOVELIA.",
+  "legal_links": [["mentions-legales.html", "Note legali (in francese)"], ["confidentialite.html", "Privacy (in francese)"]],
+  "nocookie": "Questo sito non utilizza cookie.",
+  "og_alt": "ALBEDIA, cool roof per edifici professionali",
+  "choose": "Scegliete…",
+  "sector_choices": ["Industria", "Logistica e magazzini", "Commercio e distribuzione", "Uffici e terziario", "Ente o struttura pubblica", "Agricoltura", "Altro"],
+  "sectors": {
+    "industrie": ["Industria", "Officine e siti produttivi"],
+    "logistique": ["Logistica", "Magazzini e piattaforme"],
+    "distribution": ["Commercio e distribuzione", "Negozi e superfici di vendita"],
+    "tertiaire": ["Uffici e terziario", "Uffici e locali professionali"],
+    "collectivites": ["Edifici pubblici", "Scuole, palestre, strutture"],
+    "agricole": ["Agricoltura", "Allevamento, stoccaggio, trasformazione"]
+  },
+  "menus": [
+    ["solutions", "Soluzioni", [
+      ["solutions.html", "chantier", "La nostra soluzione cool roof"],
+      ["guide-cool-roof.html", "thermo", "Come funziona il cool roof"],
+      ["solutions.html#toitures", "couches", "Coperture compatibili"],
+      ["solutions.html#entretien", "calendrier", "Manutenzione"]]],
+    ["secteurs", "Settori", [
+      ["industrie.html", "industrie", "Industria"],
+      ["logistique.html", "logistique", "Logistica"],
+      ["distribution.html", "distribution", "Commercio e distribuzione"],
+      ["tertiaire.html", "tertiaire", "Uffici e terziario"],
+      ["collectivites.html", "collectivites", "Edifici pubblici"],
+      ["agricole.html", "agricole", "Agricoltura"]]],
+    ["rentabilite", "Redditività", [
+      ["rentabilite-cool-roof.html", "euro", "Redditività e ROI"],
+      ["rentabilite-cool-roof.html#simulateur", "calendrier", "Simulatore di risparmio"],
+      ["zones-intervention.html#pays", "bouclier", "Norme e incentivi per paese"]]],
+    ["albedia", "ALBEDIA", [
+      ["qui-sommes-nous.html", "interlocuteur", "Chi siamo"],
+      ["zones-intervention.html", "lieu", "Dove interveniamo"],
+      ["assets/docs/plaquette-albedia.pdf", "document", "Brochure (PDF, in francese)"],
+      ["devis.html", "mail", "Preventivo e contatti"]]]
+  ],
+  "footer_cols": [
+    ["Soluzioni", [["solutions.html", "La nostra soluzione cool roof"], ["solutions.html#methode", "Il nostro metodo"], ["guide-cool-roof.html", "Come funziona il cool roof"], ["solutions.html#entretien", "Manutenzione della copertura"]]],
+    ["Settori", [["industrie.html", "Industria"], ["logistique.html", "Logistica"], ["distribution.html", "Commercio e distribuzione"], ["tertiaire.html", "Uffici e terziario"], ["collectivites.html", "Edifici pubblici"], ["agricole.html", "Agricoltura"]]],
+    ["Redditività", [["rentabilite-cool-roof.html", "Redditività e ROI"], ["rentabilite-cool-roof.html#simulateur", "Simulatore di risparmio"], ["zones-intervention.html#pays", "Norme per paese"]]],
+    ["ALBEDIA", [["qui-sommes-nous.html", "Chi siamo"], ["zones-intervention.html", "Dove interveniamo"], ["devis.html", "Richiedete un preventivo"]]],
+    ["Lingue", "LANGS"]
+  ],
+  "sector_tpl": {
+    "quote": "Richiedete un preventivo",
+    "understand": "Come funziona il cool roof",
+    "enjeux": "La sfida",
+    "batiments": "Edifici interessati",
+    "gain_kicker": "Cosa ci guadagnate",
+    "gain_title": "Cosa vi offre il cool roof",
+    "points_kicker": "Prima dei lavori",
+    "points_title": "Gli aspetti che valutiamo",
+    "points_text": "Ogni edificio ha i suoi vincoli. Il sopralluogo della copertura serve a individuarli prima di proporvi un sistema e un preventivo.",
+    "method": "Il nostro metodo",
+    "aides_kicker": "Incentivi e obblighi",
+    "aides_title": "Cosa può valere per il vostro edificio",
+    "link1": ["zones-intervention.html#pays", "Norme e incentivi per paese"],
+    "link2": ["rentabilite-cool-roof.html", "Redditività e tempo di ritorno"],
+    "others": "Altri settori"
+  },
+  "alts": {
+    "entrepot-toit-blanc": "Vista aerea di un grande edificio logistico con copertura bianca",
+    "application-toiture": "Operaio in tuta che spruzza un rivestimento bianco su un tetto piano",
+    "application-montagne": "Applicazione a spruzzo di un rivestimento per coperture, con le montagne sullo sfondo",
+    "plateforme-logistique": "Piattaforma logistica con copertura chiara in una zona industriale, vista dall’alto",
+    "toiture-bac-acier": "Copertura industriale in lamiera grecata dotata di estrattori d’aria",
+    "atelier-industriel": "Interno di un capannone industriale con carroponte, sotto una copertura metallica",
+    "zone-commerciale": "Centro commerciale con tetti piani e parcheggio, visto dall’alto",
+    "centre-commercial": "Negozi di periferia con tetti piani circondati da alberi, visti dall’alto",
+    "parc-activites": "Edifici di una zona artigianale con tetti piani chiari, visti dall’alto",
+    "immeuble-bureaux": "Edificio per uffici contemporaneo al tramonto",
+    "toiture-terrasse-bureaux": "Tetto piano chiaro di un edificio per uffici con i suoi impianti di climatizzazione",
+    "ecole-vue-aerienne": "Complesso scolastico con tetti piani in un quartiere residenziale, visto dall’alto",
+    "batiment-scolaire": "Edificio scolastico a un piano e la sua ampia copertura",
+    "hangar-agricole": "Capannone agricolo in mezzo ai campi",
+    "toits-ville": "Tetti piani chiari e scuri in un centro città, visti dall’alto",
+    "toit-blanc-ville": "Tetto piano bianco di un edificio in mattoni",
+    "etude-plans": "Professionista dell’edilizia che studia dei disegni in cantiere",
+    "travaux-couverture": "Lavori su una copertura metallica",
+    "ferme-toits-blancs": "Vista aerea di un’azienda lattiero-casearia con grandi edifici dai tetti bianchi",
+    "site-industriel": "Vista aerea di un grande sito industriale dai tetti grigi",
+    "toiture-photovoltaique": "Grande copertura industriale dotata di pannelli fotovoltaici al tramonto"
+  },
+  "carte": {
+    "aria": "Mappa dei dipartimenti della Francia metropolitana, colorati secondo la loro zona climatica CEE (H1, H2 o H3).",
+    "zone": "Zona {z}",
+    "deps": "{n} dipartimenti",
+    "prime": "Incentivo BAT-EN-112: {k} kWh cumac al m²",
+    "hover": "Passate il cursore su un dipartimento per visualizzarne la zona.",
+    "touch": "Toccate un dipartimento per visualizzarne la zona.",
+    "inset": "Parigi e la sua prima cintura sono ingranditi nel riquadro in alto a sinistra."
+  },
+  "pages": {
+    "index.html": {
+      "title": "Cool roof per edifici commerciali e industriali | ALBEDIA",
+      "og": "ALBEDIA, cool roof per edifici professionali",
+      "desc": "ALBEDIA applica rivestimenti riflettenti (cool roof) sulle coperture di magazzini, stabilimenti, negozi e uffici, per mantenere gli edifici più freschi in estate."
+    },
+    "guide-cool-roof.html": {
+      "title": "Il cool roof: principio, albedo, vantaggi e limiti | ALBEDIA",
+      "desc": "Capire il cool roof: albedo, emissività, SRI, dati di riferimento con le fonti, quando conviene, effetto in inverno e manutenzione.",
+      "crumbs": [["Il cool roof", null]],
+      "cta2": ["solutions.html", "Scoprite le nostre soluzioni"]
+    },
+    "solutions.html": {
+      "title": "Soluzioni cool roof: sopralluogo, applicazione, manutenzione | ALBEDIA",
+      "desc": "Dal sopralluogo alla manutenzione: il metodo ALBEDIA per applicare un rivestimento riflettente sulla copertura del vostro edificio professionale.",
+      "crumbs": [["Soluzioni", null]]
+    },
+    "industrie.html": {"crumbs": [["Settori", "index.html#secteurs"], ["Industria", null]]},
+    "logistique.html": {"crumbs": [["Settori", "index.html#secteurs"], ["Logistica", null]]},
+    "distribution.html": {"crumbs": [["Settori", "index.html#secteurs"], ["Commercio e distribuzione", null]]},
+    "tertiaire.html": {"crumbs": [["Settori", "index.html#secteurs"], ["Uffici e terziario", null]]},
+    "collectivites.html": {"crumbs": [["Settori", "index.html#secteurs"], ["Edifici pubblici", null]]},
+    "agricole.html": {"crumbs": [["Settori", "index.html#secteurs"], ["Agricoltura", null]]},
+    "qui-sommes-nous.html": {
+      "title": "Chi siamo | ALBEDIA",
+      "desc": "ALBEDIA, specialista delle coperture riflettenti per edifici professionali: il nostro nome, la nostra missione e il nostro modo di lavorare.",
+      "crumbs": [["Chi siamo", null]]
+    },
+    "devis.html": {
+      "title": "Richiedete un preventivo per un cool roof | ALBEDIA",
+      "desc": "Descrivete il vostro edificio e la sua copertura: ALBEDIA vi ricontatta per organizzare un sopralluogo e preparare un preventivo per un rivestimento riflettente.",
+      "crumbs": [["Richiesta di preventivo", null]]
+    },
+    "rentabilite-cool-roof.html": {
+      "title": "Redditività e ROI del cool roof: calcolo del tempo di ritorno | ALBEDIA",
+      "desc": "Calcolate la redditività di una copertura riflettente: risparmi sulla climatizzazione, incentivi, tempo di ritorno e guadagno a 20 anni, con il nostro simulatore.",
+      "crumbs": [["Redditività e ROI", null]],
+      "faq": "faq-rentabilite.json",
+      "cta2": ["zones-intervention.html#pays", "Norme e incentivi per paese"]
+    },
+    "zones-intervention.html": {
+      "title": "Dove interveniamo: Francia, Svizzera, Italia, Spagna | ALBEDIA",
+      "desc": "ALBEDIA tratta le coperture degli edifici professionali in Francia, Svizzera, Italia e Spagna: le norme e gli incentivi applicabili in ciascun paese.",
+      "crumbs": [["Dove interveniamo", null]]
+    }
+  }
+}
