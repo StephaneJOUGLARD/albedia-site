@@ -985,7 +985,7 @@ def build(variant, out):
         ctx = Ctx(variant, page)
         body = page_body(page, ctx)
         p = ctx.prefix
-        script = '<script src="%sassets/js/main.js?v=7" defer></script>\n' % p
+        script = '<script src="%sassets/js/main.js?v=8" defer></script>\n' % p
         if variant == 'site':
             doc = head_site(page, ctx) + body + '\n' + script + '</body>\n</html>\n'
         else:

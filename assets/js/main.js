@@ -482,6 +482,8 @@
       frCur.parentNode.replaceChild(frLink, frCur);
     }
     Array.prototype.forEach.call(langBox.querySelectorAll('a[hreflang]'), function (a) {
+      // la bonne adresse aussi dans le lien (ouverture dans un nouvel onglet, appui long sur iPhone)
+      a.setAttribute('href', langDest(a.getAttribute('hreflang')));
       if (a.getAttribute('hreflang') === trLang) {
         a.className = 'lang-cur';
         a.setAttribute('aria-current', 'true');
