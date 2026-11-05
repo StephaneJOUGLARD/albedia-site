@@ -6,7 +6,7 @@ Utilisation (depuis la racine du dépôt) :
   python3 _src/build.py preview <dossier>   produit un aperçu (polices Google Fonts, formulaire inactif)
                                             dans un dossier HORS du dépôt, pour le publier comme artifact
 """
-import html, json, os, re, shutil, sys, tempfile
+import hashlib, html, json, os, re, shutil, sys, tempfile
 from urllib.parse import quote
 
 SRC = os.path.dirname(os.path.abspath(__file__))
@@ -23,6 +23,21 @@ SLOGANS = ['Vos toitures réfléchissent\u00a0!', 'Augmentez votre albédo\u00a0
 AREA = 'en France, en Suisse, en Italie et en Espagne'   # zone d'intervention affichée sur le site
 COUNTRIES = ('France', 'Suisse', 'Italie', 'Espagne')   # pays de la zone d'intervention (données structurées)
 BASELINE = 'Augmentez votre albédo\u00a0!'   # signature affichée sous le logo (en-tête et pied de page)
+
+# plaquette de présentation à télécharger (PDF rendu depuis l'artifact « Plaquette ALBEDIA », voir CLAUDE.md)
+PLAQUETTE = 'assets/docs/plaquette-albedia.pdf'
+PLAQUETTE_ATTR = ' target="_blank" rel="noopener" type="application/pdf"'
+
+
+def plaquette_href():
+    """Lien vers la plaquette, avec une empreinte du fichier : une nouvelle version n'est jamais servie depuis le cache."""
+    data = open(os.path.join(SRC, PLAQUETTE), 'rb').read()
+    return '%s?v=%s' % (PLAQUETTE, hashlib.sha1(data).hexdigest()[:8])
+
+
+def plaquette_taille():
+    return ('PDF, %.1f Mo' % (os.path.getsize(os.path.join(SRC, PLAQUETTE)) / 1e6)).replace('.', ',')
+
 
 # photo = vignette de l'accueil et bandeau de la page secteur ; photo2 = photo dans le contenu de la page
 SECTORS = [
@@ -75,6 +90,7 @@ MENUS = [
         ('zones-intervention.html', 'lieu', 'Zones d’intervention'),
         ('zones-intervention.html#villes', 'lieu', 'Le cool roof par ville'),
         ('particuliers.html', 'question', 'Vous êtes un particulier ?'),
+        (PLAQUETTE, 'document', 'Plaquette de présentation (PDF)'),
         ('devis.html', 'mail', 'Devis et contact')]),
 ]
 
@@ -379,6 +395,12 @@ def expand(text, ctx):
             return villes_html()
         if key == 'CARTE_ZONES':
             return carte_zones()
+        if key == 'PLAQUETTE_HREF':
+            return plaquette_href()
+        if key == 'PLAQUETTE_ATTR':
+            return PLAQUETTE_ATTR
+        if key == 'PLAQUETTE_TAILLE':
+            return plaquette_taille()
         if key.startswith('img:'):
             slug, _, sizes = key[4:].partition('|')
             return photo(slug, ctx, sizes or SIZES_HALF)
@@ -399,6 +421,7 @@ def expand(text, ctx):
     # liens internes relatifs → préfixe (page 404) / accueil
     text = re.sub(r'href="([a-z0-9-]+\.html)(#[^"]*)?"', lambda m: 'href="%s%s"' % (ctx.href(m.group(1)), m.group(2) or ''), text)
     text = re.sub(r'action="(devis\.html|contact\.php|simulation\.php)"', lambda m: 'action="%s%s"' % (ctx.prefix, m.group(1)), text)
+    text = re.sub(r'(href|src)="(assets/(?:docs|img)/[^"]+)"', lambda m: '%s="%s%s"' % (m.group(1), ctx.prefix, m.group(2)), text)
     return text
 
 
@@ -453,6 +476,8 @@ def menus(ctx):
                 continue
             href, ic, lab = item
             cur = ' aria-current="page"' if href == page['file'] else ''
+            if href == PLAQUETTE:
+                href, cur = plaquette_href(), PLAQUETTE_ATTR
             lis.append('<li><a href="%s"%s>%s<span>%s</span></a></li>' % (href, cur, icon(ic), esc(lab)))
         is_cur = ' is-current' if page.get('nav') == key else ''
         out.append('<li class="has-sub"><button class="nav-toggle-sub%s" type="button" aria-expanded="false" aria-controls="sub-%s">%s%s</button>\n'
@@ -489,6 +514,7 @@ def cta_band(ctx):
 <p>Parlez-nous de votre bâtiment : surface, type de toiture, usage. Nous revenons vers vous pour organiser la visite de la toiture.</p>
 <div class="cta-actions"><a class="btn btn--sun" href="devis.html">Demander un devis{icon('fleche')}</a><a class="btn btn--line" href="{href2}">{label2}</a></div>
 <p class="cta-contact">Ou contactez-nous : <a href="mailto:{EMAIL}">{EMAIL}</a>{(' · <a href="tel:%s">%s</a>' % (PHONE_TEL, PHONE)) if PHONE else ''}</p>
+<p class="cta-contact cta-doc"><a href="{plaquette_href()}"{PLAQUETTE_ATTR}>{icon('document')}Télécharger notre plaquette ({plaquette_taille()})</a></p>
 </div>
 </section>
 </div>'''
@@ -508,6 +534,7 @@ def footer(ctx):
 <p class="footer-contact">{icon('mail')}<a href="mailto:{EMAIL}">{EMAIL}</a></p>
 {phone}
 <p class="footer-contact">{icon('lieu')}<a href="zones-intervention.html">France · Suisse · Italie · Espagne</a></p>
+<p class="footer-contact">{icon('document')}<a href="{plaquette_href()}"{PLAQUETTE_ATTR}>Plaquette de présentation (PDF)</a></p>
 </div>
 {cols}
 </div>
@@ -885,7 +912,7 @@ def head_site(page, ctx):
 <link rel="icon" href="{p}favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{p}apple-touch-icon.png">
 <link rel="preload" href="{p}assets/fonts/plus-jakarta-sans-var.woff2" as="font" type="font/woff2" crossorigin>
-{preload_photo(page, ctx)}<link rel="stylesheet" href="{p}assets/css/style.css?v=7">
+{preload_photo(page, ctx)}<link rel="stylesheet" href="{p}assets/css/style.css?v=8">
 {jsonld(page)}</head>
 <body>
 '''
@@ -899,7 +926,7 @@ GFONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
 def head_preview(page, is_main):
     if is_main:
         return ('<title>Site albedia.eu</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n'
-                + GFONTS + '\n<link rel="stylesheet" href="assets/css/style.css?v=7">\n')
+                + GFONTS + '\n<link rel="stylesheet" href="assets/css/style.css?v=8">\n')
     return f'''<!doctype html>
 <html lang="fr">
 <head>
@@ -907,7 +934,7 @@ def head_preview(page, is_main):
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{esc(page['title'])}</title>
 {GFONTS}
-<link rel="stylesheet" href="assets/css/style.css?v=7">
+<link rel="stylesheet" href="assets/css/style.css?v=8">
 </head>
 <body>
 '''
@@ -938,6 +965,11 @@ def build(variant, out):
     if os.path.isdir(photos_out):
         shutil.rmtree(photos_out)
     shutil.copytree(os.path.join(img_src, 'photos'), photos_out)
+    # documents à télécharger (plaquette PDF) : recopiés à chaque build
+    docs_out = os.path.join(out, 'assets', 'docs')
+    if os.path.isdir(docs_out):
+        shutil.rmtree(docs_out)
+    shutil.copytree(os.path.join(SRC, 'assets', 'docs'), docs_out)
     if variant == 'site':
         shutil.copytree(os.path.join(SRC, 'assets', 'fonts'), os.path.join(out, 'assets', 'fonts'), dirs_exist_ok=True)
         for f in ('favicon.ico', 'favicon.svg', 'apple-touch-icon.png'):

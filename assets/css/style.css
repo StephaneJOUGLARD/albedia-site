@@ -1005,6 +1005,15 @@ tr.hl > * { background: var(--sky-soft); }
 @media (hover: none) { .carte-aide .si-souris { display: none; } .carte-aide .si-tactile { display: inline; } }
 @media (max-width: 880px) { .zones-carte { grid-template-columns: minmax(0, 1fr); } .carte-infos { max-width: 660px; width: 100%; justify-self: center; } }
 
+/* plaquette de présentation à télécharger (Qui sommes-nous, bandeau final, devis) */
+.plaquette { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); align-items: center; }
+.plaquette-couv { display: block; justify-self: center; width: min(100%, 320px); border-radius: 6px; overflow: hidden; box-shadow: 0 2px 4px rgba(15, 43, 70, 0.08), 0 18px 40px rgba(15, 43, 70, 0.18); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.plaquette-couv:hover { transform: translateY(-3px); box-shadow: 0 4px 8px rgba(15, 43, 70, 0.1), 0 24px 48px rgba(15, 43, 70, 0.22); }
+.plaquette-couv img { display: block; width: 100%; height: auto; }
+.cta-doc a { display: inline-flex; align-items: center; gap: 8px; }
+.cta-doc .ico { width: 18px; height: 18px; flex: none; color: var(--sun-light); }
+@media (max-width: 880px) { .plaquette { grid-template-columns: minmax(0, 1fr); } .plaquette-couv { width: min(100%, 260px); } }
+
 /* ---------------------------------------------------------------- cadrage des photos (généré) */
 [data-photo="application-toiture"] { object-position: 68% 45%; }
 [data-photo="application-montagne"] { object-position: 58% 40%; }

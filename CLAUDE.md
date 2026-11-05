@@ -51,6 +51,13 @@ Donc :
     IGN ADMIN EXPRESS 2018 (Licence Ouverte) publiés par France GeoJSON : la source est créditée sous la carte et
     dans les mentions légales. Noms et zones viennent de `DEPTS` et `zone_of()` ; le comportement est dans
     `main.js` (bloc « carte des zones climatiques »).
+  - Plaquette de présentation : `assets/docs/plaquette-albedia.pdf` (constante `PLAQUETTE`), rendue depuis l'artifact
+    Design « Plaquette ALBEDIA » (A3 plié en A4 : deux planches, extérieur et intérieur). Le PDF suit l'ordre de lecture
+    (couverture A4, intérieur A3, dos A4), avec des photos en JPEG à environ deux fois leur taille d'affichage pour rester
+    léger (1,4 Mo). Liens : menu ALBEDIA, pied de page, bandeau final, page Qui sommes-nous (`#plaquette`, vignette
+    `assets/img/plaquette-albedia.webp`) et devis ; balises `{{PLAQUETTE_HREF}}` (lien avec une empreinte `?v=` du
+    fichier, recalculée au build), `{{PLAQUETTE_ATTR}}` et `{{PLAQUETTE_TAILLE}}`. Nouvelle version : remplacer le PDF
+    et la vignette, puis rebuild. La plaquette ne parle de CGBI qu'en pied de la dernière page (choix du propriétaire).
   - `partials/` : logo, soleil, illustrations SVG et icônes.
   - `assets/` : feuille de style, script, police auto-hébergée (Plus Jakarta Sans, licence OFL), logos, favicons.
   - `php/contact.php` (formulaire de devis, fonction `mail()` d'OVH), `php/simulation.php` (envoi par e-mail
