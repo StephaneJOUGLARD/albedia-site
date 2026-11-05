@@ -1114,7 +1114,7 @@ def head_site(page, ctx):
 <link rel="icon" href="{p}favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{p}apple-touch-icon.png">
 <link rel="preload" href="{p}assets/fonts/plus-jakarta-sans-var.woff2" as="font" type="font/woff2" crossorigin>
-{preload_photo(page, ctx)}<link rel="stylesheet" href="{p}assets/css/style.css?v=9">
+{preload_photo(page, ctx)}<link rel="stylesheet" href="{p}assets/css/style.css?v=10">
 {jsonld(page)}</head>
 <body>
 '''
@@ -1128,7 +1128,7 @@ GFONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
 def head_preview(page, is_main, ctx):
     if is_main:
         return ('<title>Site albedia.eu</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n'
-                + GFONTS + '\n<link rel="stylesheet" href="assets/css/style.css?v=9">\n')
+                + GFONTS + '\n<link rel="stylesheet" href="assets/css/style.css?v=10">\n')
     html_lang = 'fr' if ctx.lang == 'fr' else UI[ctx.lang]['html_lang']
     return f'''<!doctype html>
 <html lang="{html_lang}">
@@ -1137,7 +1137,7 @@ def head_preview(page, is_main, ctx):
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{esc(page['title'])}</title>
 {GFONTS}
-<link rel="stylesheet" href="{ctx.prefix}assets/css/style.css?v=9">
+<link rel="stylesheet" href="{ctx.prefix}assets/css/style.css?v=10">
 </head>
 <body>
 '''

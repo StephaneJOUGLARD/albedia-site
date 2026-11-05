@@ -54,7 +54,9 @@ Donc :
   - Plaquette de présentation : `assets/docs/plaquette-albedia.pdf` (constante `PLAQUETTE`), rendue depuis l'artifact
     Design « Plaquette ALBEDIA » (A3 plié en A4 : deux planches, extérieur et intérieur). Le PDF suit l'ordre de lecture
     (couverture A4, intérieur A3, dos A4), avec des photos en JPEG à environ deux fois leur taille d'affichage pour rester
-    léger (1,4 Mo). Liens : menu ALBEDIA, pied de page, bandeau final, page Qui sommes-nous (`#plaquette`, vignette
+    léger (1,2 Mo). Le voile bleu en dégradé de la couverture est fusionné dans la photo au rendu : écrit tel quel par
+    Chrome (dégradé « ShadingType 1 » avec transparence), pdf.js (Firefox, aperçus de fichiers) l'affiche en rose vif ;
+    le PDF ne doit contenir aucun dégradé. Liens : menu ALBEDIA, pied de page, bandeau final, page Qui sommes-nous (`#plaquette`, vignette
     `assets/img/plaquette-albedia.webp`) et devis ; balises `{{PLAQUETTE_HREF}}` (lien avec une empreinte `?v=` du
     fichier, recalculée au build), `{{PLAQUETTE_ATTR}}` et `{{PLAQUETTE_TAILLE}}`. Nouvelle version : remplacer le PDF
     et la vignette, puis rebuild. La plaquette ne parle de CGBI qu'en pied de la dernière page (choix du propriétaire).

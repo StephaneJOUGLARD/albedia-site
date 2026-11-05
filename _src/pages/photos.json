@@ -336,5 +336,21 @@
   "author": "Nuno Marques",
   "author_url": "https://unsplash.com/@logvisuals",
   "url": "https://unsplash.com/photos/0GbrjL3vZF4"
+ },
+ "parc-logistique": {
+  "alt": "Entrepôts d’un parc logistique aux toitures plates claires, vus du ciel",
+  "pos": "80% 50%",
+  "widths": [
+   640,
+   1280,
+   1920
+  ],
+  "ratio": [
+   2400,
+   1266
+  ],
+  "author": "Adrian Sulyok",
+  "author_url": "https://unsplash.com/@sulyok_imaging",
+  "url": "https://unsplash.com/photos/t9IfNt9VIkw"
  }
 }
