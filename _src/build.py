@@ -342,7 +342,8 @@ def lang_switch(ctx):
         '<a class="lang-link" href="https://translate.google.com/translate?sl=fr&amp;tl=%s&amp;hl=%s&amp;u=%s" lang="%s" hreflang="%s" rel="nofollow" title="%s"><span aria-hidden="true">%s</span><span class="visually-hidden">%s</span></a>' % (
             code, code, quote(page_url, safe=''), code, code, esc(title), short, esc(label))
         for code, short, label, title in LANGS)
-    return '<div class="lang" role="group" aria-label="Langue du site"><span class="lang-cur" lang="fr" aria-current="true" title="Français">FR</span>%s</div>' % links
+    # translate="no" : Google Traduction ne doit pas traduire les codes de langue (« EN » deviendrait « IN »)
+    return '<div class="lang notranslate" translate="no" role="group" aria-label="Langue du site"><span class="lang-cur" lang="fr" aria-current="true" title="Français">FR</span>%s</div>' % links
 
 
 class Ctx:
@@ -984,7 +985,7 @@ def build(variant, out):
         ctx = Ctx(variant, page)
         body = page_body(page, ctx)
         p = ctx.prefix
-        script = '<script src="%sassets/js/main.js?v=6" defer></script>\n' % p
+        script = '<script src="%sassets/js/main.js?v=7" defer></script>\n' % p
         if variant == 'site':
             doc = head_site(page, ctx) + body + '\n' + script + '</body>\n</html>\n'
         else:

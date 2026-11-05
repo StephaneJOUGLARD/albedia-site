@@ -447,6 +447,56 @@
     });
   }
 
+  /* ---------- langues : pages traduites par Google Traduction (adresse en *.translate.goog)
+     Sur une page traduite, Google fait passer nos liens EN, IT, ES par son propre service : il tente alors de
+     traduire sa propre page de traduction, et affiche « Can't translate this page ». Sur ces pages, chaque bouton
+     mène donc directement à la traduction voulue, FR revient à la page d'origine sur albedia.eu, et la langue
+     affichée est mise en avant. Sur albedia.eu, les liens restent de simples liens vers Google Traduction. */
+  var langBox = document.querySelector('.lang');
+  if (langBox && /\.translate\.goog$/.test(location.hostname)) {
+    var trQuery = new URLSearchParams(location.search);
+    var trLang = trQuery.get('_x_tr_tl') || '';
+    var ownQuery = new URLSearchParams();
+    trQuery.forEach(function (v, k) { if (k.indexOf('_x_tr_') !== 0) ownQuery.append(k, v); });
+    var langDest = function (code) {
+      if (code === 'fr') {
+        var q = ownQuery.toString();
+        return 'https://albedia.eu' + location.pathname + (q ? '?' + q : '') + location.hash;
+      }
+      var p = new URLSearchParams(ownQuery.toString());
+      p.set('_x_tr_sl', 'fr');
+      p.set('_x_tr_tl', code);
+      p.set('_x_tr_hl', code);
+      p.set('_x_tr_pto', 'wapp');
+      return location.origin + location.pathname + '?' + p.toString() + location.hash;
+    };
+    var frCur = langBox.querySelector('.lang-cur');
+    if (frCur) {
+      var frLink = document.createElement('a');
+      frLink.className = 'lang-link';
+      frLink.setAttribute('href', langDest('fr'));
+      frLink.setAttribute('hreflang', 'fr');
+      frLink.setAttribute('lang', 'fr');
+      frLink.setAttribute('title', 'Version originale en français');
+      frLink.textContent = 'FR';
+      frCur.parentNode.replaceChild(frLink, frCur);
+    }
+    Array.prototype.forEach.call(langBox.querySelectorAll('a[hreflang]'), function (a) {
+      if (a.getAttribute('hreflang') === trLang) {
+        a.className = 'lang-cur';
+        a.setAttribute('aria-current', 'true');
+      }
+    });
+    // phase de capture : passe avant les scripts que Google ajoute à la page
+    langBox.addEventListener('click', function (e) {
+      var a = e.target.closest ? e.target.closest('a[hreflang]') : null;
+      if (!a) return;
+      e.preventDefault();
+      e.stopPropagation();
+      if (a.getAttribute('hreflang') !== trLang) window.location.href = langDest(a.getAttribute('hreflang'));
+    }, true);
+  }
+
   /* ---------- carte des zones climatiques (Zones d'intervention) : département en orange et bulle au survol */
   var carte = document.querySelector('[data-carte-zones]');
   if (carte) {

@@ -114,6 +114,12 @@ Les boutons EN, IT et ES de l'en-tête ouvrent la page courante traduite par Goo
 vers translate.google.com, `LANGS` dans `build.py`) : aucun script ni cookie sur albedia.eu. C'est décrit
 dans `confidentialite.html` et `mentions-legales.html`.
 
+La page traduite est servie par Google à l'adresse albedia-eu.translate.goog. Google y réécrit nos liens EN, IT, ES
+vers son propre service, ce qui imbrique deux traductions et affiche « Can't translate this page ». Le bloc « langues »
+de `main.js` corrige cela sur ces pages : chaque bouton mène directement à la traduction voulue, FR devient un lien
+vers la page d'origine et la langue affichée est mise en avant. Le sélecteur porte `translate="no"` (sinon Google
+traduit « EN » en « IN »). Vérifié en conditions réelles le 5 novembre 2026.
+
 ## Règles de contenu
 
 - Textes originaux uniquement. Le site concurrent covalba.fr a servi de référence pour la structure :
