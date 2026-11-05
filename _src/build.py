@@ -16,7 +16,7 @@ SITE_URL = 'https://albedia.eu'
 EMAIL = 'contact@albedia.eu'
 PHONE = '06 83 48 06 15'   # affiché sur le site (pied de page, devis, mentions légales)
 PHONE_TEL = '+33683480615'                     # même numéro, format international pour les liens « tel: »
-LASTMOD = '2026-11-04'
+LASTMOD = '2026-11-05'
 GSC_VERIFICATION = 'ymRFVKE_Tfryz-8vZf1Ez11ze668aD4px2rOz4EN0yQ'   # Google Search Console, balise placée sur l'accueil
 SLOGANS = ['Vos toitures réfléchissent\u00a0!', 'Augmentez votre albédo\u00a0!']
 
@@ -1205,16 +1205,16 @@ def build(variant, out):
     if variant == 'site':
         urls = [pg['file'] for pg in PAGES if not pg.get('noindex') and pg['file'] not in ('mentions-legales.html', 'confidentialite.html')]
         sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+        def prio_fr(f):
+            pg = next(x for x in PAGES if x['file'] == f)
+            return pg.get('prio') or ('1.0' if f == 'index.html' else ('0.9' if f in ('guide-cool-roof.html', 'solutions.html', 'devis.html') else '0.7'))
         for f in urls:
             loc = SITE_URL + '/' + ('' if f == 'index.html' else f)
-            pg = next(x for x in PAGES if x['file'] == f)
-            prio = pg.get('prio') or ('1.0' if f == 'index.html' else ('0.9' if f in ('guide-cool-roof.html', 'solutions.html', 'devis.html') else '0.7'))
-            sm.append('  <url><loc>%s</loc><lastmod>%s</lastmod><priority>%s</priority></url>' % (loc, LASTMOD, prio))
-        for pg in LANG_PAGES:
+            sm.append('  <url><loc>%s</loc><lastmod>%s</lastmod><priority>%s</priority></url>' % (loc, LASTMOD, prio_fr(f)))
+        for pg in LANG_PAGES:   # versions traduites : un cran sous la page française correspondante
             f = pg['file']
             loc = '%s/%s/%s' % (SITE_URL, pg['lang'], '' if f == 'index.html' else f)
-            prio = pg.get('prio') or ('0.8' if f == 'index.html' else '0.6')
-            sm.append('  <url><loc>%s</loc><lastmod>%s</lastmod><priority>%s</priority></url>' % (loc, LASTMOD, prio))
+            sm.append('  <url><loc>%s</loc><lastmod>%s</lastmod><priority>%.1f</priority></url>' % (loc, LASTMOD, float(prio_fr(f)) - 0.1))
         sm.append('</urlset>')
         open(os.path.join(out, 'sitemap.xml'), 'w').write('\n'.join(sm) + '\n')
         open(os.path.join(out, 'robots.txt'), 'w').write('User-agent: *\nAllow: /\n\nSitemap: %s/sitemap.xml\n' % SITE_URL)
