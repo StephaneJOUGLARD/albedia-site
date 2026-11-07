@@ -986,7 +986,7 @@ def jsonld(page):
             'legalName': 'CONTRACTANT GENERAL EN BATIMENTS INDUSTRIELS (CGBI)',
             'telephone': PHONE_TEL,
             'address': {'@type': 'PostalAddress', 'streetAddress': '163 cours de la Libération et du Général de Gaulle',
-                        'postalCode': '38000', 'addressLocality': 'Grenoble', 'addressCountry': 'FR'}})
+                        'postalCode': '38100', 'addressLocality': 'Grenoble', 'addressCountry': 'FR'}})
         blocks.append({'@context': 'https://schema.org', '@type': 'WebSite', 'name': 'ALBEDIA', 'url': SITE_URL + '/',
                        'inLanguage': 'fr-FR'})
     elif page.get('crumbs'):
